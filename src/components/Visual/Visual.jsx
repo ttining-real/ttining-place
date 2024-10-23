@@ -24,10 +24,7 @@ function Visual() {
         <h1 className={isMobile ? "hdg-xs" : "hdg-xxl"}>
           <span>
             반갑습니다.
-            <img
-              src='/src/assets/images/3d_smiling_face.svg'
-              alt='웃는 이모지'
-            />
+            <img src='/assets/images/3d_smiling_face.svg' alt='웃는 이모지' />
           </span>
           <span>UI 개발자 안지인입니다.</span>
         </h1>
@@ -41,11 +38,11 @@ function Visual() {
         <dl>
           <dt className={isMobile ? "body-xs" : "hdg-xs"}>Contact</dt>
           <dd className={isMobile ? "body-xs" : "body-sm"}>
-            <img src='/src/assets/images/3d_telephone.svg' alt='전화 이모지' />
+            <img src='/assets/images/3d_telephone.svg' alt='전화 이모지' />
             010. 9262. 5731
           </dd>
           <dd className={isMobile ? "body-xs" : "body-sm"}>
-            <img src='/src/assets/images/3d_mail.svg' alt='이메일 이모지' />
+            <img src='/assets/images/3d_mail.svg' alt='이메일 이모지' />
             just1111111@naver.com
           </dd>
         </dl>
