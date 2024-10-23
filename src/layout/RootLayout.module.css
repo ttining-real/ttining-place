@@ -1,0 +1,6 @@
+.root {
+  display: flex;
+  flex-flow: column nowrap;
+  height: 100vh;
+  background-color: var(--root-bg);
+}
