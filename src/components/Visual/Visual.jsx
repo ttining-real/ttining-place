@@ -37,14 +37,26 @@ function Visual() {
         </p>
         <dl>
           <dt className={isMobile ? "body-xs" : "hdg-xs"}>Contact</dt>
-          <dd className={isMobile ? "body-xs" : "body-sm"}>
-            <img src='/assets/images/3d_telephone.svg' alt='전화 이모지' />
-            010. 9262. 5731
-          </dd>
-          <dd className={isMobile ? "body-xs" : "body-sm"}>
-            <img src='/assets/images/3d_mail.svg' alt='이메일 이모지' />
-            just1111111@naver.com
-          </dd>
+          <div>
+            <dd className={isMobile ? "body-xs" : "body-sm"}>
+              <img src='/assets/images/3d_telephone.svg' alt='전화 이모지' />
+              010. 9262. 5731
+            </dd>
+            <dd className={isMobile ? "body-xs" : "body-sm"}>
+              <img src='/assets/images/3d_mail.svg' alt='이메일 이모지' />
+              just1111111@naver.com
+            </dd>
+            <dd className={isMobile ? "body-xs" : "body-sm"}>
+              <img src='/assets/images/github.png' alt='GitHub 로고' />
+              <a
+                href='https://github.com/ttining-real'
+                target='_blank'
+                rel='noopener noreferrer'
+              >
+                ttining-real
+              </a>
+            </dd>
+          </div>
         </dl>
       </div>
     </header>
