@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import RootLayout from "@/layout/RootLayout";
-import { Error, Portfolio } from "@/pages";
+import { Error, Portfolio, Test, Projects, Resume } from "@/pages";
 
 export const routes = [
   {
@@ -11,6 +11,18 @@ export const routes = [
       {
         path: "",
         element: <Portfolio />,
+      },
+      {
+        path: "test",
+        element: <Test />,
+      },
+      {
+        path: "projects",
+        element: <Projects />,
+      },
+      {
+        path: "resume",
+        element: <Resume />,
       },
     ],
   },
