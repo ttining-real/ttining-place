@@ -1,0 +1,11 @@
+@use "@/styles/abstracts/fonts" as *;
+
+.portfolio {
+  & > ul {
+    padding: 1rem;
+  }
+
+  & > section {
+    padding: 1rem;
+  }
+}
