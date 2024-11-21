@@ -1,0 +1,106 @@
+.visual {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(
+    --gradient-accent,
+    linear-gradient(90deg, #d11aff 0%, #ffe96e 100%)
+  );
+
+  .personal {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: 1rem;
+    img {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+    h2 {
+      display: flex;
+      flex-flow: column nowrap;
+      color: var(--gray-100);
+    }
+  }
+
+  & > p {
+    color: var(--gray-100);
+  }
+
+  & > dl {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 0.5rem;
+    padding: 1rem 1.25rem;
+    border-radius: 0.75rem;
+    background: rgba(255, 255, 255, 0.25);
+
+    dt {
+      color: var(--gray-100);
+    }
+
+    & > div {
+      flex: 1;
+      display: flex;
+      flex-flow: column wrap;
+      gap: 0.75rem;
+    }
+
+    dd {
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--gray-100);
+
+      img {
+        width: 1.5rem;
+        height: 1.5rem;
+      }
+
+      a {
+        color: var(--gray-100);
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+/* 데스크탑 스타일 */
+// @media (min-width: 768px) {
+//   .visual {
+//     align-items: flex-start;
+//     padding: 8.75rem;
+
+//     h1 {
+//       & > span {
+//         & > img {
+//           width: 5rem;
+//           height: 5rem;
+//         }
+//       }
+//     }
+
+//     dl {
+//       flex-flow: row nowrap;
+//       gap: 3.5rem;
+//       padding: 1rem 2rem;
+//       border-radius: 3rem;
+
+//       & > div {
+//         flex-flow: row nowrap;
+//         gap: 2.5rem;
+//       }
+
+//       dd {
+//         gap: 0.75rem;
+
+//         img {
+//           width: 2rem;
+//           height: 2rem;
+//         }
+//       }
+//     }
+//   }
+// }
