@@ -1,0 +1,177 @@
+@font-face {
+  src: url("../assets/fonts/GmarketSansTTFBold.ttf") format("truetype"),
+    url("../assets/fonts/GmarketSansBold.otf") format("opentype");
+  font: {
+    family: "GmarketSansBold";
+    weight: normal;
+    style: normal;
+  }
+}
+@font-face {
+  src: url("../assets/fonts/GmarketSansTTFMedium.ttf") format("truetype"),
+    url("../assets/fonts/GmarketSansMedium.otf") format("opentype");
+  font: {
+    family: "GmarketSansMedium";
+    weight: normal;
+    style: normal;
+  }
+}
+@font-face {
+  src: url("../assets/fonts/GmarketSansTTFLight.ttf") format("truetype"),
+    url("../assets/fonts/GmarketSansLight.otf") format("opentype");
+  font: {
+    family: "GmarketSansLight";
+    weight: normal;
+    style: normal;
+  }
+}
+
+:root {
+  --font-bold: "GmarketSansBold", sans-serif;
+  --font-medium: "GmarketSansMedium", sans-serif;
+  --font-light: "GmarketSansLight", sans-serif;
+
+  /* line-height */
+  --lh-hdg: 140%;
+  --lh-body: 160%;
+  --lh-lbl: 150%;
+
+  /* letter-spacing */
+  --ls: 0;
+}
+
+/* heading */
+@mixin hdg-xs {
+  letter-spacing: var(--ls);
+  line-height: var(--lh-hdg);
+  font: {
+    family: var(--font-bold);
+    size: 1rem;
+  }
+}
+
+@mixin hdg-sm {
+  letter-spacing: var(--ls);
+  line-height: var(--lh-hdg);
+  font: {
+    family: var(--font-bold);
+    size: 1.25rem;
+  }
+}
+
+@mixin hdg-md {
+  letter-spacing: var(--ls);
+  line-height: var(--lh-hdg);
+  font: {
+    family: var(--font-bold);
+    size: 1.5rem;
+  }
+}
+@mixin hdg-lg {
+  letter-spacing: var(--ls);
+  line-height: var(--lh-hdg);
+  font: {
+    family: var(--font-bold);
+    size: 1.75rem;
+  }
+}
+@mixin hdg-xl {
+  letter-spacing: var(--ls);
+  line-height: var(--lh-hdg);
+  font: {
+    family: var(--font-bold);
+    size: 2rem;
+  }
+}
+@mixin hdg-xxl {
+  letter-spacing: var(--ls);
+  line-height: var(--lh-hdg);
+  font: {
+    family: var(--font-bold);
+    size: 2.25rem;
+  }
+}
+
+/* body */
+@mixin body-xs {
+  letter-spacing: var(--ls);
+  line-height: var(--lh-body);
+  font: {
+    family: var(--font-medium);
+    size: 0.8125rem;
+  }
+}
+@mixin body-sm {
+  letter-spacing: var(--ls);
+  line-height: var(--lh-body);
+  font: {
+    family: var(--font-medium);
+    size: 1rem;
+  }
+}
+@mixin body-md {
+  letter-spacing: var(--ls);
+  line-height: var(--lh-body);
+  font: {
+    family: var(--font-medium);
+    size: 1.25rem;
+  }
+}
+@mixin body-lg {
+  letter-spacing: var(--ls);
+  line-height: var(--lh-body);
+  font: {
+    family: var(--font-medium);
+    size: 1.5rem;
+  }
+}
+@mixin body-xl {
+  letter-spacing: var(--ls);
+  line-height: var(--lh-body);
+  font: {
+    family: var(--font-medium);
+    size: 1.75rem;
+  }
+}
+
+/* label */
+@mixin lbl-xs {
+  letter-spacing: var(--ls);
+  line-height: var(--lh-lbl);
+  font: {
+    family: var(--font-light);
+    size: 0.8125rem;
+  }
+}
+@mixin lbl-sm {
+  letter-spacing: var(--ls);
+  line-height: var(--lh-lbl);
+  font: {
+    family: var(--font-light);
+    size: 1rem;
+  }
+}
+@mixin lbl-md {
+  letter-spacing: var(--ls);
+  line-height: var(--lh-lbl);
+  font: {
+    family: var(--font-light);
+    size: 1.125rem;
+  }
+}
+@mixin lbl-lg {
+  letter-spacing: var(--ls);
+  line-height: var(--lh-lbl);
+  font: {
+    family: var(--font-light);
+    size: 1.25rem;
+  }
+}
+@mixin lbl-xl {
+  letter-spacing: var(--ls);
+  line-height: var(--lh-lbl);
+  font: {
+    family: var(--font-light);
+    size: 1.375rem;
+  }
+}

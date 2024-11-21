@@ -1,0 +1,19 @@
+.root {
+  flex: 1;
+  overflow: auto;
+}
+// .root {
+//   display: flex;
+//   flex-flow: column nowrap;
+//   height: 100vh;
+//   background-color: var(--root-bg);
+
+//   & > div {
+//     flex: 1;
+//     display: flex;
+//     flex-flow: column nowrap;
+//     gap: 1rem;
+//     overflow: auto;
+//     background-color: yellowgreen;
+//   }
+// }
