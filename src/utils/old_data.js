@@ -128,6 +128,10 @@ export const skillsData = {
       cate: "Adobe",
       desc: "Figma, XD, Photoshop, Illustrator, InDesign",
     },
+    {
+      cate: "Cooperation",
+      desc: "Figma, Zeplin",
+    },
   ],
   development: [
     {
