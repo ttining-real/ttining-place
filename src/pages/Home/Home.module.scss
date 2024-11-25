@@ -27,9 +27,11 @@
   }
 
   dl {
+    flex: 1;
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
+    width: 100%;
 
     dt {
       @include hdg-sm;
@@ -188,6 +190,10 @@ nav {
 
 /* 데스크탑 스타일 */
 @media (min-width: 768px) {
+  .visual_section {
+    align-items: center;
+  }
+
   nav {
     flex-flow: row nowrap;
     a {

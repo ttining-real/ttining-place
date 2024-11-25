@@ -28,6 +28,17 @@
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    &::selection {
+      background-color: #ffe96e;
+      color: var(--gray-600);
+      background-clip: initial;
+      -webkit-background-clip: initial;
+      -webkit-text-fill-color: var(--gray-600);
+    }
+    &::-moz-selection {
+      background-color: #ffe96e;
+      color: var(--gray-600);
+    }
   }
 
   & + .section_wrap {
