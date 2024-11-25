@@ -34,7 +34,6 @@ body {
 
 // wrap
 #react-app {
-  // flex: 1;
   display: flex;
   flex-flow: column nowrap;
   height: 100vh;
@@ -44,4 +43,13 @@ body {
     flex: 1;
     overflow: auto;
   }
+}
+
+::selection {
+  background-color: #ffe96e;
+  color: var(--gray-600);
+}
+::-moz-selection {
+  background-color: #ffe96e;
+  color: var(--gray-600);
 }

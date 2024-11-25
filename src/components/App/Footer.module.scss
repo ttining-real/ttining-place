@@ -1,0 +1,17 @@
+@use "@/styles/abstracts/fonts" as *;
+
+.footer {
+  padding: 1rem;
+  background-color: var(--gray-300);
+
+  p {
+    @include body-xs;
+    margin-bottom: 0.25rem;
+    margin-block-end: 0.25rem;
+    color: var(--gray-600);
+    & + p {
+      @include lbl-xs;
+      color: var(--gray-700);
+    }
+  }
+}

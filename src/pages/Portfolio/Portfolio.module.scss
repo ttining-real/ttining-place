@@ -1,11 +1,27 @@
 @use "@/styles/abstracts/fonts" as *;
 
-.portfolio {
-  & > ul {
-    padding: 1rem;
-  }
-
-  & > section {
-    padding: 1rem;
-  }
+.layout {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 2rem;
+  padding: 1rem;
+  background-color: var(--gray-200);
 }
+
+/* 데스크탑 스타일 */
+// @media (min-width: 768px) {
+//   .portfolio {
+//     display: flex;
+//     flex-flow: row nowrap;
+
+//     .layout {
+//       flex: 1;
+//       display: flex;
+//       flex-flow: column nowrap;
+//       gap: 2.5rem;
+//       max-width: 40rem;
+//       margin: 5rem 0;
+//       transform: translate(calc(50% + 20rem), 0px);
+//     }
+//   }
+// }

@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import RootLayout from "@/layout/RootLayout";
-import { Error, Portfolio, Test, Projects, Resume } from "@/pages";
+import { Error, Home, Resume, Projects, Skills } from "@/pages";
 
 export const routes = [
   {
@@ -10,21 +10,25 @@ export const routes = [
     children: [
       {
         path: "",
-        element: <Portfolio />,
+        element: <Home />,
       },
       {
-        path: "test",
-        element: <Test />,
+        path: "resume",
+        element: <Resume />,
       },
       {
         path: "projects",
         element: <Projects />,
       },
       {
-        path: "resume",
-        element: <Resume />,
+        path: "skills",
+        element: <Skills />,
       },
     ],
+  },
+  {
+    path: "*",
+    element: <Error />,
   },
 ];
 

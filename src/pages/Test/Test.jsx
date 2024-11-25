@@ -1,18 +1,12 @@
 import S from "./Test.module.scss";
-import LinkButtonGroup from "@/components/Link/LinkButtonGroup";
+import Loading from "@/components/App/Loading";
 
 function Test() {
-  const links = [
-    { name: "Projects", href: "/projects" },
-    { name: "Resume", href: "/resume" },
-  ];
-
   return (
     <div className={S.test}>
-      <p>테스트 페이지</p>
-      <LinkButtonGroup links={links} />
+      {/* <p>테스트 페이지</p> */}
 
-      <div className={S.typo}>
+      {/* <div className={S.typo}>
         <p className='hdg-xxl'>다람쥐 헌 쳇바퀴에 타고파</p>
         <p className='hdg-xl'>다람쥐 헌 쳇바퀴에 타고파</p>
         <p className='hdg-lg'>다람쥐 헌 쳇바퀴에 타고파</p>
@@ -32,7 +26,8 @@ function Test() {
         <p className='lbl-sm'>다람쥐 헌 쳇바퀴에 타고파</p>
         <p className='lbl-xs'>다람쥐 헌 쳇바퀴에 타고파</p>
         <hr />
-      </div>
+      </div> */}
+      <Loading />
     </div>
   );
 }

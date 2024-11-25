@@ -10,13 +10,10 @@ function SkillList({ skills }) {
       <ul>
         {skills.map((skill, index) => (
           <li key={index}>
-            <span>
+            <span aria-hidden='true' className={S.icon}>
               <img src={skill.icon} alt={skill.alt} />
             </span>
-            <dl>
-              <dt className='body-sm'>{skill.title}</dt>
-              <dd className='lbl-xs'>{skill.description}</dd>
-            </dl>
+            <span className='body-sm'>{skill.title}</span>
           </li>
         ))}
       </ul>

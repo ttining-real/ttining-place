@@ -1,10 +1,10 @@
 // import S from "./RootLayout.module.scss";
 import { Helmet } from "react-helmet-async";
-import { Suspense, useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
-import Loading from "@/components/Loading/Loading";
+import { Suspense, useState, useEffect, useRef } from "react";
+import Loading from "@/components/App/Loading";
 import Header from "@/components/App/Header";
-import Nav from "@/components/App/Nav";
+import TopButton from "@/components/App/TopButton";
 
 function RootLayout() {
   const [theme, setTheme] = useState("light");
@@ -51,6 +51,29 @@ function RootLayout() {
     setTheme(newTheme);
   };
 
+  const [isVisible, setIsVisible] = useState(false); // 버튼의 가시성 상태
+  const scrollContainerRef = useRef(null); // 스크롤 가능한 영역을 참조할 ref 생성
+
+  // 스크롤 위치에 따라 버튼의 보임 여부 설정
+  const handleScroll = () => {
+    if (scrollContainerRef.current.scrollTop > 200) {
+      // 스크롤이 200px 이상일 때 버튼 보이기
+      setIsVisible(true);
+    } else {
+      setIsVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    // 스크롤 이벤트 리스너 추가
+    const container = scrollContainerRef.current;
+    container.addEventListener("scroll", handleScroll);
+
+    return () => {
+      container.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <>
       <Helmet>
@@ -78,10 +101,16 @@ function RootLayout() {
         <meta property='og:site_author' content='안지인' />
       </Helmet>
       <Header theme={theme} toggleTheme={toggleTheme} />
-      <Suspense fallback={<Loading />}>
-        <Outlet />
-      </Suspense>
-      <Nav />
+      <div
+        ref={scrollContainerRef}
+        // style={{ height: "80vh", overflowY: "auto" }}
+      >
+        <Suspense fallback={<Loading />}>
+          <Outlet />
+        </Suspense>
+      </div>
+      {/* TopButton을 클릭하면 scrollContainerRef가 가리키는 요소로 스크롤을 최상단으로 이동 */}
+      {isVisible && <TopButton scrollContainer={scrollContainerRef.current} />}
     </>
   );
 }

@@ -3,18 +3,9 @@ import { useState, useEffect } from "react";
 import { debounce } from "@/utils/debounce";
 import { workData, otherData, skillsData } from "@/utils/temporaryData";
 import PersonalSection from "@/components/Personal/PersonalSection";
-import LinkButtonGroup from "@/components/Link/LinkButtonGroup";
 import SkillList from "@/components/Skills/SkillList";
 import ExperienceList from "@/components/Experience/ExperienceList";
-
-const links = [
-  {
-    name: "Projects",
-    href: "/projects",
-    iconSrc: "/assets/icons/rocket.svg",
-  },
-  { name: "Resume", href: "/resume", iconSrc: "/assets/icons/resume.svg" },
-];
+import Footer from "@/components/App/Footer";
 
 function Portfolio() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -35,10 +26,12 @@ function Portfolio() {
   return (
     <div className={S.portfolio}>
       <PersonalSection isMobile={isMobile} />
-      <LinkButtonGroup links={links} />
-      <SkillList skills={skillsData} />
-      <ExperienceList title='Work Experience.' data={workData} />
-      <ExperienceList title='Other Experience.' data={otherData} />
+      <div className={S.layout}>
+        <SkillList skills={skillsData} />
+        <ExperienceList title='Work Experience.' data={workData} />
+        <ExperienceList title='Other Experience.' data={otherData} />
+      </div>
+      <Footer />
     </div>
   );
 }

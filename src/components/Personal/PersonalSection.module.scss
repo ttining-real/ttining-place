@@ -68,39 +68,16 @@
 }
 
 /* 데스크탑 스타일 */
-// @media (min-width: 768px) {
-//   .visual {
-//     align-items: flex-start;
-//     padding: 8.75rem;
+@media (min-width: 768px) {
+  .visual {
+    box-sizing: border-box;
+    position: fixed;
+    max-width: 20rem;
+    height: calc(100% - 7.625rem);
+    justify-content: space-between;
 
-//     h1 {
-//       & > span {
-//         & > img {
-//           width: 5rem;
-//           height: 5rem;
-//         }
-//       }
-//     }
-
-//     dl {
-//       flex-flow: row nowrap;
-//       gap: 3.5rem;
-//       padding: 1rem 2rem;
-//       border-radius: 3rem;
-
-//       & > div {
-//         flex-flow: row nowrap;
-//         gap: 2.5rem;
-//       }
-
-//       dd {
-//         gap: 0.75rem;
-
-//         img {
-//           width: 2rem;
-//           height: 2rem;
-//         }
-//       }
-//     }
-//   }
-// }
+    & > p {
+      flex: 1;
+    }
+  }
+}

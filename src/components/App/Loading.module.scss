@@ -1,0 +1,18 @@
+@use "@/styles/abstracts/fonts" as *;
+
+.loading {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  box-sizing: border-box;
+  height: 100%;
+  padding: 2rem;
+  background-color: var(--gray-200);
+
+  & > p {
+    @include body-sm;
+    color: var(--gray-700);
+  }
+}

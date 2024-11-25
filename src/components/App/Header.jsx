@@ -11,7 +11,8 @@ function Header({ theme, toggleTheme }) {
       <div className={S.switch_checkbox}>
         <label>
           <span className='lbl-xs'>
-            {theme === "light" ? "라이트 모드" : "다크 모드"}
+            <img src='/assets/icons/sun.svg' alt='' />
+            {/* {theme === "light" ? "라이트 모드" : "다크 모드"} */}
           </span>
           <input
             role='switch'
@@ -19,6 +20,9 @@ function Header({ theme, toggleTheme }) {
             checked={theme === "dark"}
             onChange={toggleTheme}
           />
+          <span className='lbl-xs'>
+            <img src='/assets/icons/moon.svg' alt='' />
+          </span>
         </label>
       </div>
     </header>

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import S from "./Nav.module.scss";
 import { string, func } from "prop-types";
 
@@ -6,22 +7,22 @@ function Nav() {
     <nav className={S.nav}>
       <ul>
         <li>
-          <a href='/'>
+          <Link to='/'>
             <img src='/assets/icons/home.svg' alt='' />
-            <span className='body-xs'>Home</span>
-          </a>
+            Home
+          </Link>
         </li>
         <li>
-          <a href='/projects'>
+          <Link to='/projects'>
             <img src='/assets/icons/rocket.svg' alt='' />
-            <span className='body-xs'>Projects</span>
-          </a>
+            Projects
+          </Link>
         </li>
         <li>
-          <a href='/resume'>
+          <Link to='/resume'>
             <img src='/assets/icons/resume.svg' alt='' />
-            <span className='body-xs'>Resume</span>
-          </a>
+            Resume
+          </Link>
         </li>
       </ul>
     </nav>
