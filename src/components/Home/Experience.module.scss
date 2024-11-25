@@ -1,0 +1,110 @@
+@use "@/styles/abstracts/fonts" as *;
+
+.experience_section {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 1rem;
+  padding: 1.5rem 1rem;
+  padding-inline: 1rem;
+  padding-block: 1.5rem;
+  background-color: var(--gray-200);
+
+  h3 {
+    @include hdg-sm;
+    width: fit-content;
+    background: var(
+      --gradient-accent,
+      linear-gradient(90deg, #d11aff 0%, #ffe96e 100%)
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    &::selection {
+      background-color: #ffe96e;
+      color: var(--gray-600); // 선택 시 투명 대신 텍스트 색상 사용
+      background-clip: initial; // 선택 상태에서 배경 클립 해제
+      -webkit-background-clip: initial; // 선택 상태에서 배경 클립 해제
+      -webkit-text-fill-color: var(--gray-600); // 투명 제거
+    }
+    &::-moz-selection {
+      background-color: #ffe96e;
+      color: var(--gray-600);
+    }
+  }
+
+  .list {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 0.5rem;
+  }
+
+  .list_item {
+    @include lbl-sm;
+    display: flex;
+    flex-flow: column nowrap;
+    padding: 1rem;
+    padding-inline: 1rem;
+    padding-block: 1rem;
+    border-radius: 0.5rem;
+    background-color: var(--gray-100);
+    box-shadow: 0 0.25rem 0.25rem rgba(0, 0, 0, 0.05);
+
+    .tit {
+      @include body-sm;
+      color: var(--gray-900);
+    }
+
+    .sub_text {
+      @include body-xs;
+      color: var(--gray-600);
+    }
+
+    .chips {
+      display: flex;
+      flex-flow: row wrap;
+      gap: 0.25rem;
+      padding: 0.25rem 0rem 0.125rem;
+      padding-inline: 0;
+      padding-block-start: 0.25rem;
+      padding-block-end: 0.125rem;
+    }
+
+    .chip {
+      @include lbl-xs;
+      display: flex;
+      align-items: center;
+      height: 1.5rem;
+      padding: 0.125rem 0.5rem;
+      padding-inline: 0.5rem;
+      padding-block: 0.125rem;
+      color: var(--gray-800);
+      border-radius: 1.5rem;
+      border: 1px solid var(--gray-400);
+    }
+
+    .date {
+      @include lbl-xs;
+      display: flex;
+      flex-flow: row nowrap;
+      gap: 0.25rem;
+      padding: 0.25rem 0;
+      padding-block: 0.25rem;
+      color: var(--gray-800);
+      img {
+        width: 1rem;
+        height: 1rem;
+      }
+    }
+  }
+}
+
+/* 데스크탑 스타일 */
+@media (min-width: 768px) {
+  .experience_section {
+    .list {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0.5rem;
+    }
+  }
+}

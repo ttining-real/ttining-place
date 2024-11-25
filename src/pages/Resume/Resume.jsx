@@ -1,8 +1,10 @@
 import S from "./Resume.module.scss";
 import WorkExperience from "@/components/Resume/WorkExperience";
 import Footer from "@/components/App/Footer";
-import { workExperienceData } from "@/utils/workExperienceData";
 import { useRef } from "react";
+import { workExperienceData } from "@/utils/workExperienceData";
+import { otherData } from "@/utils/temporaryData";
+import OtherExperience from "./../../components/Resume/OtherExperience";
 
 function Resume() {
   const scrollContainerRef = useRef(null);
@@ -16,6 +18,10 @@ function Resume() {
             <WorkExperience key={index} experience={experience} />
           ))}
         </div>
+      </section>
+      <section className={S.section_wrap}>
+        <h2>Other Experience.</h2>
+        <OtherExperience data={otherData} />
       </section>
       <Footer />
     </div>

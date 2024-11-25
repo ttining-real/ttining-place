@@ -6,41 +6,51 @@
   height: 100%;
 }
 
-.name_card {
+.visual_section {
   display: flex;
   flex-flow: column nowrap;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  padding: 1.5rem 1rem;
-  color: var(--gray-100);
+  padding: 1.5rem;
+  padding-inline: 1.5rem;
+  padding-block: 1.5rem;
   background: var(
     --gradient-accent,
     linear-gradient(90deg, #d11aff 0%, #ffe96e 100%)
   );
 
-  img {
-    margin-bottom: 1rem;
-    margin-block-end: 1rem;
+  h2 {
+    @include hdg-sm;
+    padding-bottom: 1rem;
+    padding-block-end: 1rem;
+    color: var(--gray-100);
   }
 
-  p {
-    @include hdg-sm;
-    & + p {
-      @include body-xs;
-      margin-top: 0.25rem;
-      margin-block-end: 0.25rem;
+  dl {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+
+    dt {
+      @include hdg-sm;
+      display: flex;
+      flex-flow: column nowrap;
+      gap: 1rem;
+      color: var(--gray-100);
+    }
+
+    dd {
+      @include body-sm;
+      color: var(--gray-100);
+
+      & + dd {
+        @include lbl-sm;
+        padding-top: 1rem;
+        padding-block-start: 1rem;
+        text-align: center;
+      }
     }
   }
-}
-
-.desc {
-  @include lbl-sm;
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  gap: 1rem;
-  padding: 2rem 1.5rem;
-  text-align: center;
 }
 
 nav {
@@ -176,30 +186,8 @@ nav {
   }
 }
 
+/* 데스크탑 스타일 */
 @media (min-width: 768px) {
-  .name_card {
-    padding: 2rem 1rem;
-
-    img {
-      margin-bottom: 1.5rem;
-      margin-block-end: 1.5rem;
-    }
-
-    p {
-      @include hdg-md;
-      & + p {
-        @include body-sm;
-        margin-top: 0.25rem;
-        margin-block-end: 0.25rem;
-      }
-    }
-  }
-
-  .desc {
-    @include lbl-md;
-    flex: 1;
-  }
-
   nav {
     flex-flow: row nowrap;
     a {

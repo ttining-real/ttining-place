@@ -7,6 +7,7 @@
 .resume {
   display: flex;
   flex-flow: column nowrap;
+  // gap: 1.5rem;
 }
 
 .section_wrap {
@@ -19,6 +20,7 @@
 
   h2 {
     @include hdg-md;
+    width: fit-content;
     background: var(
       --gradient-accent,
       linear-gradient(90deg, #d11aff 0%, #ffe96e 100%)
@@ -26,6 +28,14 @@
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+  }
+
+  & + .section_wrap {
+    gap: 0rem;
+    padding: 1rem 1rem 1.5rem;
+    padding-block-start: 1rem;
+    padding-block-end: 1.5rem;
+    padding-inline: 1rem;
   }
 }
 
@@ -38,10 +48,15 @@
 /* 데스크탑 스타일 */
 @media (min-width: 768px) {
   .section_wrap {
-    padding: 3rem 3rem;
-    padding-block: 3rem;
+    gap: 1rem;
+    padding: 1.5rem 3rem;
+    padding-block: 1.5rem;
     padding-inline: 3rem;
+    & + .section_wrap {
+      gap: 1rem;
+    }
   }
+
   .experience_wrap {
     display: grid;
     grid-template-columns: 1fr 1fr;
