@@ -1,17 +1,11 @@
 import S from "./Home.module.scss";
-import { useState } from "react";
 import { Link } from "react-router-dom";
-import Dialog from "@/components/Dialog/Dialog";
+import { workData, otherData } from "@/utils/temporaryData";
 import Footer from "@/components/App/Footer";
 import Experience from "@/components/Home/Experience";
-import { workData, otherData } from "@/utils/temporaryData";
+import Skills from "@/components/Home/Skills";
 
 function Home() {
-  const [isDialogOpen, setDialogOpen] = useState(false);
-
-  const handleDialogOpen = () => setDialogOpen(true);
-  const handleDialogClose = () => setDialogOpen(false);
-
   return (
     <div className={S.home}>
       <section className={S.visual_section}>
@@ -61,93 +55,10 @@ function Home() {
           />
           <span>Projects</span>
         </Link>
-        <Link to='/skills'>
-          <img
-            src='https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Technologist.png'
-            alt='Technologist'
-            width='60'
-            height='60'
-          />
-          <span>Skills</span>
-        </Link>
-        <button onClick={handleDialogOpen} className={S.button_contact}>
-          <img
-            src='https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Telephone%20Receiver.png'
-            alt='Telephone Receiver'
-            width='60'
-            height='60'
-          />
-          <span>Contact</span>
-        </button>
       </nav>
-      {/* <section className={S.experience_section}>
-        <h3>Work Experience.</h3>
-        <ul className={S.list}>
-          {workData.map((work, index) => (
-            <li key={index} className={S.list_item}>
-              <p className={S.tit}>{work.title}</p>
-              <p className={S.sub_text}>{work.sub}</p>
-              <ul
-                className={S.chips}
-                aria-label={`${work.title} 관련 작업 내용`}
-              >
-                {work.chips.map((chip, chipIndex) => (
-                  <li className={S.chip} key={chipIndex}>
-                    {chip}
-                  </li>
-                ))}
-              </ul>
-              <p className={S.date}>
-                <img
-                  src='/assets/icons/calendar.svg'
-                  alt={`${work.date} 기간`}
-                  className={S.calendar_icon}
-                />
-                {work.date}
-              </p>
-            </li>
-          ))}
-          <li className={S.list_item}>
-            <p className={S.tit}>다누시스</p>
-            <p className={S.sub_text}>UX기획팀, 주임연구원</p>
-            <ul className={S.chips}>
-              <li className={S.chip}>Publishing</li>
-              <li className={S.chip}>UI/UX</li>
-              <li className={S.chip}>Design</li>
-              <li className={S.chip}>QA</li>
-            </ul>
-            <p className={S.date}>
-              <img src='/assets/icons/calendar.svg' alt='' />
-              0000. 00 - 0000. 00 (0년 0개월)
-            </p>
-          </li>
-        </ul>
-      </section> */}
+      <Skills />
       <Experience title='Work Experience.' data={workData} />
       <Experience title='Other Experience.' data={otherData} />
-      <Dialog isOpen={isDialogOpen} onClose={handleDialogClose}>
-        <h3 className={S.dialog_head}>Contact Me.</h3>
-        <ul className={S.dialog_body}>
-          <li>
-            <img src='/assets/icons/call.svg' alt='' />
-            <span>+82 10-9262-5731</span>
-          </li>
-          <li>
-            <img src='/assets/icons/mail.svg' alt='' />
-            <p>just1111111@naver.com</p>
-          </li>
-          <li>
-            <img src='/assets/icons/cat.svg' alt='' />
-            <a
-              href='https://github.com/ttining-real'
-              target='_blank'
-              rel='noopener noreferrer'
-            >
-              ttining-real (GitHub)
-            </a>
-          </li>
-        </ul>
-      </Dialog>
       <Footer />
     </div>
   );

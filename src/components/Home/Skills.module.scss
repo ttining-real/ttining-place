@@ -1,0 +1,124 @@
+@use "@/styles/abstracts/fonts" as *;
+
+.skills {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem 0.5rem;
+  padding-inline: 1rem;
+  padding-block-start: 0.75rem;
+  padding-block-end: 0.5rem;
+}
+.item {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+
+  button {
+    width: 3rem;
+    height: 3rem;
+    border: none;
+    border-radius: 3rem;
+    background-color: var(--gray-300);
+    transition: scale 0.3s;
+    cursor: pointer;
+    &:hover {
+      scale: 1.1;
+      box-shadow: 0 0.25rem 0.25rem rgba(0, 0, 0, 0.05);
+    }
+    img {
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+}
+
+/* Dialog */
+.dialog_wrap {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 0.5rem;
+  overflow: auto;
+
+  h3 {
+    @include hdg-xs;
+    width: fit-content;
+    padding: 1.5rem 1.5rem 0.5rem;
+    padding-block-start: 1.5rem;
+    padding-block-end: 0.5rem;
+    padding-inline: 1.5rem;
+    background: var(
+      --gradient-accent,
+      linear-gradient(90deg, #d11aff 0%, #ffe96e 100%)
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    &::selection {
+      background-color: #ffe96e;
+      color: var(--gray-600);
+      background-clip: initial;
+      -webkit-background-clip: initial;
+      -webkit-text-fill-color: var(--gray-600);
+    }
+    &::-moz-selection {
+      background-color: #ffe96e;
+      color: var(--gray-600);
+    }
+  }
+}
+
+.dialog_cont {
+  padding: 1rem;
+  li {
+    @include body-xs;
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 0.5rem;
+    color: var(--gray-800);
+    img {
+      width: 1rem;
+      height: 1rem;
+    }
+    a {
+      text-decoration: none;
+      color: var(--gray-800);
+    }
+    &.chips {
+      display: flex;
+      flex-flow: row wrap;
+      gap: 0.25rem;
+      padding-top: 0.5rem;
+      padding-block-start: 0.5rem;
+      span {
+        display: flex;
+        align-items: center;
+        height: 1.5rem;
+        padding: 0 0.5rem;
+        border-radius: 1.5rem;
+        background-color: var(--gray-300);
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .skills {
+    max-width: 640px;
+    width: 100%;
+    margin: auto;
+  }
+  .item {
+    button {
+      width: 5rem;
+      height: 5rem;
+      border-radius: 5rem;
+    }
+    img {
+      width: 3.5rem;
+      height: 3.5rem;
+    }
+  }
+}
