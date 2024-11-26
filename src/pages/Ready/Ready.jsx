@@ -3,7 +3,6 @@ import S from "./Ready.module.scss";
 function Ready() {
   return (
     <main className={S.ready}>
-      {/* <img src='/assets/icons/moon.svg' alt='' /> */}
       <img
         src='https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Shooting%20Star.png'
         alt='Shooting Star'
