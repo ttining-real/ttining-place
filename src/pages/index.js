@@ -3,4 +3,3 @@ export { default as Error } from "./Error/Error";
 export { default as Home } from "./Home/Home";
 export { default as Resume } from "./Resume/Resume";
 export { default as Projects } from "./Projects/Projects";
-export { default as Skills } from "./Skills/Skills";
