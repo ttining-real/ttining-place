@@ -1,0 +1,103 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  height: 3rem;
+  padding: 0 1rem;
+  background-color: var(--white);
+  box-shadow: 0 0 2rem rgba(0, 0, 0, 0.16);
+
+  h1 {
+    // margin: 0;
+    font-size: 1rem;
+    color: var(--black);
+  }
+}
+
+// 스위치 버튼
+.switch_checkbox {
+  display: flex;
+  align-items: center;
+  // gap: 0.5rem;
+
+  label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    span {
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--gray-30);
+      img {
+        width: 1.5rem;
+      }
+    }
+  }
+
+  .checkbox {
+    appearance: none;
+    position: relative;
+    width: 2.25rem;
+    height: 1.25rem;
+    margin: 0;
+    padding: 0;
+    border-radius: 1.75rem;
+    background-color: var(--gray-60);
+    cursor: pointer;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 0.25rem;
+      width: 0.75rem;
+      height: 0.75rem;
+      border-radius: 0.75rem;
+      background-color: var(--gray-10);
+      transform: translateY(-50%);
+      transition: left 0.2s ease-in;
+    }
+
+    &:checked {
+      &::before {
+        left: calc(100% - 1rem);
+      }
+    }
+
+    &:focus {
+      outline-offset: max(2px);
+      outline: 2px solid var(--yellow);
+    }
+
+    &:disabled {
+      opacity: 0.35;
+      cursor: auto;
+    }
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .header {
+    background-color: var(--black);
+    h1 {
+      color: var(--white);
+    }
+  }
+}
+
+body[data-theme="dark"] {
+  .header {
+    background-color: var(--black);
+    h1 {
+      color: var(--white);
+    }
+  }
+}
