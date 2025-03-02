@@ -83,21 +83,3 @@
     }
   }
 }
-
-@media (prefers-color-scheme: dark) {
-  .header {
-    background-color: var(--black);
-    h1 {
-      color: var(--white);
-    }
-  }
-}
-
-body[data-theme="dark"] {
-  .header {
-    background-color: var(--black);
-    h1 {
-      color: var(--white);
-    }
-  }
-}

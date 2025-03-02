@@ -11,7 +11,7 @@ function Header({ theme, toggleTheme }) {
     if (location.pathname === "/test") {
       return "test";
     } else {
-      return "Untitled";
+      return "ttining place";
     }
   };
 
