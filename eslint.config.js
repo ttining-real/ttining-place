@@ -1,8 +1,9 @@
-import globals from "globals";
 import pluginJs from "@eslint/js";
 import pluginReact from "eslint-plugin-react";
 import pluginReactHooks from "eslint-plugin-react-hooks";
 import pluginReactRefresh from "eslint-plugin-react-refresh";
+import pluginSimpleImportSort from "eslint-plugin-simple-import-sort";
+import globals from "globals";
 
 // ESLint v9+ - Flat Config
 export default [
@@ -19,6 +20,7 @@ export default [
       react: pluginReact, // React 관련 린트 규칙 제공
       "react-hooks": pluginReactHooks, // React Hooks 관련 린트 규칙 제공
       "react-refresh": pluginReactRefresh, // React Fast Refresh 관련 린트 규칙 제공
+      "simple-import-sort": pluginSimpleImportSort,
     },
   },
   {
@@ -43,6 +45,8 @@ export default [
       ...pluginReactHooks.configs.recommended.rules,
       "react-refresh/only-export-components": "warn",
       "react/react-in-jsx-scope": "off", // react-in-jsx-scope 규칙 비활성화 (JSX 변환 시, React 변수 필요 없음)
+      "simple-import-sort/imports": "error",
+      "simple-import-sort/exports": "error",
     },
   },
 ];
