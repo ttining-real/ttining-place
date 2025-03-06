@@ -1,0 +1,18 @@
+@use "./../mixins/typography" as *;
+
+.title {
+  @include typography(24px, bold);
+  font-family: "Gmarket Sans", sans-serif;
+}
+
+.subtitle {
+  @include typography(20px, semibold);
+}
+
+.body {
+  @include typography(16px, regular);
+}
+
+.caption {
+  @include typography(14px, light);
+}
