@@ -1,18 +1,19 @@
-@use "./../mixins/typography" as *;
+@use "./../utils/mixins" as mix;
 
 .title {
-  @include typography(24px, bold);
+  @include mix.typography(1.5rem, bold);
   font-family: "Gmarket Sans", sans-serif;
 }
 
 .subtitle {
-  @include typography(20px, semibold);
+  @include mix.typography(1rem, semibold);
+  font-family: "Gmarket Sans", sans-serif;
 }
 
 .body {
-  @include typography(16px, regular);
+  @include mix.typography(14px, regular);
 }
 
 .caption {
-  @include typography(14px, light);
+  @include mix.typography(13px, light);
 }

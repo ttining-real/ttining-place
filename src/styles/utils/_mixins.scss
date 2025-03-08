@@ -1,0 +1,207 @@
+@use "sass:string";
+@use "sass:map";
+@use "sass:list";
+@use "sass:color";
+@use "./functions" as func;
+
+// 숨김 콘텐츠
+@mixin a11yHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  clip: rect(0, 0, 0, 0);
+  clip-path: polygon(0 0, 0 0, 0 0);
+  overflow: hidden;
+  padding: 0;
+  white-space: nowrap;
+  border-width: 0;
+}
+
+// Border Radius
+@mixin rounded($value) {
+  @if $value == "xs" {
+    border-radius: 0.25rem;
+  } @else if $value == "sm" {
+    border-radius: 0.5rem;
+  } @else if $value == "md" {
+    border-radius: 0.75rem;
+  } @else if $value == "lg" {
+    border-radius: 1rem;
+  } @else if $value == "xl" {
+    border-radius: 1.25rem;
+  } @else if $value == "full" {
+    border-radius: 62.5rem;
+  } @else {
+    border-radius: func.rem($value);
+  }
+}
+
+// Typography
+@mixin typography(
+  $size,
+  $weight: regular,
+  $line-height: 140%,
+  $letter-spacing: -0.25px
+) {
+  font-size: $size;
+  letter-spacing: $letter-spacing;
+  line-height: $line-height;
+
+  // 폰트 가중치 설정
+  $pretendard-weights: (
+    light: 300,
+    regular: 400,
+    medium: 500,
+    semibold: 600,
+    bold: 700,
+  );
+
+  $gmarket-weights: (
+    light: 300,
+    regular: 500,
+    bold: 700,
+  );
+
+  // 폰트 선택 (Pretendard 기본, Gmarket Sans 보조)
+  @if map.has-key($pretendard-weights, $weight) {
+    font-family: "Pretendard", sans-serif;
+    font-weight: map.get($pretendard-weights, $weight);
+  } @else if map.has-key($gmarket-weights, $weight) {
+    font-family: "Gmarket Sans", sans-serif;
+    font-weight: map.get($gmarket-weights, $weight);
+  } @else {
+    @warn "⚠️ Unsupported font-weight: #{$weight}. Defaulting to regular.";
+    font-family: "Pretendard", sans-serif;
+    font-weight: 400;
+  }
+}
+
+// 미디어쿼리 중단점
+$breakpoints: (
+  sm: 480,
+  md: 768,
+  lg: 1024,
+  xl: 1280,
+  2xl: 1440,
+);
+
+// 미디어쿼리 믹스인
+@mixin mq($breakpoint) {
+  @each $key, $value in $breakpoints {
+    @if not map.has-key($breakpoints, $breakpoint) {
+      @error '#{$breakpoint}는 유효한 중단점이 아닙니다.(유효한 값:sm, md, lg, xl, 2xl)';
+    }
+  }
+
+  $viewport: map.get($breakpoints, $breakpoint);
+  $query: string.unquote("min-width: #{$viewport}px");
+
+  @media ($query) {
+    @content;
+  }
+}
+
+// Size (width, inline-size, height, block-size)
+@mixin inline-size($value) {
+  width: $value;
+  inline-size: $value;
+}
+@mixin block-size($value) {
+  height: $value;
+  block-size: $value;
+}
+@mixin size($width, $height: null) {
+  @include inline-size($width);
+  @if $height != null {
+    @include block-size($height);
+  }
+}
+
+// Flex Box
+@mixin flexbox(
+  $direction: row,
+  $wrap: nowrap,
+  $items: null,
+  $justify: null,
+  $gap: null
+) {
+  display: flex;
+  flex-direction: $direction;
+  flex-wrap: $wrap;
+  align-items: $items;
+  justify-content: $justify;
+  gap: $gap;
+}
+
+// 여백 (padding)
+@mixin pl($value) {
+  padding-left: $value;
+  padding-inline-start: $value;
+}
+@mixin pr($value) {
+  padding-right: $value;
+  padding-inline-end: $value;
+}
+@mixin pt($value) {
+  padding-top: $value;
+  padding-block-start: $value;
+}
+@mixin pb($value) {
+  padding-bottom: $value;
+  padding-block-end: $value;
+}
+
+@mixin px($paddingX) {
+  @include pl($paddingX);
+  @include pr($paddingX);
+}
+@mixin py($paddingY) {
+  @include pt($paddingY);
+  @include pb($paddingY);
+}
+
+@mixin p($paddingX, $paddingY: null) {
+  @include px($paddingX);
+  @if $paddingY == null {
+    @include py($paddingX);
+  } @else {
+    @include py($paddingY);
+  }
+}
+
+// 여백 (margin)
+@mixin ml($value) {
+  margin-left: $value;
+  margin-inline-start: $value;
+}
+@mixin mr($value) {
+  margin-right: $value;
+  margin-inline-end: $value;
+}
+@mixin mt($value) {
+  margin-top: $value;
+  margin-block-start: $value;
+}
+@mixin mb($value) {
+  margin-bottom: $value;
+  margin-block-end: $value;
+}
+
+@mixin mx($marginX) {
+  @include ml($marginX);
+  @include mr($marginX);
+}
+@mixin my($marginY) {
+  @include mt($marginY);
+  @include mb($marginY);
+}
+
+@mixin m($marginX, $marginY: null) {
+  @include mx($marginX);
+  @if $marginY == null {
+    @include my($marginX);
+  } @else {
+    @include my($marginY);
+  }
+}

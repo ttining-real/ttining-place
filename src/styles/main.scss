@@ -1,6 +1,7 @@
-@use "theme/theme" as *;
-@use "base/base" as *;
+@use "base" as *;
 @use "foundations/typography" as *;
+@use "theme/theme" as *;
+@use "utils/mixins" as mix;
 
 html,
 body {
@@ -11,4 +12,9 @@ body {
 #react-app {
   height: 100vh;
   background-color: var(--gray-60);
+}
+
+/* 숨김 콘텐츠 */
+.sr-only {
+  @include mix.a11yHidden;
 }
