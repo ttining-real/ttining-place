@@ -1,8 +1,11 @@
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import PropTypes from "prop-types";
 import { useEffect, useRef } from "react";
 
 import S from "./Timeline.module.scss";
+
+gsap.registerPlugin(ScrollTrigger);
 
 function Timeline({ list }) {
   const timelineRef = useRef(null);
@@ -18,7 +21,11 @@ function Timeline({ list }) {
         duration: 0.6,
         stagger: 0.3,
         ease: "power2.out",
-        clearProps: "all",
+        scrollTrigger: {
+          trigger: timelineRef.current,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
       });
     }
   }, [list]);
