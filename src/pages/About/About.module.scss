@@ -1,0 +1,29 @@
+@use "/src/styles/utils/mixins" as mix;
+
+.wrap {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 2.5rem;
+  box-sizing: border-box;
+  padding-top: 3rem;
+  padding: 6rem 1.5rem 1.5rem;
+  background-color: var(--gray-60);
+  h2 {
+    margin: 0;
+    color: var(--black);
+  }
+
+  section {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1rem;
+  }
+}
+
+.intro {
+  @include mix.flexbox(column, nowrap, null, null, 0.5rem);
+
+  p {
+    color: var(--black);
+  }
+}
