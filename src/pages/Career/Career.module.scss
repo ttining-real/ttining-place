@@ -1,0 +1,14 @@
+@use "/src/styles/utils/mixins" as mix;
+
+.wrap {
+  @include mix.flexbox(column, nowrap, null, null, 2.5rem);
+  @include mix.px(1.5rem);
+  @include mix.pt(6rem);
+  @include mix.pb(1.5rem);
+  box-sizing: border-box;
+  background-color: var(--gray-60);
+
+  section {
+    @include mix.flexbox(column, nowrap, null, null, 1rem);
+  }
+}
