@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import RootLayout from "@/layout/RootLayout";
-import { Test } from "@/pages";
+import { About, Career, Experience, Projects, Skills, Test } from "@/pages";
 
 export const routes = [
   {
@@ -9,11 +9,31 @@ export const routes = [
     element: <RootLayout />,
     children: [
       {
-        path: "/test",
-        element: <Test />,
+        path: "/",
+        element: <About />,
       },
       {
-        path: "/",
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/skills",
+        element: <Skills />,
+      },
+      {
+        path: "/experience",
+        element: <Experience />,
+      },
+      {
+        path: "/career",
+        element: <Career />,
+      },
+      {
+        path: "/projects",
+        element: <Projects />,
+      },
+      {
+        path: "/test",
         element: <Test />,
       },
     ],
