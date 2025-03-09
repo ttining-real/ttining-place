@@ -1,12 +1,16 @@
 import { Suspense, useEffect } from "react";
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Outlet } from "react-router-dom";
 
+import MenuButton from "@/components/App/Button/MenuButton";
 import Footer from "@/components/App/Footer/Footer";
 import Header from "@/components/App/Header/Header";
+import Menu from "@/components/App/Menu/Menu";
 import themeStore from "@/store/themeStore";
 
 function RootLayout() {
+  // Theme
   const { initializeTheme, syncSystemTheme, toggleTheme, theme } = themeStore();
 
   useEffect(() => {
@@ -24,6 +28,25 @@ function RootLayout() {
       mediaQuery.removeEventListener("change", handleSystemThemeChange);
     };
   }, [initializeTheme, syncSystemTheme]);
+
+  // Menu
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen((prev) => !prev);
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape" && isMenuOpen) {
+        setIsMenuOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isMenuOpen]);
 
   return (
     <>
@@ -52,6 +75,8 @@ function RootLayout() {
         <meta property='og:site_author' content='안지인' />
       </Helmet>
       <Header theme={theme} toggleTheme={toggleTheme} />
+      <Menu isMenuOpen={isMenuOpen} />
+      <MenuButton isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
       <Suspense>
         <Outlet />
         <Footer />

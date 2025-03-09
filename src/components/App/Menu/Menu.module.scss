@@ -1,0 +1,25 @@
+@use "/src/styles/utils/mixins" as mix;
+
+.menu {
+  @include mix.flexbox(column, nowrap);
+  @include mix.size(100%, 100dvh);
+  position: fixed;
+  bottom: 0;
+  z-index: 10;
+  background-color: var(--white);
+  &.open {
+    display: none;
+  }
+  ul {
+    @include mix.py(4rem);
+    li {
+      a {
+        @include mix.size(100%);
+        @include mix.p(2rem, 1.75rem);
+        display: block;
+        color: var(--black);
+        text-decoration: none;
+      }
+    }
+  }
+}

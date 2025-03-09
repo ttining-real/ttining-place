@@ -1,0 +1,41 @@
+@use "/src/styles/utils/mixins" as mix;
+
+// menu 버튼
+.menu_button {
+  @include mix.flexbox(column, nowrap, null, space-between);
+  @include mix.size(3rem, 3rem);
+  @include mix.p(0.75rem, 1rem);
+  z-index: 20;
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  order: -1;
+  border: none;
+  border-radius: 100%;
+  background-color: var(--white);
+  box-shadow: 0 0 2rem rgba(0, 0, 0, 0.16);
+  cursor: pointer;
+
+  .bar {
+    @include mix.size(100%, 0.125rem);
+    display: block;
+    background-color: var(--black);
+    border-radius: 4px;
+    transition: transform 0.3s ease, opacity 0.3s ease,
+      background-color 0.3s ease;
+  }
+
+  &.open {
+    .bar {
+      &:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+      &:nth-child(2) {
+        opacity: 0;
+      }
+      &:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+      }
+    }
+  }
+}
