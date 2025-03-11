@@ -15,7 +15,7 @@ function Switch({ label, labelId, checked, onChange }) {
           className={$.checkbox}
           onChange={onChange}
         />
-        <span>{label}</span>
+        <span className='body'>{label}</span>
       </label>
     </div>
   );

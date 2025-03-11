@@ -1,33 +1,29 @@
 @use "/src/styles/utils/mixins" as mix;
 
 .timeline {
+  @include mix.flexbox(column, nowrap, null, null, 1rem);
+  @include mix.pl(1.5rem);
   position: relative;
-  display: flex;
-  flex-flow: column nowrap;
-  gap: 1rem;
-  padding-inline-start: 1.5rem;
   &::before {
+    @include mix.size(1px, 100%);
     content: "";
     position: absolute;
     top: 0;
     left: 4px;
-    width: 1px;
-    height: 100%;
     background-color: var(--gray-30);
   }
   li {
     @include mix.rounded(8);
+    @include mix.p(1rem);
     position: relative;
-    padding: 1rem;
     background-color: var(--white);
     &::before {
+      @include mix.size(9px, 9px);
       @include mix.rounded(10);
       content: "";
       position: absolute;
       top: 8px;
       left: -24px;
-      width: 9px;
-      height: 9px;
       background-color: var(--gray-30);
     }
     span {

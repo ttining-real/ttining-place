@@ -1,8 +1,9 @@
+@use "/src/styles/utils/mixins" as mix;
+
 .footer {
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: center;
-  padding: 1.5rem 1.5rem;
+  @include mix.flexbox(column, nowrap, center, center, 0);
+  @include mix.px(2rem);
+  @include mix.py(1.5rem);
   background-color: var(--gray-50);
 
   p {

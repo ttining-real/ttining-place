@@ -1,8 +1,8 @@
-import $ from "./Footer.module.scss";
+import S from "./Footer.module.scss";
 
 function Footer() {
   return (
-    <footer className={$.footer}>
+    <footer className={S.footer}>
       <p className='caption'>
         본 웹 사이트는 개인 포트폴리오 목적으로 제작되었습니다.
       </p>

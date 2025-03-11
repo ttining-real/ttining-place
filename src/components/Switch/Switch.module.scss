@@ -1,8 +1,9 @@
+@use "/src/styles/utils/mixins" as mix;
+
 // 스위치 버튼
 .switch_checkbox {
   display: flex;
   align-items: center;
-  // gap: 0.5rem;
 
   label {
     display: inline-flex;
@@ -10,11 +11,7 @@
     gap: 0.5rem;
 
     span {
-      // @include lbl-sm;
-      display: flex;
-      flex-flow: row nowrap;
-      align-items: center;
-      gap: 0.5rem;
+      @include mix.flexbox(row, nowrap, center, null, 0.5rem);
       color: var(--gray-20);
       img {
         width: 1.5rem;
@@ -23,23 +20,21 @@
   }
 
   .checkbox {
+    @include mix.size(2.25rem, 1.25rem);
+    @include mix.p(0);
+    @include mix.m(0);
     appearance: none;
     position: relative;
-    width: 2.25rem;
-    height: 1.25rem;
-    margin: 0;
-    padding: 0;
     border-radius: 1.75rem;
     background-color: var(--gray-40);
     cursor: pointer;
 
     &::before {
+      @include mix.size(0.75rem, 0.75rem);
       content: "";
       position: absolute;
       top: 50%;
       left: 0.25rem;
-      width: 0.75rem;
-      height: 0.75rem;
       border-radius: 0.75rem;
       background-color: var(--white);
       transform: translateY(-50%);
