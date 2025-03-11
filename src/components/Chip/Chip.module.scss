@@ -1,0 +1,9 @@
+@use "/src/styles/utils/mixins" as mix;
+
+.chip {
+  @include mix.px(0.5rem);
+  @include mix.py(0.25rem);
+  @include mix.rounded(xs);
+  color: var(--white);
+  background-color: var(--black);
+}
