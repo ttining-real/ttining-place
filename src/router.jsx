@@ -1,7 +1,15 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import RootLayout from "@/layout/RootLayout";
-import { About, Career, Experience, Projects, Skills, Test } from "@/pages";
+import {
+  About,
+  Career,
+  Experience,
+  Home,
+  Projects,
+  Skills,
+  Test,
+} from "@/pages";
 
 export const routes = [
   {
@@ -10,7 +18,7 @@ export const routes = [
     children: [
       {
         path: "/",
-        element: <About />,
+        element: <Home />,
       },
       {
         path: "/about",
