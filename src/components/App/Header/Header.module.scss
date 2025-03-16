@@ -1,17 +1,26 @@
+@use "/src/styles/utils/mixins" as mix;
+
 .header {
+  @include mix.flexbox(row, nowrap, center, flex-start, 1rem);
+  @include mix.px(2rem);
+  @include mix.py(1.5rem);
   z-index: 10;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 1rem;
   box-sizing: border-box;
-  padding: 1.5rem 1.5rem;
 
   h1 {
     color: var(--black);
+  }
+
+  .prev_button {
+    @include mix.size(2rem, 2rem);
+    @include mix.p(0);
+    order: -1;
+    border: none;
+    background-color: var(--gray-60);
+    cursor: pointer;
   }
 }
