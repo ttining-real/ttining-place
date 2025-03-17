@@ -118,6 +118,32 @@ $breakpoints: (
   }
 }
 
+// Position
+@mixin position($position, $offsets: 0) {
+  position: $position;
+  @if length($offsets) == 1 {
+    top: nth($offsets, 1);
+    right: nth($offsets, 1);
+    bottom: nth($offsets, 1);
+    left: nth($offsets, 1);
+  } @else if length($offsets) == 2 {
+    top: nth($offsets, 1);
+    right: nth($offsets, 2);
+    bottom: nth($offsets, 1);
+    left: nth($offsets, 2);
+  } @else if length($offsets) == 3 {
+    top: nth($offsets, 1);
+    right: nth($offsets, 2);
+    bottom: nth($offsets, 3);
+    left: nth($offsets, 2);
+  } @else if length($offsets) >= 4 {
+    top: nth($offsets, 1);
+    right: nth($offsets, 2);
+    bottom: nth($offsets, 3);
+    left: nth($offsets, 4);
+  }
+}
+
 // Flex Box
 @mixin flexbox(
   $direction: row,
@@ -204,4 +230,29 @@ $breakpoints: (
   } @else {
     @include my($marginY);
   }
+}
+
+// Grid Box
+@mixin gridbox($column-count, $column-gap: 1rem, $row-gap: null) {
+  $row-gap: if($row-gap == null, $column-gap, $row-gap);
+
+  display: grid;
+  grid-template-columns: repeat($column-count, 1fr);
+  gap: $row-gap $column-gap;
+}
+
+@mixin grid-column-start($number) {
+  grid-column-start: $number;
+}
+
+@mixin grid-row-start($number) {
+  grid-row-start: $number;
+}
+
+@mixin grid-column-span($count) {
+  grid-column-end: span $count;
+}
+
+@mixin grid-row-span($count) {
+  grid-row-end: span $count;
 }
