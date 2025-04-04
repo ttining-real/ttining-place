@@ -4,7 +4,12 @@ const config: Config = {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   darkMode: 'media', // 또는 class
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        base: ['var(--baseFont)'],
+        title: ['var(--titleFont)'],
+      },
+    },
   },
   plugins: [],
 };
