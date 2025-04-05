@@ -6,8 +6,8 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        base: ['var(--baseFont)'],
-        title: ['var(--titleFont)'],
+        pretendard: ['var(--pretendardFont)', 'sans-serif'],
+        gmarket: ['var(--gmarketFont)', 'sans-serif'],
       },
     },
   },
