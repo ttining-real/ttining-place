@@ -1,3 +1,4 @@
+import Footer from '@/components/footer';
 import Header from '@/components/header';
 import localFont from 'next/font/local';
 import { ReactNode } from 'react';
@@ -13,7 +14,7 @@ export default function GlobalLayout({ children }: { children: ReactNode }) {
     <div className={`${pretendard.className}`}>
       <Header />
       <main>{children}</main>
-      <footer>@ttining</footer>
+      <Footer />
     </div>
   );
 }
