@@ -1,5 +1,5 @@
 import Card from '@/components/card';
-import SubTitle from '@/components/sub-title';
+import SectionTitle from '@/components/section-title';
 import VisualBanner from '@/components/visual-banner';
 
 const cardData = [
@@ -34,7 +34,7 @@ export default function Home() {
     <>
       <VisualBanner />
       <section className="m-auto flex max-w-5xl flex-col gap-6 px-6 py-12">
-        <SubTitle
+        <SectionTitle
           title="Projects"
           description="Front-end Development Project"
         />
@@ -51,8 +51,11 @@ export default function Home() {
           ))}
         </div>
       </section>
-      <section className="m-auto flex max-w-5xl flex-col gap-6 py-12">
-        <SubTitle title="Experience" description="Companies and Freelance" />
+      <section className="m-auto flex max-w-5xl flex-col gap-6 px-6 py-12">
+        <SectionTitle
+          title="Experience"
+          description="Companies and Freelance"
+        />
         <div className="bg-gray-10 h-[380px] rounded-2xl"></div>
       </section>
     </>

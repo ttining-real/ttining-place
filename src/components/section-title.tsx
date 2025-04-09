@@ -22,12 +22,15 @@ const gmarket = localFont({
   variable: '--gmarketFont',
 });
 
-type SubTitleProps = {
+type SectionTitleProps = {
   title: string;
   description: string;
 };
 
-export default function SubTitle({ title, description }: SubTitleProps) {
+export default function SectionTitle({
+  title,
+  description,
+}: SectionTitleProps) {
   return (
     <>
       <header className="flex flex-col items-center gap-1">
