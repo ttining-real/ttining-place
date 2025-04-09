@@ -3,6 +3,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import StackIcon from './stack-icon';
+import LogoIcon from './logo-icon';
 
 const gmarket = localFont({
   src: [
@@ -56,38 +58,55 @@ export default function Header() {
       href: '/contact',
       name: 'Contact',
     },
+    {
+      href: 'https://github.com/ttining-real',
+      name: 'GitHub',
+    },
+    {
+      href: 'https://velog.io/@ttining/posts',
+      name: 'Velog',
+    },
   ];
 
-  const logoUrl = theme === 'light' ? '/logo_light.svg' : 'logo_dark.svg';
   return (
-    <header className="flex h-12 items-center justify-between gap-6 bg-white px-6 shadow-sm">
+    <header className="flex h-14 items-center justify-between gap-6 bg-white px-6 shadow-sm">
       <h1>
-        <Link href="/">
-          <Image
-            src={logoUrl}
-            alt="홈으로 이동 (Jiin 로고)"
-            width={50}
-            height={28}
-            className="text-red"
-          />
+        <Link href="/" aria-label="홈으로 이동">
+          <LogoIcon id="light" />
         </Link>
       </h1>
       <nav
         className={`${gmarket.className} font-gmarket`}
         aria-label="주요 메뉴"
       >
-        <ul className="flex gap-1">
-          {nav.map((menu, index) => (
-            <li key={index}>
-              <Link
-                href={menu.href}
-                className="font-base p-3 text-sm"
-                aria-current={pathname === menu.href ? 'page' : undefined}
-              >
-                {menu.name}
-              </Link>
-            </li>
-          ))}
+        <ul className="flex items-center gap-1">
+          {nav.map((menu, index) => {
+            const isExternal = menu.href.startsWith('http');
+
+            return (
+              <li key={index}>
+                {isExternal ? (
+                  <a
+                    href={menu.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex h-14 items-center px-4 text-base font-normal text-black"
+                    aria-label={`안지인의 ${menu.name}으로 이동`}
+                  >
+                    <StackIcon id={menu.name} />
+                  </a>
+                ) : (
+                  <Link
+                    href={menu.href}
+                    className="flex h-14 items-center px-4 text-base font-normal text-black"
+                    aria-current={pathname === menu.href ? 'page' : undefined}
+                  >
+                    {menu.name}
+                  </Link>
+                )}
+              </li>
+            );
+          })}
         </ul>
       </nav>
     </header>
