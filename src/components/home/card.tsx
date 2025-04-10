@@ -4,17 +4,17 @@ import Image from 'next/image';
 const gmarket = localFont({
   src: [
     {
-      path: '../fonts/GmarketSansTTFBold.ttf',
+      path: '../../fonts/GmarketSansTTFBold.ttf',
       weight: '600',
       style: 'normal',
     },
     {
-      path: '../fonts/GmarketSansTTFMedium.ttf',
+      path: '../../fonts/GmarketSansTTFMedium.ttf',
       weight: '400',
       style: 'normal',
     },
     {
-      path: '../fonts/GmarketSansTTFLight.ttf',
+      path: '../../fonts/GmarketSansTTFLight.ttf',
       weight: '200',
       style: 'normal',
     },
