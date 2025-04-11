@@ -11,10 +11,14 @@ const pretendard = localFont({
 
 export default function GlobalLayout({ children }: { children: ReactNode }) {
   return (
-    <div className={`${pretendard.className}`}>
+    <>
       <Header />
-      <main>{children}</main>
-      <Footer />
-    </div>
+      <div
+        className={`${pretendard.className} mt-14 flex h-[calc(100%-56px)] flex-col overflow-auto`}
+      >
+        <main>{children}</main>
+        <Footer />
+      </div>
+    </>
   );
 }
