@@ -16,20 +16,24 @@ export default function Card({
   description,
 }: CardProps) {
   return (
-    <article className="flex flex-col overflow-hidden rounded-3xl bg-white md:flex-row md:items-center">
-      <figure className="bg-gray-40 aspect-4/3 h-[300px] min-w-[400px]"></figure>
-      <div className="flex flex-col gap-4 p-8">
-        <dl className="flex flex-col text-base text-black">
-          <dt className="order-1 text-lg font-bold md:text-2xl">{title}</dt>
+    <article className="flex flex-col overflow-hidden rounded-2xl border border-gray-50 bg-white text-black md:flex-row md:items-center">
+      <figure className="bg-gray-10 aspect-2/1 w-full md:aspect-4/3 md:h-full md:max-w-sm"></figure>
+      <div className="p-6">
+        <dl className="flex flex-col">
+          <dt className="order-1 text-base font-semibold md:text-lg">
+            {title}
+          </dt>
           <dd className="order-0 text-sm md:text-base">{period}</dd>
           <dd className="order-2 text-sm md:text-base">{affiliation}</dd>
         </dl>
-        <div className="flex flex-col text-sm font-normal text-black md:text-base">
+        <div className="py-3">
           {description.map((desc, index) => (
-            <p key={index}>{desc}</p>
+            <p key={index} className="text-sm md:text-base">
+              {desc}
+            </p>
           ))}
-          <Chips data={position} />
         </div>
+        <Chips data={position} />
       </div>
     </article>
   );
