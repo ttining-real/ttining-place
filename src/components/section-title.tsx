@@ -32,13 +32,13 @@ export default function SectionTitle({
   description,
 }: SectionTitleProps) {
   return (
-    <>
-      <header className="flex flex-col items-center gap-1">
-        <h3 className={`${gmarket.className} gmarket text-2xl font-bold`}>
-          {title}
-        </h3>
-        <p>{description}</p>
-      </header>
-    </>
+    <header className="flex flex-col items-center gap-1 md:gap-2">
+      <h3
+        className={`${gmarket.className} gmarket text-center text-lg font-bold text-black md:text-2xl`}
+      >
+        {title}
+      </h3>
+      <p className="md:text-md text-center text-sm text-black">{description}</p>
+    </header>
   );
 }
