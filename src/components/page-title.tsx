@@ -1,10 +1,5 @@
 import localFont from 'next/font/local';
 
-type pageTitleProps = {
-  title: string;
-  description?: string[];
-};
-
 const gmarket = localFont({
   src: [
     {
@@ -27,27 +22,29 @@ const gmarket = localFont({
   variable: '--gmarketFont',
 });
 
-export default function PageTitle({ title, description }: pageTitleProps) {
+interface PageTitleProps {
+  title: string;
+  imgUrl: string;
+  desc?: string[];
+}
+
+export default function PageTitle({ title, imgUrl, desc }: PageTitleProps) {
   return (
-    <section className="flex h-[360px] items-center justify-center bg-white bg-[url('/images/sample_about.png')] bg-cover bg-center bg-no-repeat">
-      <div className="m-auto flex max-w-5xl flex-1 flex-col items-center justify-between gap-4 px-6 md:flex-row">
-        <div className="flex flex-col items-center gap-4">
-          <h2
-            className={`${gmarket.className} flex flex-col items-center gap-2 text-3xl font-bold text-white`}
-          >
-            {title}
-          </h2>
-          <hr className="w-[80px] border-2 border-white/50 dark:border-black/50" />
-        </div>
-        {description ? (
-          <div className="text-center font-light text-white">
-            {description
-              .filter((desc) => desc.trim() !== '')
-              .map((desc, index) => (
-                <p key={index}>{desc}</p>
-              ))}
-          </div>
-        ) : null}
+    <section
+      className="flex h-[360px] flex-col items-center justify-center gap-4 bg-cover bg-center px-6 md:relative md:flex-row"
+      style={{ backgroundImage: `url(${imgUrl})` }}
+    >
+      <h2
+        className={`${gmarket.className} text-center text-xl font-bold text-white md:flex-1 md:text-3xl dark:text-black`}
+      >
+        {title}
+      </h2>
+      <hr
+        aria-hidden={true}
+        className="w-[80px] border-2 border-white/50 md:hidden dark:border-black/50"
+      />
+      <div className="flex flex-col text-center text-sm font-normal text-white md:flex-1 dark:text-black">
+        {desc?.map((item, index) => <p key={index}>{item}</p>)}
       </div>
     </section>
   );
