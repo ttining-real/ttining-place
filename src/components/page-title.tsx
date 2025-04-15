@@ -31,7 +31,7 @@ interface PageTitleProps {
 export default function PageTitle({ title, imgUrl, desc }: PageTitleProps) {
   return (
     <section
-      className="flex h-[360px] flex-col items-center justify-center gap-4 bg-cover bg-center px-6 md:relative md:flex-row"
+      className="flex h-[180px] flex-col items-center justify-center gap-4 bg-cover bg-center px-6 md:relative md:h-[360px] md:flex-row"
       style={{ backgroundImage: `url(${imgUrl})` }}
     >
       <h2
@@ -41,7 +41,7 @@ export default function PageTitle({ title, imgUrl, desc }: PageTitleProps) {
       </h2>
       <hr
         aria-hidden={true}
-        className="w-[80px] border-2 border-white/50 md:hidden dark:border-black/50"
+        className="hidden w-[80px] border-2 border-white/50 md:block md:hidden dark:border-black/50"
       />
       <div className="flex flex-col text-center text-sm font-normal text-white md:flex-1 dark:text-black">
         {desc?.map((item, index) => <p key={index}>{item}</p>)}

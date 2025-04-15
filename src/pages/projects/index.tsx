@@ -1,22 +1,13 @@
-import Chips from '@/components/chips';
 import ListItem from '@/components/list-item';
 import PageTitle from '@/components/page-title';
 import SectionTitle from '@/components/section-title';
 import { supabase } from '@/lib/supabase';
+import { Project } from '@/types/project';
 import { GetServerSideProps } from 'next';
 
-interface ProjectProps {
-  id: number;
-  title: string;
-  period: string;
-  stack: string[];
-  description: string[];
-  url?: string;
-}
-
 interface ProjectsProps {
-  projectsWork: ProjectProps[];
-  projectsOther: ProjectProps[];
+  projectsWork: Project[];
+  projectsOther: Project[];
   error?: string;
 }
 
@@ -66,53 +57,19 @@ export default function Page({
   return (
     <>
       <PageTitle title="Projects" imgUrl="/images/projects.png" />
-      <section className="m-auto flex max-w-5xl flex-col gap-6 px-6 py-12">
+      <section className="flex flex-col gap-6 p-6">
         <SectionTitle
           title="Work Projects"
           description="UI/UX 디자인, 퍼블리싱, 프론트엔드 개발"
         />
-        {projectsWork.map((work, index) => (
-          <ListItem
-            key={index}
-            id={work.title}
-            title={work.title}
-            period={work.period}
-          >
-            {work.description.map((p, i) => (
-              <p key={i}>{p}</p>
-            ))}
-            <Chips
-              key={index}
-              data={work.stack}
-              chipClassName="border-gray-10"
-              chipsClassName="mt-4"
-            />
-          </ListItem>
-        ))}
+        <ListItem data={projectsWork} />
       </section>
-      <section className="m-auto flex max-w-5xl flex-col gap-6 px-6 py-12">
+      <section className="flex flex-col gap-6 p-6">
         <SectionTitle
           title="Other Projects"
           description="토이 프로젝트 및 프리랜서 프로젝트"
         />
-        {projectsOther.map((other, index) => (
-          <ListItem
-            key={index}
-            id={other.title}
-            title={other.title}
-            period={other.period}
-          >
-            {other.description.map((p, i) => (
-              <p key={i}>{p}</p>
-            ))}
-            <Chips
-              key={index}
-              data={other.stack}
-              chipClassName="border-gray-10"
-              chipsClassName="mt-4"
-            />
-          </ListItem>
-        ))}
+        <ListItem data={projectsOther} />
       </section>
     </>
   );

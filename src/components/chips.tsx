@@ -1,24 +1,33 @@
 type ChipProps = {
   text: string;
+  className?: string;
 };
 
 type ChipsProps = {
   data: string[];
+  chipClassName?: string;
+  chipsClassName?: string;
 };
 
-function Chip({ text }: ChipProps) {
+function Chip({ text, className = '' }: ChipProps) {
   return (
-    <li className="rounded-4xl border border-gray-50 px-3 py-1 text-sm whitespace-nowrap text-black">
+    <li
+      className={`rounded-4xl border border-gray-50 px-3 py-1 text-[13px] whitespace-nowrap text-black md:text-sm ${className}`}
+    >
       {text}
     </li>
   );
 }
 
-export default function Chips({ data }: ChipsProps) {
+export default function Chips({
+  data,
+  chipClassName = '',
+  chipsClassName = '',
+}: ChipsProps) {
   return (
-    <ul className="flex flex-wrap gap-x-1 gap-y-1.5">
+    <ul className={`flex flex-wrap gap-x-1 gap-y-1.5 ${chipsClassName}`}>
       {data.map((text, index) => (
-        <Chip key={index} text={text} />
+        <Chip key={index} text={text} className={chipClassName} />
       ))}
     </ul>
   );
