@@ -1,73 +1,84 @@
+import Error from '@/components/error';
 import Card from '@/components/experience/card';
 import PageTitle from '@/components/page-title';
 import SectionTitle from '@/components/section-title';
 import { supabase } from '@/lib/supabase';
+import { WorkProps, FreelancerProps } from '@/types/experience';
 import { GetServerSideProps } from 'next';
 
-interface Experience {
-  id: number;
-  company: string;
-  affiliation: string;
-  period: string;
-  position: string;
-  description: string;
-}
-
-interface Props {
-  experiences: Experience[];
+interface ExperienceProps {
+  experiences: WorkProps[];
+  freelancerExperiences: FreelancerProps[];
   error?: string;
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const { data, error } = await supabase.from('experience').select('*');
+  // work
+  const { data: workData, error: workError } = await supabase
+    .from('experience_work')
+    .select('*');
 
-  console.log('📦 Supabase data:', data);
-  console.log('❌ Supabase error:', error);
+  // freelancer
+  const { data: freelancerData, error: freelancerError } = await supabase
+    .from('experience_freelancer')
+    .select('*');
 
-  if (error) {
+  if (workError || freelancerError) {
     return {
       props: {
         experiences: [],
-        error: error.message,
+        freelancerExperiences: [],
+        error: workError?.message || freelancerError?.message,
       },
     };
   }
 
+  // storage
+  const updateData = (data: any[]) =>
+    data.map((item) => {
+      const { data: urlData } = supabase.storage
+        .from('experience-image')
+        .getPublicUrl(item.img);
+
+      console.log('imgUrl:', urlData?.publicUrl);
+
+      return {
+        ...item,
+        imgUrl: urlData?.publicUrl ?? null,
+      };
+    });
+
   return {
     props: {
-      experiences: data,
+      experiences: updateData(workData),
+      freelancerExperiences: updateData(freelancerData),
     },
   };
 };
 
-export default function Page({ experiences, error }: Props) {
+export default function Page({
+  experiences,
+  freelancerExperiences,
+  error,
+}: ExperienceProps) {
   if (error) {
-    return <p>🚫 데이터를 불러오는데 실패했습니다. : {error}</p>;
+    return <Error error={error} />;
   }
 
   return (
     <>
-      <PageTitle title="Experience" />
-      <section>
-        <header>
-          <SectionTitle title="Work Experience" description="근무 경험" />
-          {experiences?.map((exp) => (
-            <Card
-              key={exp.id}
-              title={exp.company}
-              affiliation={exp.affiliation}
-              period={exp.period}
-              position={
-                Array.isArray(exp.position) ? exp.position : [exp.position]
-              }
-              description={
-                Array.isArray(exp.description)
-                  ? exp.description
-                  : [exp.description]
-              }
-            />
-          ))}
-        </header>
+      <PageTitle title="Experience" imgUrl="/images/experience.png" />
+      <section className="flex flex-col gap-6 p-6">
+        <SectionTitle title="Work Experience" description="근무 경험" />
+        <div className="grid gap-4 md:m-auto md:w-5xl">
+          <Card data={experiences} />
+        </div>
+      </section>
+      <section className="flex flex-col gap-6 p-6">
+        <SectionTitle title="Other Experience" description="그 밖의 경험" />
+        <div className="grid gap-4 md:m-auto md:w-5xl">
+          <Card data={freelancerExperiences} />
+        </div>
       </section>
     </>
   );
