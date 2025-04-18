@@ -18,11 +18,17 @@ export default function NavMobile() {
         animate={isOpen ? 'open' : 'closed'}
         custom={height}
         ref={containerRef}
-        style={nav}
+        style={{
+          ...nav,
+          pointerEvents: isOpen ? 'auto' : 'none',
+        }}
       >
         <motion.div style={background} variants={sidebarVariants} />
-        <Navigation />
-        <MenuToggle toggle={() => setIsOpen(!isOpen)} />
+        <Navigation setIsOpen={setIsOpen} />
+        <MenuToggle
+          toggle={() => setIsOpen(!isOpen)}
+          style={{ pointerEvents: 'auto' }}
+        />
       </motion.nav>
     </div>
   );
@@ -37,10 +43,14 @@ const navVariants = {
   },
 };
 
-const Navigation = () => (
+const Navigation = ({
+  setIsOpen,
+}: {
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) => (
   <motion.ul style={list} variants={navVariants}>
     {NAV_LIST.map((item, index) => (
-      <MenuItem key={index} item={item} />
+      <MenuItem key={index} item={item} setIsOpen={setIsOpen} />
     ))}
   </motion.ul>
 );
@@ -62,7 +72,17 @@ const itemVariants = {
   },
 };
 
-const MenuItem = ({ item }: { item: NavItemProps }) => {
+const MenuItem = ({
+  item,
+  setIsOpen,
+}: {
+  item: NavItemProps;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+  const handleMunuClick = () => {
+    setIsOpen(false);
+  };
+
   const renderContent = () => {
     if (item.type === 'link') {
       return (
@@ -116,6 +136,7 @@ const MenuItem = ({ item }: { item: NavItemProps }) => {
       variants={itemVariants}
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.95 }}
+      onClick={handleMunuClick}
     >
       <div style={{ ...textPlaceholder }}>{renderContent()}</div>
     </motion.li>
@@ -158,8 +179,14 @@ const Path = (props: PathProps) => (
   />
 );
 
-const MenuToggle = ({ toggle }: { toggle: () => void }) => (
-  <button style={toggleContainer} onClick={toggle}>
+const MenuToggle = ({
+  toggle,
+  style,
+}: {
+  toggle: () => void;
+  style?: React.CSSProperties;
+}) => (
+  <button style={{ ...toggleContainer, ...style }} onClick={toggle}>
     <svg width="23" height="23" viewBox="0 0 23 23">
       <Path
         variants={{
@@ -197,7 +224,7 @@ const container: React.CSSProperties = {
   flex: 1,
   alignItems: 'stretch',
   justifyContent: 'flex-start',
-  width: '50vw',
+  width: '80vw',
   height: '100vh',
   backgroundColor: 'var(--accent)',
   borderRadius: 20,
