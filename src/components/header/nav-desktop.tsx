@@ -1,20 +1,21 @@
 import localFont from 'next/font/local';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import StackIcon from './stack-icon';
+import StackIcon from '../stack-icon';
+import { NAV_LIST } from './nav-list';
 
 const gmarket = localFont({
   src: [
     {
-      path: '../fonts/GmarketSansTTFBold.ttf',
+      path: '../../fonts/GmarketSansTTFBold.ttf',
       weight: '700',
     },
     {
-      path: '../fonts/GmarketSansTTFMedium.ttf',
+      path: '../../fonts/GmarketSansTTFMedium.ttf',
       weight: '400',
     },
     {
-      path: '../fonts/GmarketSansTTFLight.ttf',
+      path: '../../fonts/GmarketSansTTFLight.ttf',
       weight: '100',
     },
   ],
@@ -22,16 +23,16 @@ const gmarket = localFont({
   variable: '--gmarketFont',
 });
 
-export default function NavDesktop({ nav }) {
+export default function NavDesktop() {
   const pathname = usePathname();
 
   return (
     <nav className={`${gmarket.className} font-gmarket`} aria-label="주요 메뉴">
       <ul className="flex items-center gap-1">
-        {nav.map((menu) => {
+        {NAV_LIST.map((menu) => {
           const isLink = menu.type === 'link';
           const isButton = menu.type === 'button';
-          const isExternal = menu.type === 'external link';
+          const isExternal = menu.type === 'external';
 
           return (
             <li key={menu.name}>
