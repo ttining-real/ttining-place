@@ -1,5 +1,5 @@
 import { formatDate } from '@/lib/formatDate';
-import { EducationTypes } from '@/types/educationTypes';
+import { EducationTypes } from '@/types/education-types';
 
 interface EducationSectionTypes {
   educationData: EducationTypes[];
