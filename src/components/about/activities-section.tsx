@@ -47,7 +47,9 @@ export default function ActivitiesSection({
             </div>
             <div>
               <dt className="sr-only">주요 업무</dt>
-              <dd>{item.description}</dd>
+              {item.description?.map((desc, index) => (
+                <dd key={index}>{desc}</dd>
+              ))}
             </div>
           </dl>
         </div>
