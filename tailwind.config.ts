@@ -2,7 +2,7 @@ import type { Config } from 'tailwindcss';
 
 const config: Config = {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
-  darkMode: 'media', // 또는 class
+  darkMode: 'class',
   theme: {
     extend: {
       fontFamily: {
