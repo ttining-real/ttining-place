@@ -1,5 +1,5 @@
-import Icon from './icon';
-import LogoIcon from './logo-icon';
+import Icon from '../icon/icon';
+import LogoIcon from '../icon/logo-icon';
 
 export default function Header({
   isDark,

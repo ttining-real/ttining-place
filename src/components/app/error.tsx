@@ -1,30 +1,8 @@
-import localFont from 'next/font/local';
+import { gmarket } from '@/fonts/font';
 
 interface ErrorTypes {
   error: string;
 }
-
-const gmarket = localFont({
-  src: [
-    {
-      path: '../fonts/GmarketSansTTFBold.ttf',
-      weight: '600',
-      style: 'normal',
-    },
-    {
-      path: '../fonts/GmarketSansTTFMedium.ttf',
-      weight: '400',
-      style: 'normal',
-    },
-    {
-      path: '../fonts/GmarketSansTTFLight.ttf',
-      weight: '200',
-      style: 'normal',
-    },
-  ],
-  display: 'swap',
-  variable: '--gmarketFont',
-});
 
 export default function Error({ error }: ErrorTypes) {
   console.log(error);
