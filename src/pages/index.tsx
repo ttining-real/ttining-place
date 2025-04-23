@@ -1,26 +1,69 @@
-import { FEATURE_DATA } from '@/components/home/feature-data';
-import Introduce from '@/components/introduce';
+import IntroduceSection from '@/components/home/introduce-section';
+import GridMenuSection from '@/components/home/grid-menu-section';
+import TechStackSection from '@/components/home/tech-stack-section';
+import ExperienceSection from '@/components/home/experience-section';
 
-import { gmarket } from '@/fonts/font'; // 예시
-import FeatureCard from '@/components/home/feature-card';
+import { GetServerSideProps } from 'next';
+import { CareersDataTypes } from '@/types/career-types';
+import { supabase } from '@/lib/supabase';
+import { StackDataTypes } from '@/types/tech-stack-types';
 
-export default function Home() {
+export const getServerSideProps: GetServerSideProps = async () => {
+  const { data: careersData, error: careersError } = await supabase
+    .from('careers')
+    .select('*');
+
+  const { data: stackData, error: stackError } = await supabase.from(
+    'stack_sections',
+  ).select(`
+    *,
+    stack_items (
+      *,
+      stack_icons (
+        *
+      )
+    )
+  `);
+
+  if (careersError || stackError || !careersData || !stackData) {
+    return {
+      props: {
+        careersData: [],
+        stackData: [],
+        error: careersError?.message || stackError?.message || 'Unknown error',
+      },
+    };
+  }
+
+  const updatedCareersData: CareersDataTypes[] = careersData.map((item) => {
+    const { data: urlData } = supabase.storage
+      .from('careers')
+      .getPublicUrl(item.image_url);
+
+    return {
+      ...item,
+      image_url: urlData?.publicUrl ?? '',
+    };
+  });
+
+  return {
+    props: { careersData: updatedCareersData, stackData: stackData ?? [] },
+  };
+};
+
+export default function Home({
+  careersData,
+  stackData,
+}: {
+  careersData: CareersDataTypes[];
+  stackData: StackDataTypes[];
+}) {
   return (
     <>
-      <Introduce />
-      <section className={`${gmarket.className}`}>
-        <div className="m-auto grid max-w-5xl grid-cols-6 gap-4 p-6">
-          {FEATURE_DATA.map(({ title, color, items, colSpan }, index) => (
-            <FeatureCard
-              key={index}
-              title={title}
-              color={color}
-              items={items}
-              colSpan={colSpan}
-            />
-          ))}
-        </div>
-      </section>
+      <IntroduceSection />
+      <GridMenuSection />
+      <TechStackSection data={stackData} />
+      <ExperienceSection data={careersData} />
     </>
   );
 }
