@@ -13,7 +13,7 @@ export default function Icon({ id, size = 24, className }: IconTypes) {
       className={className}
       aria-hidden={true}
     >
-      <use href={`/icons/_icons.svg#${id}`} />
+      <use href={`/sprite/icons.svg#${id}`} />
     </svg>
   );
 }
