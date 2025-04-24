@@ -1,15 +1,15 @@
-export interface CareerTypes {
+export interface CareersDataTypes {
   id: string;
   company_name: string;
-  department?: string;
-  position?: string;
-  start_date?: string | Date;
-  end_date?: string | Date;
-  description?: string[];
-  major_task?: string[];
-  achievements?: string[];
-  location?: string;
-  summary?: string;
-  image_url?: string;
-  created_at?: string;
+  department: string;
+  position: string;
+  start_date: string;
+  end_date: string;
+  summary: string;
+  description: string[];
+  major_task: string[];
+  achievements: string[];
+  tech_stack: string[];
+  location: string[];
+  image_url: string;
 }
