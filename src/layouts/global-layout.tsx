@@ -1,14 +1,8 @@
-import Footer from '@/components/footer';
-import Header from '@/components/header';
+import Footer from '@/components/app/footer';
+import Header from '@/components/app/header';
 import ScrollProgressBar from '@/components/progress-bar';
-import localFont from 'next/font/local';
+import { pretendard } from '@/fonts/font';
 import { ReactNode, useEffect, useState } from 'react';
-
-const pretendard = localFont({
-  src: '../fonts/PretendardVariable.woff2',
-  display: 'swap',
-  variable: '--pretendardFont',
-});
 
 export default function GlobalLayout({ children }: { children: ReactNode }) {
   const [isDark, setIsDark] = useState<boolean>(false);
