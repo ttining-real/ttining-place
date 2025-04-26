@@ -4,10 +4,10 @@ import {
   getMonthDiff,
 } from '@/lib/calculator';
 import { formatDate } from '@/lib/formatDate';
-import { CareerTypes } from '@/types/career-types';
+import { CareersDataTypes } from '@/types/career-types';
 
 interface CareerSectionTypes {
-  careerData: CareerTypes[];
+  careerData: CareersDataTypes[];
 }
 
 export default function CareerSection({ careerData }: CareerSectionTypes) {
@@ -19,7 +19,7 @@ export default function CareerSection({ careerData }: CareerSectionTypes) {
   const totalDuration = formatTotalDuration(totalMonths);
 
   return (
-    <section className="flex flex-col gap-4 px-6">
+    <section className="flex max-w-5xl flex-col gap-4 px-6 py-4 sm:m-auto">
       <h3 className="border-gray-10 flex items-center gap-2 border-b-[1px] py-2 text-lg font-bold sm:text-2xl">
         경력
         <span className="text-primary text-[13px] font-normal sm:text-sm">

@@ -2,16 +2,22 @@ import ActivitiesSection from '@/components/about/activities-section';
 import CareerSection from '@/components/about/career-section';
 import CertificatesSection from '@/components/about/certificates-section';
 import EducationSection from '@/components/about/education-section';
+import PersonalSection from '@/components/about/personal-section';
 import TrainingSection from '@/components/about/training-section';
 import { supabase } from '@/lib/supabase';
-import { ActivitiesTypes } from '@/types/activities-types';
-import { CareerTypes } from '@/types/career-types';
-import { CertificatesTypes } from '@/types/certificates-types';
-import { EducationTypes } from '@/types/education-types';
-import { TrainingTypes } from '@/types/training-types';
+import { CareersDataTypes } from '@/types/career-types';
+import { EducationDataTypes } from '@/types/education-types';
+import { CertificatesDataTypes } from '@/types/certificates-types';
+import { TrainingDataTypes } from '@/types/training-types';
+import { ActivitiesDataTypes } from '@/types/activities-types';
 import { GetServerSideProps } from 'next';
+import { gmarket } from '@/fonts/font';
+import { PersonalDataTypes } from '@/types/personal-types';
 
 export const getServerSideProps: GetServerSideProps = async () => {
+  const { data: personalData, error: personalError } = await supabase
+    .from('personal')
+    .select('*');
   const { data: careerData, error: careerError } = await supabase
     .from('careers')
     .select('*');
@@ -28,15 +34,23 @@ export const getServerSideProps: GetServerSideProps = async () => {
     .from('activities')
     .select('*');
 
-  if (careerError || educationError || certificatesError || activitiesError) {
+  if (
+    personalError ||
+    careerError ||
+    educationError ||
+    certificatesError ||
+    activitiesError
+  ) {
     return {
       props: {
+        personalData: null,
         careerData: null,
         educationData: null,
         trainingnData: null,
         certificatesData: null,
         activitiesData: null,
         error:
+          personalError?.message ||
           careerError?.message ||
           educationError?.message ||
           trainingError?.message ||
@@ -48,49 +62,52 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   return {
     props: {
-      careerData: careerData as CareerTypes[],
-      educationData: educationData as EducationTypes[],
-      trainingData: trainingData as TrainingTypes[],
-      certificatesData: certificatesData as CertificatesTypes[],
-      activitiesData: activitiesData as ActivitiesTypes[],
+      personalData: personalData as PersonalDataTypes[],
+      careerData: careerData as CareersDataTypes[],
+      educationData: educationData as EducationDataTypes[],
+      trainingData: trainingData as TrainingDataTypes[],
+      certificatesData: certificatesData as CertificatesDataTypes[],
+      activitiesData: activitiesData as ActivitiesDataTypes[],
     },
   };
 };
 
 export default function Page({
+  personalData,
   careerData,
   educationData,
   trainingData,
   certificatesData,
   activitiesData,
 }: {
-  careerData: CareerTypes[] | null;
-  educationData: EducationTypes[] | null;
-  trainingData: TrainingTypes[] | null;
-  certificatesData: CertificatesTypes[] | null;
-  activitiesData: ActivitiesTypes[] | null;
+  personalData: PersonalDataTypes[] | null;
+  careerData: CareersDataTypes[] | null;
+  educationData: EducationDataTypes[] | null;
+  trainingData: TrainingDataTypes[] | null;
+  certificatesData: CertificatesDataTypes[] | null;
+  activitiesData: ActivitiesDataTypes[] | null;
 }) {
-  console.log(
-    careerData,
-    educationData,
-    trainingData,
-    certificatesData,
-    activitiesData,
-  );
+  console.log(personalData);
+
+  // console.log(
+  //   careerData,
+  //   educationData,
+  //   trainingData,
+  //   certificatesData,
+  //   activitiesData,
+  // );
 
   return (
     <>
-      <div className="flex max-w-5xl flex-col gap-12 py-12 sm:m-auto">
-        {careerData && <CareerSection careerData={careerData} />}
-        {educationData && <EducationSection educationData={educationData} />}
-        {trainingData && <TrainingSection trainingData={trainingData} />}
-        {certificatesData && (
-          <CertificatesSection certificatesData={certificatesData} />
-        )}
-        {activitiesData && (
-          <ActivitiesSection activitiesData={activitiesData} />
-        )}
-      </div>
+      <h2 className={`${gmarket.className} text-2xl font-bold`}>About</h2>
+      <PersonalSection personalData={personalData} />
+      {careerData && <CareerSection careerData={careerData} />}
+      {educationData && <EducationSection educationData={educationData} />}
+      {trainingData && <TrainingSection trainingData={trainingData} />}
+      {certificatesData && (
+        <CertificatesSection certificatesData={certificatesData} />
+      )}
+      {activitiesData && <ActivitiesSection activitiesData={activitiesData} />}
     </>
   );
 }

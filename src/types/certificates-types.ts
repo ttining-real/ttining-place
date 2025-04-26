@@ -1,4 +1,4 @@
-export interface CertificatesTypes {
+export interface CertificatesDataTypes {
   id: string;
   title: string;
   organization?: string;

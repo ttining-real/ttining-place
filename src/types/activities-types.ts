@@ -1,6 +1,6 @@
-export interface ActivitiesTypes {
+export interface ActivitiesDataTypes {
   id: string;
-  title: string;
+  company_name: string;
   organization?: string;
   position?: string;
   start_date?: string | Date;

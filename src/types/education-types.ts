@@ -1,4 +1,4 @@
-export interface EducationTypes {
+export interface EducationDataTypes {
   id: string;
   school_name: string;
   major?: string;

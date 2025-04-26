@@ -1,4 +1,4 @@
-export interface TrainingTypes {
+export interface TrainingDataTypes {
   id: string;
   title: string;
   organization?: string;

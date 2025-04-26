@@ -1,15 +1,15 @@
 import { formatDate } from '@/lib/formatDate';
-import { EducationTypes } from '@/types/education-types';
+import { EducationDataTypes } from '@/types/education-types';
 
 interface EducationSectionTypes {
-  educationData: EducationTypes[];
+  educationData: EducationDataTypes[];
 }
 
 export default function EducationSection({
   educationData,
 }: EducationSectionTypes) {
   return (
-    <section className="flex flex-col gap-4 px-6">
+    <section className="flex max-w-5xl flex-col gap-4 px-6 py-4 sm:m-auto">
       <h3 className="border-gray-10 flex items-center gap-2 border-b-[1px] py-2 text-lg font-bold sm:text-2xl">
         학력
       </h3>

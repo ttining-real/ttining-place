@@ -1,16 +1,16 @@
 import { calculateDuration } from '@/lib/calculator';
 import { formatDate } from '@/lib/formatDate';
-import { ActivitiesTypes } from '@/types/activities-types';
+import { ActivitiesDataTypes } from '@/types/activities-types';
 
 interface ActivitiesSectionTypes {
-  activitiesData: ActivitiesTypes[];
+  activitiesData: ActivitiesDataTypes[];
 }
 
 export default function ActivitiesSection({
   activitiesData,
 }: ActivitiesSectionTypes) {
   return (
-    <section className="flex flex-col gap-4 px-6">
+    <section className="flex max-w-5xl flex-col gap-4 px-6 py-4 sm:m-auto">
       <h3 className="border-gray-10 flex items-center gap-2 border-b-[1px] py-2 text-lg font-bold sm:text-2xl">
         활동
       </h3>
@@ -20,7 +20,7 @@ export default function ActivitiesSection({
           className="border-gray-30 flex flex-col gap-1 border-b-[1px] pb-4 sm:grid sm:grid-cols-6"
         >
           <h4 className="order-2 text-base font-bold sm:col-span-4">
-            {item.title}
+            {item.company_name}
           </h4>
           <dl className="order-1 text-[13px] sm:col-span-2 sm:row-span-2">
             <dt className="sr-only">근무 기간</dt>

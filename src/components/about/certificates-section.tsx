@@ -1,15 +1,15 @@
 import { formatDate } from '@/lib/formatDate';
-import { CertificatesTypes } from '@/types/certificates-types';
+import { CertificatesDataTypes } from '@/types/certificates-types';
 
 interface CertificatesSectionTypes {
-  certificatesData: CertificatesTypes[];
+  certificatesData: CertificatesDataTypes[];
 }
 
 export default function CertificatesSection({
   certificatesData,
 }: CertificatesSectionTypes) {
   return (
-    <section className="flex flex-col gap-4 px-6">
+    <section className="flex max-w-5xl flex-col gap-4 px-6 py-4 sm:m-auto">
       <h3 className="border-gray-10 flex items-center gap-2 border-b-[1px] py-2 text-lg font-bold sm:text-2xl">
         자격증
       </h3>
