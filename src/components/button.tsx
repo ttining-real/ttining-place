@@ -2,17 +2,18 @@ import Link from 'next/link';
 import React, { ReactNode } from 'react';
 
 const baseStyle =
-  'flex items-center justify-center gap-1 rounded-4xl text-base font-normal border-[1px] whitespace-nowrap hover:font-medium';
+  'flex items-center justify-center gap-1 rounded-md whitespace-nowrap focus:outline-2 focus:outline-offset-2 focus:outline-primary/50 hover:';
 
 const buttonSize: Record<string, string> = {
   sm: 'w-8 h-8',
-  md: 'h-12 px-4',
+  md: 'pt-2.5 pb-2 px-4',
 };
 
 const variantStyle: Record<string, string> = {
-  primary: 'bg-primary text-white border-white/10 hover:brightness-130',
-  secondary: 'bg-transparent text-primary border-primary hover:bg-primary/20',
-  tertiary: 'bg-gray-50 text-black border-white/10 hover:bg-gray-40',
+  primary: 'bg-primary text-white hover:bg-indigo-700',
+  secondary:
+    'border border-primary text-primary dark:border-white/50 dark:text-white hover:bg-primary/10',
+  tertiary: 'bg-gray-50 text-gray-10 hover:bg-gray-40 hover:text-black/60',
 };
 
 type CommonButtonTypes = {

@@ -1,5 +1,7 @@
 @import 'tailwindcss';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --gray-10: #8e8e93;
   --gray-20: #aeaeb2;
@@ -42,8 +44,8 @@
   --purple: #bf5af2;
   --pink: #ff375f;
   --brown: #ac8e68;
-  --white: #121212;
-  --black: #ffffff;
+  --white: #ffffff;
+  --black: #121212;
 }
 
 @theme inline {
