@@ -11,7 +11,6 @@ import { CertificatesDataTypes } from '@/types/certificates-types';
 import { TrainingDataTypes } from '@/types/training-types';
 import { ActivitiesDataTypes } from '@/types/activities-types';
 import { GetServerSideProps } from 'next';
-import { gmarket } from '@/fonts/font';
 import { PersonalDataTypes } from '@/types/personal-types';
 
 export const getServerSideProps: GetServerSideProps = async () => {
@@ -87,20 +86,14 @@ export default function Page({
   certificatesData: CertificatesDataTypes[] | null;
   activitiesData: ActivitiesDataTypes[] | null;
 }) {
-  console.log(personalData);
-
-  // console.log(
-  //   careerData,
-  //   educationData,
-  //   trainingData,
-  //   certificatesData,
-  //   activitiesData,
-  // );
-
   return (
     <>
-      <h2 className={`${gmarket.className} text-2xl font-bold`}>About</h2>
-      <PersonalSection personalData={personalData} />
+      <div className="m-auto flex h-[calc(100vh-56px)] max-w-5xl flex-col gap-6 p-6 sm:h-auto">
+        <h2 className="text-primary text-2xl font-bold dark:text-white">
+          About
+        </h2>
+        <PersonalSection personalData={personalData} />
+      </div>
       {careerData && <CareerSection careerData={careerData} />}
       {educationData && <EducationSection educationData={educationData} />}
       {trainingData && <TrainingSection trainingData={trainingData} />}

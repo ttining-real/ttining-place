@@ -1,9 +1,9 @@
 import { PersonalDataTypes } from '@/types/personal-types';
-import StackIcon from '../icon/stack-icon';
 import Image from 'next/image';
+import { gmarket, pretendard } from '@/fonts/font';
 
 interface PersonalSectionTypes {
-  personalData: PersonalDataTypes[];
+  personalData: PersonalDataTypes[] | null;
 }
 
 export default function PersonalSection({
@@ -19,10 +19,10 @@ export default function PersonalSection({
   ];
 
   return (
-    <section>
-      <div className="flex max-w-5xl flex-col items-center gap-8 px-6 py-4 sm:m-auto sm:flex-row">
+    <section className={pretendard.className}>
+      <div className="flex max-w-5xl flex-col items-center gap-8 sm:m-auto lg:flex-row">
         <div className="flex flex-1 flex-col items-center gap-10 sm:flex-row">
-          <figure className="relative aspect-square h-40 w-40 overflow-hidden rounded-full bg-white">
+          <figure className="relative aspect-square h-40 w-40 overflow-hidden rounded-full bg-white dark:bg-gray-50">
             <Image
               src="/images/memoji.png"
               width={240}
@@ -37,16 +37,15 @@ export default function PersonalSection({
                 <dt className="bg-primary/10 text-primary min-w-16 rounded-3xl py-[1px] text-center text-sm sm:text-base">
                   {info.label}
                 </dt>
-                <dd className="flex-1 text-sm text-black sm:text-base">
+                <dd className="flex-1 text-sm font-light text-black sm:text-base dark:text-white">
                   {['저장소', '블로그'].includes(info.label) ? (
                     <a
                       href={info.value ?? '/'}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="hover:text-primary flex items-center gap-1 text-black underline"
+                      className="hover:text-primary flex items-center gap-1 text-black hover:underline dark:text-white"
                     >
-                      <StackIcon id={info.icon!} size={16} />
-                      {info.icon}
+                      {info.icon} 열기
                     </a>
                   ) : (
                     info.value
@@ -56,11 +55,13 @@ export default function PersonalSection({
             ))}
           </dl>
         </div>
-        <div className="flex-1">
-          <h3 className="border-gray-10 flex items-center gap-2 border-b-[1px] py-2 text-lg font-bold sm:text-lg">
+        <div className="w-full flex-1">
+          <h3
+            className={`${gmarket.className} border-gray-10 flex items-center gap-2 border-b-[1px] py-2 text-base font-medium text-black sm:text-xl dark:text-white`}
+          >
             인사말
           </h3>
-          <div className="flex flex-col gap-1 py-3 text-sm">
+          <div className="dark:text-gray-10 flex flex-col gap-1 py-3 text-sm font-light text-black">
             {personalData?.map((item) => {
               return item.greeting?.map((greeting, index) => (
                 <p key={index}>{greeting}</p>
