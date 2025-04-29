@@ -8,10 +8,10 @@ export default function ExperienceSection({
   data: CareersDataTypes[];
 }) {
   return (
-    <section className="bg-white py-8">
+    <section className="py-8">
       <div className="m-auto flex max-w-5xl flex-col gap-6 p-6 sm:gap-8">
         <h2
-          className={`${gmarket.className} text-xl font-bold text-black sm:text-2xl`}
+          className={`${gmarket.className} text-xl font-bold text-black sm:text-2xl dark:text-white`}
         >
           Experience
         </h2>

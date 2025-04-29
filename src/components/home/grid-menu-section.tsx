@@ -29,15 +29,15 @@ export default function GridMenuSection() {
   ];
 
   return (
-    <section className="px-6 py-16">
+    <section className="bg-[url(/images/introduce.png)] bg-cover bg-fixed bg-bottom bg-no-repeat px-6 py-16">
       <div className="m-auto grid max-w-5xl grid-cols-3 gap-3 sm:gap-6">
         {GRID_MENU.map((menu) => (
           <Link
             href={menu.href}
             key={menu.label}
-            className={`group hover:bg-primary hover:shadow-primary/30 flex flex-col gap-2 rounded-2xl bg-white p-6 whitespace-normal shadow-md shadow-gray-50 transition-all duration-300 sm:rounded-3xl sm:p-8 ${menu.colSpan === 1 ? 'col-span-1' : 'col-span-2'}`}
+            className={`group flex flex-col gap-2 rounded-2xl bg-white/15 p-6 whitespace-normal transition-all duration-300 hover:bg-white/30 sm:rounded-3xl sm:p-8 ${menu.colSpan === 1 ? 'col-span-1' : 'col-span-2'}`}
           >
-            <h3 className="text-primary text-lg font-bold break-words group-hover:text-white sm:text-2xl">
+            <h3 className="text-lg font-bold break-words text-white sm:text-xl">
               {menu.label}
             </h3>
             <p className="text-gray-10 text-sm font-normal break-words group-hover:text-white/70 sm:text-base">

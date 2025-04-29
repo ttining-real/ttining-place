@@ -89,7 +89,7 @@ body {
 }
 
 ::selection {
-  background: rgba(88, 86, 214, 0.8);
+  background: rgba(88, 86, 214, 0.95);
   color: var(--color-white);
 }
 

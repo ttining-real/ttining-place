@@ -29,14 +29,14 @@ export default function TechStackSection({ data }: { data: StackDataTypes[] }) {
             >
               <Link
                 href={`/tech-stack/#${String(data.title).toLowerCase()}`}
-                className="h-full p-6"
+                className="flex h-full flex-col gap-1 p-6"
               >
-                <p className="text-base font-semibold text-white/50 sm:text-lg">
+                <p className="font-bold text-white/30">
                   {formatNumber(index + 1)}
                 </p>
                 <h3
                   id={`tech-stack-title-${index}`}
-                  className="text-xl font-bold text-white sm:text-xl"
+                  className="text-lg font-bold text-white sm:text-xl"
                 >
                   {data.title}
                 </h3>
@@ -48,7 +48,7 @@ export default function TechStackSection({ data }: { data: StackDataTypes[] }) {
                   ) && (
                     <ul
                       aria-label={`${data.title} 관련 기술 스택 아이콘`}
-                      className="mt-1 flex flex-wrap gap-2"
+                      className="mt-2 flex flex-wrap gap-2"
                     >
                       {data.stack_items.map((item) =>
                         item.stack_icons.map((icon) => (

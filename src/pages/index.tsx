@@ -62,8 +62,8 @@ export default function Home({
     <>
       <IntroduceSection />
       <GridMenuSection />
-      <TechStackSection data={stackData} />
       <ExperienceSection data={careersData} />
+      <TechStackSection data={stackData} />
     </>
   );
 }
