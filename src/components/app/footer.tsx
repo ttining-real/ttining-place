@@ -1,8 +1,10 @@
 import Link from 'next/link';
 import LogoIcon from '../icon/logo-icon';
 import { pretendard } from '@/fonts/font';
+import { useThemeStore } from '@/stores/themeStore';
 
 export default function Footer() {
+  const { theme } = useThemeStore();
   return (
     <footer
       role="contentinfo"
@@ -13,7 +15,7 @@ export default function Footer() {
           <span>&copy; 2025</span>
           <Link href="/">
             <LogoIcon
-              id="light"
+              id={theme === 'dark' ? 'dark' : 'light'}
               width={36}
               height={18}
               className="mt-1 opacity-30"
