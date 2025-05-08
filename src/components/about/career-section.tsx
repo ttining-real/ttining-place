@@ -20,7 +20,7 @@ export default function CareerSection({ careerData }: CareerSectionTypes) {
   const totalDuration = formatTotalDuration(totalMonths);
 
   return (
-    <section className="flex max-w-5xl flex-col gap-4 p-6 text-black sm:m-auto dark:text-white">
+    <section className="flex flex-col gap-4 py-6 text-black dark:text-white">
       <h3 className="border-gray-10 flex items-center gap-2 border-b-[1px] py-2 text-lg font-medium sm:text-xl">
         경력
         <span className="text-primary dark:text-gray-10 text-[13px] font-medium sm:text-sm">

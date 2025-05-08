@@ -11,7 +11,7 @@ export default function ActivitiesSection({
   activitiesData,
 }: ActivitiesSectionTypes) {
   return (
-    <section className="flex max-w-5xl flex-col gap-4 p-6 text-black sm:m-auto dark:text-white">
+    <section className="flex flex-col gap-4 py-6 text-black dark:text-white">
       <h3 className="border-gray-10 flex items-center gap-2 border-b-[1px] py-2 text-lg font-medium sm:text-xl">
         활동
       </h3>

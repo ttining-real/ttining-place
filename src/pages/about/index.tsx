@@ -88,12 +88,10 @@ export default function Page({
 }) {
   return (
     <>
-      <div className="m-auto flex h-[calc(100vh-56px)] max-w-5xl flex-col gap-6 p-6 sm:h-auto">
-        <h2 className="text-primary text-2xl font-bold dark:text-white">
-          About
-        </h2>
-        <PersonalSection personalData={personalData} />
-      </div>
+      <h2 className="mb-6 text-2xl font-bold text-black dark:text-white">
+        About
+      </h2>
+      <PersonalSection personalData={personalData} />
       {careerData && <CareerSection careerData={careerData} />}
       {educationData && <EducationSection educationData={educationData} />}
       {trainingData && <TrainingSection trainingData={trainingData} />}
