@@ -1,4 +1,5 @@
 import TagListSection from '@/components/experience/tag-list-section';
+import PageTitle from '@/components/page-title';
 import { supabase } from '@/lib/supabase';
 import { CareersDataTypes } from '@/types/career-types';
 import { GetServerSideProps } from 'next';
@@ -23,9 +24,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 export default function Page({ data }: { data: CareersDataTypes[] }) {
   return (
     <>
-      <h2 className="mb-6 text-2xl font-bold text-black dark:text-white">
-        Experience
-      </h2>
+      <PageTitle />
       {data
         .sort((a, b) => {
           const dateA = a.end_date ? new Date(a.end_date) : new Date(0);
