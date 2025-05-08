@@ -9,7 +9,9 @@ export default function PageLayout({ children }: { children: ReactNode }) {
     <>
       <Header />
       <ScrollProgressBar />
-      <main className={`${pretendard.className} bg-blue-100 pt-[56px]`}>
+      <main
+        className={`${pretendard.className} m-auto max-w-5xl px-6 pt-20 pb-6`}
+      >
         {children}
       </main>
       <Footer />
