@@ -5,7 +5,7 @@ import { CareersDataTypes } from '@/types/career-types';
 import { GetServerSideProps } from 'next';
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const { data, error } = await supabase.from('careers').select('*');
+  const { data, error } = await supabase.from('activities').select('*');
 
   if (error) {
     return {
@@ -22,6 +22,8 @@ export const getServerSideProps: GetServerSideProps = async () => {
 };
 
 export default function Page({ data }: { data: CareersDataTypes[] }) {
+  console.log(data);
+
   return (
     <>
       <PageTitle />
