@@ -1,6 +1,6 @@
 import { gmarket } from '@/fonts/font';
 import { CareersDataTypes } from '@/types/career-types';
-import Card from '../card';
+import Card from './card';
 
 export default function ExperienceSection({
   data,
