@@ -1,5 +1,6 @@
 'use client';
 
+import { gmarket } from '@/fonts/font';
 import { titleFormatter } from '@/lib/formetTitle';
 import { useRouter } from 'next/router';
 
@@ -8,7 +9,9 @@ export default function PageTitle() {
   const title = titleFormatter(router.pathname);
 
   return (
-    <h2 className="mb-6 text-2xl font-bold text-black dark:text-white">
+    <h2
+      className={`${gmarket.className} text-primary mb-6 text-xl font-bold sm:text-3xl dark:text-white`}
+    >
       {title}
     </h2>
   );

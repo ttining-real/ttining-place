@@ -12,7 +12,7 @@ type ChipsProps = {
 function Chip({ text, className = '' }: ChipProps) {
   return (
     <li
-      className={`rounded-4xl border border-gray-50 px-3 py-1 text-[13px] whitespace-nowrap text-black md:text-sm ${className}`}
+      className={`dark:border-gray-20 rounded-4xl border border-gray-50 px-3 py-1 text-[13px] whitespace-nowrap text-black md:text-sm dark:text-white ${className}`}
     >
       {text}
     </li>

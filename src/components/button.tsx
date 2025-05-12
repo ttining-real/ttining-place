@@ -5,8 +5,8 @@ const baseStyle =
   'flex items-center justify-center gap-1 rounded-md whitespace-nowrap focus:outline-2 focus:outline-offset-2 focus:outline-primary/50 hover:';
 
 const buttonSize: Record<string, string> = {
-  sm: 'w-8 h-8',
-  md: 'pt-2.5 pb-2 px-4',
+  sm: 'pt-1.5 pb-1 px-2 text-sm',
+  md: 'pt-2.5 pb-2 px-4 text-base',
 };
 
 const variantStyle: Record<string, string> = {
