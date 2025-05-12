@@ -1,6 +1,7 @@
 import Footer from '@/components/app/footer';
 import Header from '@/components/app/header';
 import ScrollProgressBar from '@/components/progress-bar';
+import TopButton from '@/components/top-button';
 import { gmarket } from '@/fonts/font';
 import { ReactNode } from 'react';
 
@@ -11,6 +12,7 @@ export default function GlobalLayout({ children }: { children: ReactNode }) {
       <ScrollProgressBar />
       <main className={`${gmarket.className} pt-[56px]`}>{children}</main>
       <Footer />
+      <TopButton />
     </>
   );
 }

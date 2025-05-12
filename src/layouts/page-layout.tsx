@@ -1,6 +1,7 @@
 import Footer from '@/components/app/footer';
 import Header from '@/components/app/header';
 import ScrollProgressBar from '@/components/progress-bar';
+import TopButton from '@/components/top-button';
 import { pretendard } from '@/fonts/font';
 import { ReactNode } from 'react';
 
@@ -15,6 +16,7 @@ export default function PageLayout({ children }: { children: ReactNode }) {
         {children}
       </main>
       <Footer />
+      <TopButton />
     </>
   );
 }
