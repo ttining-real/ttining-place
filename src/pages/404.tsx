@@ -30,7 +30,7 @@ export default function Page() {
         Page Not Found 😶‍🌫️
       </h2>
       <p>존재하지 않는 페이지입니다.</p>
-      <Button type="link" path="/" className="mt-2">
+      <Button type="link" href="/" className="mt-2">
         홈 화면으로 돌아가기
       </Button>
     </div>
