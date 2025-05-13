@@ -18,7 +18,7 @@ export default function Footer() {
               id={theme === 'dark' ? 'dark' : 'light'}
               width={36}
               height={18}
-              className="mt-1 opacity-30"
+              className={`mt-1 ${theme === 'dark' ? 'opacity-30' : 'opacity-60 grayscale'}`}
             />
           </Link>
           <span>All rights reserved.</span>
