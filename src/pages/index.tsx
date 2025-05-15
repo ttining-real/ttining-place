@@ -1,12 +1,17 @@
-import IntroduceSection from '@/components/home/introduce-section';
-import GridMenuSection from '@/components/home/grid-menu-section';
-import TechStackSection from '@/components/home/tech-stack-section';
-import ExperienceSection from '@/components/home/experience-section';
-
 import { GetServerSideProps } from 'next';
-import { CareersDataTypes } from '@/types/career-types';
+
 import { supabase } from '@/lib/supabase';
+import { CareersDataTypes } from '@/types/career-types';
 import { StackDataTypes } from '@/types/tech-stack-types';
+
+import { useThemeStore } from '@/stores/themeStore';
+
+import IntroduceSection from '@/components/home/introduce-section';
+import QuickMenu from '@/components/home/quick-menu';
+import SectionLayout from '@/components/home/section-layout';
+import ProjectsCard from '@/components/home/projects-card';
+import ExperienceList from '@/components/home/experience-list';
+import StackCard from '@/components/home/stack-card';
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const { data: careersData, error: careersError } = await supabase
@@ -58,12 +63,35 @@ export default function Home({
   careersData: CareersDataTypes[];
   stackData: StackDataTypes[];
 }) {
+  const { theme } = useThemeStore();
+
   return (
     <>
       <IntroduceSection />
-      <GridMenuSection />
-      <ExperienceSection data={careersData} />
-      <TechStackSection data={stackData} />
+      <QuickMenu />
+      <SectionLayout title="Projects" subtitle="프로젝트">
+        <div className="flex gap-4">
+          <ProjectsCard />
+        </div>
+      </SectionLayout>
+      <SectionLayout
+        full={true}
+        title="Experience"
+        subtitle="근무 경험"
+        className="bg-cover bg-fixed bg-no-repeat"
+        style={{
+          backgroundImage: `url(/images/abstract_${theme === 'light' ? 'light' : 'dark'}.png)`,
+        }}
+      >
+        <div className="flex w-full max-w-5xl gap-2 px-6 sm:gap-4">
+          <ExperienceList data={careersData} />
+        </div>
+      </SectionLayout>
+      <SectionLayout title="Tech Stack" subtitle="기술 스택">
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+          <StackCard data={stackData} />
+        </div>
+      </SectionLayout>
     </>
   );
 }
