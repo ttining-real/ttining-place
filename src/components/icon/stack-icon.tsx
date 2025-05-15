@@ -1,14 +1,12 @@
 type StackIconProps = {
   id: string;
-  width?: number;
-  height?: number;
+  size?: number;
   className?: string;
 };
 
 export default function StackIcon({
   id,
-  width = 24,
-  height = 24,
+  size = 24,
   className,
 }: StackIconProps) {
   const formatId = (id: string) => {
@@ -20,8 +18,8 @@ export default function StackIcon({
   };
   return (
     <svg
-      width={width}
-      height={height}
+      width={size}
+      height={size}
       viewBox="0 0 26 26"
       className={className}
       aria-hidden={true}
