@@ -2,8 +2,8 @@ import { ReactNode } from 'react';
 
 interface SectionLayoutTypes {
   full?: boolean;
-  title: string;
-  subtitle: string;
+  title?: string;
+  subtitle?: string;
   className?: string;
   style?: React.CSSProperties;
   children: ReactNode;
