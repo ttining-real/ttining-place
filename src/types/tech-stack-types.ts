@@ -1,14 +1,23 @@
 export interface StackIconTypes {
-  id: number;
+  id: string;
+  item_id: string;
   name: string;
-  url: string;
 }
 
 export interface StackItemTypes {
-  id: number;
-  name: string;
-  description?: string;
+  id: string;
+  section_id: string;
+  title: string;
+  description: string[];
+  created_at: string;
   stack_icons: StackIconTypes[];
+}
+
+export interface StackSectionTypes {
+  id: string;
+  title: string;
+  created_at: string;
+  stack_items: StackItemTypes[];
 }
 
 export interface StackDataTypes {
