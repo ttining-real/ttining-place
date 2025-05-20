@@ -1,7 +1,7 @@
 import localFont from 'next/font/local';
 
 export const pretendard = localFont({
-  src: '../fonts/PretendardVariable.woff2',
+  src: './PretendardVariable.woff2',
   display: 'swap',
   variable: '--pretendardFont',
 });
@@ -9,17 +9,17 @@ export const pretendard = localFont({
 export const gmarket = localFont({
   src: [
     {
-      path: '../fonts/GmarketSansTTFBold.ttf',
+      path: './GmarketSansBold.woff2',
       weight: '600',
       style: 'normal',
     },
     {
-      path: '../fonts/GmarketSansTTFMedium.ttf',
+      path: './GmarketSansMedium.woff2',
       weight: '400',
       style: 'normal',
     },
     {
-      path: '../fonts/GmarketSansTTFLight.ttf',
+      path: './GmarketSansLight.woff2',
       weight: '200',
       style: 'normal',
     },
