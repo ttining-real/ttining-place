@@ -1,26 +1,15 @@
 import Link from 'next/link';
 import React, { ReactNode } from 'react';
+import Icon from './icon/icon';
 
-const baseStyle =
-  'flex items-center justify-center gap-1 rounded-md whitespace-nowrap focus:outline-2 focus:outline-offset-2 focus:outline-primary/50 hover:';
-
-const buttonSize: Record<string, string> = {
-  sm: 'pt-1.5 pb-1 px-2 text-sm',
-  md: 'pt-2.5 pb-2 px-4 text-base',
-};
-
-const variantStyle: Record<string, string> = {
-  primary: 'bg-primary text-white hover:bg-indigo-700',
-  secondary:
-    'border border-primary text-primary dark:border-white/50 dark:text-white hover:bg-primary/10',
-  tertiary: 'bg-gray-50 text-gray-10 hover:bg-gray-40 hover:text-black/60',
-};
+type Size = keyof typeof buttonSize;
 
 type CommonButtonTypes = {
   children: ReactNode;
-  size?: keyof typeof buttonSize;
+  size?: Size;
   variant?: keyof typeof variantStyle;
   className?: string;
+  icon?: string;
 };
 
 type LinkButtonTypes = CommonButtonTypes & {
@@ -49,21 +38,65 @@ type ButtonTypes =
   | ExternalButtonTypes
   | NormalButtonTypes;
 
+const baseStyle =
+  'flex items-center justify-center gap-1 rounded-md whitespace-nowrap focus:outline-2 focus:outline-offset-2 focus:outline-primary/50 cursor-pointer';
+
+const buttonSize: Record<'sm' | 'md', string> = {
+  sm: 'pt-1.5 pb-1 px-2 text-sm',
+  md: 'pt-2.5 pb-2 px-4 text-base',
+};
+
+// ✅ icon 사이즈 매핑: 숫자 타입
+const iconSizeMap: Record<'sm' | 'md', number> = {
+  sm: 16,
+  md: 24,
+};
+
+const variantStyle: Record<string, string> = {
+  primary: 'bg-primary text-white hover:bg-indigo-700',
+  secondary:
+    'border border-primary text-primary dark:border-white/50 dark:text-white hover:bg-primary/10 dark:hover:bg-white/10',
+  tertiary:
+    'bg-gray-50 text-gray-10 hover:bg-gray-40 hover:text-black/60 dark:hover:text-white/80',
+};
+
 export default function Button(props: ButtonTypes) {
-  const { type, size = 'md', variant = 'primary', className, children } = props;
+  const {
+    type,
+    size = 'md',
+    variant = 'primary',
+    icon,
+    className,
+    children,
+  } = props;
+
   const style = `${baseStyle} ${buttonSize[size]} ${variantStyle[variant]} ${className ?? ''}`;
+  const iconSize = iconSizeMap[size];
+
+  const renderContent = () => (
+    <>
+      {icon && (
+        <Icon
+          id={icon}
+          size={iconSize}
+          className={iconSize === 16 ? 'mt-[-2px]' : 'mt-[-4px]'}
+        />
+      )}
+      {children}
+    </>
+  );
 
   switch (type) {
     case 'link':
       return (
         <Link href={props.href} className={style}>
-          {children}
+          {renderContent()}
         </Link>
       );
     case 'download':
       return (
         <a href={props.href} download className={style}>
-          {children}
+          {renderContent()}
         </a>
       );
     case 'external':
@@ -74,16 +107,15 @@ export default function Button(props: ButtonTypes) {
           rel="noopener noreferrer"
           className={style}
         >
-          {children}
+          {renderContent()}
         </a>
       );
     case 'button':
       return (
         <button className={style} onClick={props.onClick}>
-          {children}
+          {renderContent()}
         </button>
       );
-
     default:
       return null;
   }
