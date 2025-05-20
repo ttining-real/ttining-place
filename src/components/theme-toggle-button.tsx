@@ -10,14 +10,20 @@ export default function ThemeToggleButton() {
 
   return (
     <div className="flex items-center gap-2">
-      <Icon id="mode-light" className="text-gray-10" size={20} />
+      <Icon
+        id={isDark ? 'mode-dark' : 'mode-light'}
+        className={isDark ? 'text-yellow' : 'text-orange'}
+        size={22}
+      />
       <button
         onClick={toggleTheme}
         aria-label={isDark ? '라이트모드로 전환' : '다크모드로 전환'}
-        className="bg-gray-20 relative h-6 w-12 rounded-full transition-colors duration-300"
+        role="switch"
+        aria-checked={isDark}
+        className="border-primary relative h-7 w-12 rounded-full border-2 bg-white transition-colors duration-300 dark:bg-black"
       >
         <span
-          className={`absolute top-[4px] left-[4px] h-4 w-4 rounded-full bg-white transition-transform duration-300 ${isDark ? 'translate-x-6' : ''}`}
+          className={`bg-primary absolute top-[4px] left-[4px] h-4 w-4 rounded-full transition-transform duration-300 ${isDark ? 'translate-x-5' : ''}`}
         ></span>
       </button>
     </div>
