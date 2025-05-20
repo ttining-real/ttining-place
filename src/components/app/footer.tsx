@@ -1,14 +1,14 @@
 import Link from 'next/link';
 import LogoIcon from '../icon/logo-icon';
-import { pretendard } from '@/fonts/font';
 import { useThemeStore } from '@/stores/themeStore';
+import { gmarket } from '@/fonts/font';
 
 export default function Footer() {
   const { theme } = useThemeStore();
   return (
     <footer
       role="contentinfo"
-      className={`${pretendard.className} text-gray-10 flex flex-col items-center justify-center gap-1 border-t border-gray-50 px-8 py-4 text-center text-[13px] sm:gap-2 sm:text-sm`}
+      className={`${gmarket.className} text-gray-10 flex flex-col items-center justify-center gap-1 border-t border-gray-50 px-8 py-4 text-center text-xs sm:gap-2 sm:text-sm`}
     >
       <div className="flex flex-col items-center gap-1 sm:flex-row sm:gap-2">
         <p className="flex items-center gap-1">

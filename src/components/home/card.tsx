@@ -22,7 +22,7 @@ export default function Card({ href, data, index, children }: CardTypes) {
   return (
     <article
       key={data.id}
-      className="hover:border-primary/60 overflow-hidden rounded-2xl border-2 border-white bg-white shadow-lg transition-all duration-300"
+      className="hover:border-primary/60 dark:border-gray-40 overflow-hidden rounded-2xl border-2 border-white bg-white shadow-lg transition-all duration-300 dark:bg-gray-50"
     >
       <Link
         href={`/${href}#${encodeURIComponent(anchor)}`}
