@@ -1,14 +1,14 @@
 import StackIcon from './icon/stack-icon';
 
 type ChipProps = {
-  icon: boolean;
+  icon?: boolean;
   text: string;
   className?: string;
 };
 
 type ChipsProps = {
   data: string[];
-  icon: boolean;
+  icon?: boolean;
   chipClassName?: string;
   chipsClassName?: string;
 };
@@ -16,7 +16,7 @@ type ChipsProps = {
 export function Chip({ icon = false, text, className = '' }: ChipProps) {
   return (
     <li
-      className={`dark:border-gray-20 flex items-center gap-1.5 rounded-4xl border border-gray-50 px-3 py-1 text-[13px] whitespace-nowrap text-black md:text-sm dark:text-white ${className}`}
+      className={`border-gray-30 flex h-8 items-center gap-1.5 rounded-3xl border px-4 text-sm text-black/60 dark:text-white/60 ${className}`}
     >
       {icon ? <StackIcon id={text} size={16} /> : null}
       {text}
@@ -31,9 +31,9 @@ export default function Chips({
   chipsClassName = '',
 }: ChipsProps) {
   return (
-    <ul className={`flex flex-wrap gap-x-1 gap-y-1.5 ${chipsClassName}`}>
-      {data.map((text, index) => (
-        <Chip icon={icon} key={index} text={text} className={chipClassName} />
+    <ul className={`flex flex-wrap gap-2 ${chipsClassName}`}>
+      {data.map((text) => (
+        <Chip key={text} text={text} icon={icon} className={chipClassName} />
       ))}
     </ul>
   );
