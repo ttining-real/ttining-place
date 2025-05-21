@@ -12,7 +12,6 @@ import { TrainingDataTypes } from '@/types/training-types';
 import { ActivitiesDataTypes } from '@/types/activities-types';
 import { GetServerSideProps } from 'next';
 import { PersonalDataTypes } from '@/types/personal-types';
-import PageTitle from '@/components/page-title';
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const { data: personalData, error: personalError } = await supabase
@@ -89,7 +88,6 @@ export default function Page({
 }) {
   return (
     <>
-      <PageTitle />
       <PersonalSection personalData={personalData} />
       {careerData && <CareerSection careerData={careerData} />}
       {educationData && <EducationSection educationData={educationData} />}

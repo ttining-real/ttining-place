@@ -1,5 +1,4 @@
 import ListSection from '@/components/list-section';
-import PageTitle from '@/components/page-title';
 import { supabase } from '@/lib/supabase';
 import { CareersDataTypes } from '@/types/career-types';
 import { GetServerSideProps } from 'next';
@@ -24,7 +23,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
 export default function Page({ data }: { data: CareersDataTypes[] }) {
   return (
     <>
-      <PageTitle />
       <ListSection data={data} />
     </>
   );
