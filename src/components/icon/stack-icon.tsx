@@ -12,8 +12,9 @@ export default function StackIcon({
   const formatId = (id: string) => {
     return id
       .replace(' ', '-')
-      .replace('/', '-')
+      .replace('/', '_')
       .replace('.', '-')
+      .replace('module-css', 'css3')
       .toLowerCase();
   };
   return (

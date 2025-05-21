@@ -4,7 +4,11 @@ interface IconTypes {
   className?: string;
 }
 
-export default function Icon({ id, size = 24, className }: IconTypes) {
+export default function Icon({
+  id,
+  size = 24,
+  className = 'text-primary dark:text-indigo-400',
+}: IconTypes) {
   return (
     <svg
       width={size}

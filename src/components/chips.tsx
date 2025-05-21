@@ -16,7 +16,7 @@ type ChipsProps = {
 export function Chip({ icon = false, text, className = '' }: ChipProps) {
   return (
     <li
-      className={`border-gray-30 flex h-8 items-center gap-1.5 rounded-3xl border px-4 text-sm text-black/60 dark:text-white/60 ${className}`}
+      className={`border-gray-20 flex items-center gap-1.5 rounded-3xl border px-4 pt-1.5 pb-1 text-sm font-light text-black/80 dark:text-white/60 ${className}`}
     >
       {icon ? <StackIcon id={text} size={16} /> : null}
       {text}

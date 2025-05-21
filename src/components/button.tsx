@@ -53,11 +53,12 @@ const iconSizeMap: Record<'sm' | 'md', number> = {
 };
 
 const variantStyle: Record<string, string> = {
-  primary: 'bg-primary text-white hover:bg-indigo-700',
+  primary:
+    'bg-primary text-white dark:bg-indigo-500 hover:bg-indigo-600 dark:hover:bg-indigo-600',
   secondary:
-    'border border-primary text-primary dark:border-white/50 dark:text-white hover:bg-primary/10 dark:hover:bg-white/10',
+    'border border-primary text-primary dark:border-indigo-400 dark:text-indigo-400 hover:bg-primary/10 dark:hover:border-indigo-300 dark:hover:text-indigo-300',
   tertiary:
-    'bg-gray-50 text-gray-10 hover:bg-gray-40 hover:text-black/60 dark:hover:text-white/80',
+    'bg-gray-50 text-gray-10 dark:bg-gray-40 dark:text-white/60 hover:bg-gray-40 hover:text-black/60 dark:hover:bg-gray-30 dark:hover:text-white',
 };
 
 export default function Button(props: ButtonTypes) {
