@@ -1,29 +1,7 @@
 import StackIcon from '@/components/icon/stack-icon';
-import PageTitle from '@/components/page-title';
 import { supabase } from '@/lib/supabase';
+import { StackSectionTypes } from '@/types/tech-stack-types';
 import { GetServerSideProps } from 'next';
-
-type StackIconTypes = {
-  id: string;
-  item_id: string;
-  name: string;
-};
-
-type StackItemTypes = {
-  id: string;
-  title: string;
-  description: string[];
-  created_at: string;
-  section_id: string;
-  stack_icons: StackIconTypes[];
-};
-
-type StackSectionTypes = {
-  id: string;
-  title: string;
-  created_at: string;
-  stack_items: StackItemTypes[];
-};
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const { data: stack_sections, error } = await supabase.from('stack_sections')
@@ -59,28 +37,46 @@ export default function Page({
   console.log(stack_sections);
 
   return (
-    <>
-      <PageTitle />
+    <div>
       {stack_sections.map((section) => (
         <section
           key={section.id}
+          id={section.title}
           className="border-gray-30 flex flex-col gap-6 border-t py-12 md:flex-row"
         >
-          <h3 className="mb-4 text-xl font-bold text-black md:flex-2/6 dark:text-white">
+          <h3 className="text-primary mb-4 text-xl font-bold md:flex-2/6 dark:text-indigo-400">
             {section.title}
           </h3>
-          <dl className="flex flex-col gap-6 text-sm text-black sm:text-[14px] md:flex-4/6 dark:text-white">
+          <dl className="flex flex-col gap-8 md:flex-4/6">
             {section.stack_items.map((stack) => (
-              <div key={stack.id} className="flex flex-col gap-1">
-                <dt className="font-bold">{stack.title}</dt>
+              <div key={stack.id} className="flex flex-col gap-2">
+                <dt className="flex flex-wrap items-center gap-3">
+                  <span className="text-primary before:bg-primary/10 relative px-2 before:absolute before:bottom-1 before:left-0 before:h-2 before:w-full dark:text-indigo-400 dark:before:bg-indigo-400/20">
+                    {stack.title}
+                  </span>
+                  {stack.stack_icons && (
+                    <ul className="flex gap-1.5">
+                      {stack.stack_icons.map((icon) => (
+                        <li key={icon.id}>
+                          <StackIcon id={icon.name} size={18} />
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </dt>
                 {stack.description.map((desc, index) => (
-                  <dd key={index}>{desc}</dd>
+                  <dd
+                    key={index}
+                    className="text-sm font-light text-black dark:text-white"
+                  >
+                    {desc}
+                  </dd>
                 ))}
               </div>
             ))}
           </dl>
         </section>
       ))}
-    </>
+    </div>
   );
 }

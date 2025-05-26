@@ -86,16 +86,18 @@ export default function Page({
   certificatesData: CertificatesDataTypes[] | null;
   activitiesData: ActivitiesDataTypes[] | null;
 }) {
+  console.log(careerData);
+
   return (
     <>
       <PersonalSection personalData={personalData} />
       {careerData && <CareerSection careerData={careerData} />}
       {educationData && <EducationSection educationData={educationData} />}
-      {trainingData && <TrainingSection trainingData={trainingData} />}
       {certificatesData && (
         <CertificatesSection certificatesData={certificatesData} />
       )}
       {activitiesData && <ActivitiesSection activitiesData={activitiesData} />}
+      {trainingData && <TrainingSection trainingData={trainingData} />}
     </>
   );
 }
