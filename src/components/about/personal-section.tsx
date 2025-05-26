@@ -1,5 +1,6 @@
 import { PersonalDataTypes } from '@/types/personal-types';
 import Image from 'next/image';
+import TableLayout from './table-layout';
 
 interface PersonalSectionTypes {
   personalData: PersonalDataTypes[] | null;
@@ -31,11 +32,11 @@ export default function PersonalSection({
         </figure>
         <dl className="flex flex-col gap-1">
           {personalInfo.map((info, index) => (
-            <div key={index} className="flex items-center gap-2">
-              <dt className="bg-primary/10 text-primary min-w-16 rounded-3xl py-[1px] text-center text-sm sm:text-base">
+            <div key={index} className="flex items-center gap-4">
+              <dt className="bg-primary/10 text-primary flex h-8 w-16 items-center justify-center rounded-4xl font-light dark:bg-indigo-300/10 dark:text-indigo-300">
                 {info.label}
               </dt>
-              <dd className="flex-1 text-sm font-light text-black sm:text-base dark:text-white">
+              <dd className="font-light text-black dark:text-white">
                 {['저장소', '블로그'].includes(info.label) ? (
                   <a
                     href={info.value ?? '/about'}
@@ -53,18 +54,15 @@ export default function PersonalSection({
           ))}
         </dl>
       </div>
-      <div className="w-full flex-1">
-        <h3 className="border-gray-10 flex items-center gap-2 border-b-[1px] py-2 text-base font-medium text-black sm:text-xl dark:text-white">
-          인사말
-        </h3>
-        <div className="dark:text-gray-10 flex flex-col gap-1 py-3 text-sm font-light text-black">
+      <TableLayout title="인사말">
+        <div className="border-gray-30 flex flex-col gap-1 border-b py-4 font-light text-black sm:flex dark:text-white">
           {personalData?.map((item) => {
             return item.greeting?.map((greeting, index) => (
               <p key={index}>{greeting}</p>
             ));
           })}
         </div>
-      </div>
+      </TableLayout>
     </section>
   );
 }
