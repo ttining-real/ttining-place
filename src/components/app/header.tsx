@@ -31,18 +31,21 @@ export default function Header() {
       className={`${gmarket.className} bg-gray-60 fixed top-0 right-0 left-0 z-10 flex h-14 items-center justify-between px-6`}
     >
       <h1>
-        <Link href="/">
+        <Link
+          href="/"
+          className="focus:outline-primary/50 inline-flex rounded-sm focus:outline-2 focus:outline-offset-2 dark:focus:outline-indigo-400/60"
+        >
           <LogoIcon id={theme === 'dark' ? 'dark' : 'light'} />
         </Link>
       </h1>
       <div className="flex h-full items-center gap-4 md:gap-8">
         {/* 데스크탑 메뉴 (640px 이상에서만 보임) */}
-        <nav className="dark:text-gray-10 hidden h-full gap-3 text-black/60 md:flex">
+        <nav className="dark:text-gray-10 hidden gap-3 text-black/60 md:flex">
           {MENU_LIST.map((menu) => (
             <Link
               key={menu.label}
               href={`/${menu.source}`}
-              className="hover:text-primary before:bg-primary/20 relative flex items-center px-2 transition-colors duration-200 before:absolute before:right-0 before:bottom-0 before:left-0 before:h-2 before:origin-bottom before:scale-y-0 before:transition-transform before:duration-300 before:content-[''] hover:before:scale-y-100 dark:before:bg-indigo-300/30 dark:hover:text-indigo-300"
+              className="hover:text-primary before:bg-primary/20 focus:outline-primary/50 relative flex items-center rounded-sm p-2 transition-colors duration-200 before:absolute before:right-0 before:bottom-3 before:left-0 before:h-2 before:origin-bottom before:scale-y-0 before:transition-transform before:duration-300 before:content-[''] hover:before:scale-y-100 focus:outline-2 focus:outline-offset-[-2px] dark:before:bg-indigo-300/30 dark:hover:text-indigo-300 dark:focus:outline-indigo-400/60"
             >
               {menu.label}
             </Link>

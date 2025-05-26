@@ -13,7 +13,10 @@ export default function Footer() {
       <div className="flex flex-col items-center gap-1 sm:flex-row sm:gap-2">
         <p className="flex items-center gap-1">
           <span>&copy; 2025</span>
-          <Link href="/">
+          <Link
+            href="/"
+            className="focus:outline-primary/50 rounded-sm focus:outline-2 focus:outline-offset-2 dark:focus:outline-indigo-400/60"
+          >
             <LogoIcon
               id={theme === 'dark' ? 'dark' : 'light'}
               width={36}
