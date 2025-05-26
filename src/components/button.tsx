@@ -39,7 +39,7 @@ type ButtonTypes =
   | NormalButtonTypes;
 
 const baseStyle =
-  'flex items-center justify-center gap-1 rounded-md whitespace-nowrap focus:outline-2 focus:outline-offset-2 focus:outline-primary/50 cursor-pointer';
+  'flex items-center justify-center gap-1 rounded-md whitespace-nowrap focus:outline-2 focus:outline-offset-2 focus:outline-primary/50 cursor-pointer dark:focus:outline-indigo-400/60';
 
 const buttonSize: Record<'sm' | 'md', string> = {
   sm: 'pt-1.5 pb-1 px-2 text-sm',
