@@ -1,18 +1,20 @@
-import Footer from '@/components/app/footer';
-import Header from '@/components/app/header';
-import ScrollProgressBar from '@/components/progress-bar';
-import TopButton from '@/components/top-button';
-import { gmarket } from '@/fonts/font';
+import { pretendard } from '@/fonts/font';
 import { ReactNode } from 'react';
+
+// components
+import Header from '@/components/header';
+import Footer from '@/components/footer';
+import ToTheTop from '@/components/to-the-top';
 
 export default function GlobalLayout({ children }: { children: ReactNode }) {
   return (
     <>
       <Header />
-      <ScrollProgressBar />
-      <main className={`${gmarket.className} pt-[56px]`}>{children}</main>
+      <main className={`${pretendard.className}`}>
+        {children}
+        <ToTheTop />
+      </main>
       <Footer />
-      <TopButton />
     </>
   );
 }
