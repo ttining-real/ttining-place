@@ -21,36 +21,40 @@ export default function Card({
   role,
   image_url,
 }: CardProps) {
-  // type별로 이미지 경로 prefix를 다르게 설정
-  const imagePrefix =
-    type === 'experience'
-      ? 'experience'
-      : type === 'projects'
-        ? 'projects'
-        : '';
+  // type별로 이미지 경로 설정
+  const imageFolder = {
+    experience: 'experience',
+    projects: 'projects',
+  }[type];
 
   // type별로 타이틀 라벨 설정
-  const titleLabel = type === 'experience' ? '회사명' : '프로젝트명';
+  const titleLabel = {
+    experience: '회사명',
+    projects: '프로젝트명',
+  }[type];
 
-  const experienceClassName = 'border-primary-lighter bg-white/30';
-  const projectsClassName = 'bg-white/10 border-white/30';
+  const figureClassMap = {
+    experience: 'border-primary-lighter bg-white/30',
+    projects: 'bg-white/10 border-white/30',
+  };
 
-  const classNamePrefix =
-    type === 'experience'
-      ? experienceClassName
-      : type === 'projects'
-        ? projectsClassName
-        : '';
+  const chipClassMap = {
+    experience: 'border-primary/60 text-primary-darker',
+    projects: 'bg-white/10 border-white/30',
+  };
+
+  const figureClassName = figureClassMap[type] ?? '';
+  const chipClassName = chipClassMap[type] ?? '';
 
   return (
     <article className="">
       <Link href="/" className="flex h-full flex-col">
         <figure
-          className={`flex aspect-video items-center justify-center overflow-hidden rounded-xl border backdrop-blur-lg ${classNamePrefix}`}
+          className={`flex aspect-video items-center justify-center overflow-hidden rounded-xl border backdrop-blur-lg ${figureClassName}`}
         >
           {image_url ? (
             <Image
-              src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${imagePrefix}/${image_url}`}
+              src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${imageFolder}/${image_url}`}
               alt={title}
               width={240}
               height={135}
@@ -71,12 +75,12 @@ export default function Card({
             </dd>
           </div>
 
-          {type === 'experience' && (
+          {type === 'experience' && department && title !== department && (
             <div>
               <dt className="sr-only">소속/직급</dt>
               <dd>
-                {title === department ? null : department}{' '}
-                {position ? <span>{position}</span> : null}
+                {department}
+                {position && <span> {position}</span>}
               </dd>
             </div>
           )}
@@ -89,11 +93,11 @@ export default function Card({
           <div className="pt-2">
             <dt className="sr-only">담당 업무</dt>
             <dd>
-              <ul className="text-primary-darker flex flex-wrap gap-1">
+              <ul className="flex flex-wrap gap-1">
                 {role.map((item, index) => (
                   <li
                     key={index}
-                    className="border-primary rounded-2xl border px-3 py-0.5"
+                    className={`rounded-2xl border px-3 py-1 ${chipClassName}`}
                   >
                     {item}
                   </li>
