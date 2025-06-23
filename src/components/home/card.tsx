@@ -1,52 +1,107 @@
-import { formatIndex } from '@/lib/formatIndex';
-import { CareersDataTypes } from '@/types/career-types';
-import { StackDataTypes } from '@/types/tech-stack-types';
+import Image from 'next/image';
 import Link from 'next/link';
-import { ReactNode } from 'react';
+import LoadingSpinner from '@/components/loading-spinner';
 
-interface CardTypes {
-  href: string;
-  data: CareersDataTypes | StackDataTypes;
-  index: number;
-  children: ReactNode;
-}
+type CardProps = {
+  type: 'experience' | 'projects';
+  title: string;
+  position?: string;
+  department?: string;
+  period: string;
+  role: string[];
+  image_url: string;
+};
 
-export default function Card({ href, data, index, children }: CardTypes) {
-  const anchor =
-    'title' in data
-      ? data.title
-      : 'company_name' in data
-        ? data.company_name
+export default function Card({
+  type,
+  title,
+  position,
+  department,
+  period,
+  role,
+  image_url,
+}: CardProps) {
+  // type별로 이미지 경로 prefix를 다르게 설정
+  const imagePrefix =
+    type === 'experience'
+      ? 'experience'
+      : type === 'projects'
+        ? 'projects'
+        : '';
+
+  // type별로 타이틀 라벨 설정
+  const titleLabel = type === 'experience' ? '회사명' : '프로젝트명';
+
+  const experienceClassName = 'border-primary-lighter bg-white/30';
+  const projectsClassName = 'bg-white/10 border-white/30';
+
+  const classNamePrefix =
+    type === 'experience'
+      ? experienceClassName
+      : type === 'projects'
+        ? projectsClassName
         : '';
 
   return (
-    <article
-      key={data.id}
-      className="hover:border-primary/60 dark:border-gray-40 overflow-hidden rounded-2xl border-2 border-white bg-white shadow-lg transition-all duration-300 dark:bg-gray-50"
-    >
-      <Link
-        href={`/${href}#${encodeURIComponent(anchor)}`}
-        className="flex h-full flex-col gap-2 p-6"
-      >
-        <span aria-hidden={true} className="text-primary/60 font-bold">
-          {formatIndex(index)}
-        </span>
-        <header className="flex items-center gap-2">
-          {'company_name' in data && (
-            <h3 className="text-lg font-bold text-black dark:text-white">
-              {data.company_name}
-            </h3>
+    <article className="">
+      <Link href="/" className="flex h-full flex-col">
+        <figure
+          className={`flex aspect-video items-center justify-center overflow-hidden rounded-xl border backdrop-blur-lg ${classNamePrefix}`}
+        >
+          {image_url ? (
+            <Image
+              src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${imagePrefix}/${image_url}`}
+              alt={title}
+              width={240}
+              height={135}
+              className="w-full"
+            />
+          ) : (
+            <div>
+              <LoadingSpinner />
+            </div>
           )}
-          {'title' in data && (
-            <h3 className="w-full text-lg font-bold break-words text-black dark:text-white">
-              {data.title}
-            </h3>
+        </figure>
+
+        <dl className="flex flex-col gap-1 px-2 pt-4 text-sm">
+          <div>
+            <dt className="sr-only">{titleLabel}</dt>
+            <dd className="flex items-center gap-1 text-base font-bold">
+              {title}
+            </dd>
+          </div>
+
+          {type === 'experience' && (
+            <div>
+              <dt className="sr-only">소속/직급</dt>
+              <dd>
+                {title === department ? null : department}{' '}
+                {position ? <span>{position}</span> : null}
+              </dd>
+            </div>
           )}
-          {'department' in data && (
-            <span className="text-gray-10 text-sm">{data.department}</span>
-          )}
-        </header>
-        <div>{children}</div>
+
+          <div>
+            <dt className="sr-only">기간</dt>
+            <dd>{period}</dd>
+          </div>
+
+          <div className="pt-2">
+            <dt className="sr-only">담당 업무</dt>
+            <dd>
+              <ul className="text-primary-darker flex flex-wrap gap-1">
+                {role.map((item, index) => (
+                  <li
+                    key={index}
+                    className="border-primary rounded-2xl border px-3 py-0.5"
+                  >
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </dd>
+          </div>
+        </dl>
       </Link>
     </article>
   );
