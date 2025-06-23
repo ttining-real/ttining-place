@@ -5,6 +5,7 @@ import { useGsapFadeInOnScroll } from '@/hooks/useGsapFadeInOnScroll';
 import { supabase } from '@/lib/supabase';
 import { generateRandomNickname } from '@/lib/generateRandomNickname';
 import { formatCommentDate } from '@/lib/formatCommentDate';
+import Button from '../button';
 
 type Comment = {
   id: string;
@@ -92,7 +93,7 @@ export default function CommentsSection() {
                 placeholder="이름"
                 value={inputNameValue}
                 onChange={onChangeName}
-                className="w-full rounded-lg bg-white/60 px-4 py-2 pr-21"
+                className="focus:ring-primary w-full rounded-lg bg-white/60 px-4 py-2 pr-21 focus:ring-2 focus:outline-none"
               />
               <button
                 onClick={onClickRandomName}
@@ -106,15 +107,11 @@ export default function CommentsSection() {
               placeholder="텍스트를 입력해 주세요."
               value={inputCommentValue}
               onChange={onChangeComment}
-              className="rounded-lg bg-white/60 px-4 py-2 sm:w-7/12"
+              className="focus:ring-primary rounded-lg bg-white/60 px-4 py-2 focus:ring-2 focus:outline-none sm:w-7/12"
             />
-
-            <button
-              onClick={onClickRegisterButton}
-              className="bg-primary cursor-pointer rounded-lg px-4 py-2 text-white sm:w-2/12"
-            >
+            <Button onClick={onClickRegisterButton} className="sm:w-2/12">
               등록
-            </button>
+            </Button>
           </div>
           {comments.length === 0 ? (
             <div className="text-primary-darker flex flex-col items-center rounded-lg bg-white/20 py-4">
