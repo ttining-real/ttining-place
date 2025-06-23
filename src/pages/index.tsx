@@ -1,97 +1,86 @@
 import { GetServerSideProps } from 'next';
 
+// components
+import Visual from '@/components/home/visual';
+import AboutSection from '@/components/home/about';
+import CircleSection from '@/components/home/circle';
+import ExperienceSection from '@/components/home/experience';
+import ProjectsSection from '@/components/home/projects';
+import ContactSection from '@/components/home/contact';
+import CommentsSection from '@/components/home/comments';
 import { supabase } from '@/lib/supabase';
-import { CareersDataTypes } from '@/types/career-types';
-import { StackDataTypes } from '@/types/tech-stack-types';
 
-import { useThemeStore } from '@/stores/themeStore';
-
-import IntroduceSection from '@/components/home/introduce-section';
-import QuickMenu from '@/components/home/quick-menu';
-import SectionLayout from '@/components/home/section-layout';
-import ProjectsCard from '@/components/home/projects-card';
-import ExperienceList from '@/components/home/experience-list';
-import StackCard from '@/components/home/stack-card';
+import { PersonalDataTypes } from '@/types/personal-data-types';
+import { ExperienceDataTypes } from '@/types/experience-data-type';
+import { ProjectsDataTypes } from '@/types/projects-data-type';
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const { data: careersData, error: careersError } = await supabase
-    .from('careers')
+  // personal
+  const { data: personalData, error: personalError } = await supabase
+    .from('personal')
     .select('*');
 
-  const { data: stackData, error: stackError } = await supabase.from(
-    'stack_sections',
-  ).select(`
-    *,
-    stack_items (
-      *,
-      stack_icons (
-        *
-      )
-    )
-  `);
+  // experience
+  const { data: experienceData, error: experienceError } = await supabase
+    .from('experience')
+    .select('*');
 
-  if (careersError || stackError || !careersData || !stackData) {
+  // projects
+  const { data: projectsData, error: projectsError } = await supabase
+    .from('projects')
+    .select('*');
+
+  if (
+    personalError ||
+    experienceError ||
+    projectsError ||
+    !personalData ||
+    !experienceData ||
+    !projectsData
+  ) {
     return {
       props: {
-        careersData: [],
-        stackData: [],
-        error: careersError?.message || stackError?.message || 'Unknown error',
+        personalData: [],
+        experienceData: [],
+        projectsData: [],
+        error:
+          personalError?.message ||
+          experienceError?.message ||
+          projectsError?.message ||
+          '🚫 알 수 없는 오류가 발생했어요.',
       },
     };
   }
 
-  const updatedCareersData: CareersDataTypes[] = careersData.map((item) => {
-    const { data: urlData } = supabase.storage
-      .from('careers')
-      .getPublicUrl(item.image_url);
-
-    return {
-      ...item,
-      image_url: urlData?.publicUrl ?? '',
-    };
-  });
-
   return {
-    props: { careersData: updatedCareersData, stackData: stackData ?? [] },
+    props: {
+      personalData: personalData ?? [],
+      experienceData: experienceData ?? [],
+      projectsData: projectsData ?? [],
+    },
   };
 };
 
 export default function Home({
-  careersData,
-  stackData,
+  personalData,
+  experienceData,
+  projectsData,
 }: {
-  careersData: CareersDataTypes[];
-  stackData: StackDataTypes[];
+  personalData: PersonalDataTypes[];
+  experienceData: ExperienceDataTypes[];
+  projectsData: ProjectsDataTypes[];
 }) {
-  const { theme } = useThemeStore();
+  const circleKeywords = ['Overall', 'Design', 'Develop', 'Cooperation'];
 
   return (
     <>
-      <IntroduceSection />
-      <QuickMenu />
-      <SectionLayout title="Projects" subtitle="프로젝트">
-        <div className="flex gap-4">
-          <ProjectsCard />
-        </div>
-      </SectionLayout>
-      <SectionLayout
-        full={true}
-        title="Experience"
-        subtitle="근무 경험"
-        className="bg-cover bg-fixed bg-no-repeat"
-        style={{
-          backgroundImage: `url(/images/abstract_${theme === 'light' ? 'light' : 'dark'}.png)`,
-        }}
-      >
-        <div className="flex w-full max-w-5xl gap-2 px-6 sm:gap-4">
-          <ExperienceList data={careersData} />
-        </div>
-      </SectionLayout>
-      <SectionLayout title="Tech Stack" subtitle="기술 스택">
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-          <StackCard data={stackData} />
-        </div>
-      </SectionLayout>
+      <Visual />
+      <AboutSection introduction={personalData[0].introduction} />
+      <CircleSection keywords={circleKeywords} />
+      <ExperienceSection data={experienceData} />
+      <ProjectsSection data={projectsData} />
+      <ContactSection />
+      <CommentsSection />
     </>
   );
 }
