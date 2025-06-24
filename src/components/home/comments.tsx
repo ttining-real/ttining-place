@@ -5,7 +5,8 @@ import { useGsapFadeInOnScroll } from '@/hooks/useGsapFadeInOnScroll';
 import { supabase } from '@/lib/supabase';
 import { generateRandomNickname } from '@/lib/generateRandomNickname';
 import { formatCommentDate } from '@/lib/formatCommentDate';
-import Button from '../button';
+import Dialog from '@/components/dialog';
+import Button from '@/components/button';
 
 type Comment = {
   id: string;
@@ -15,60 +16,61 @@ type Comment = {
 };
 
 export default function CommentsSection() {
-  const [inputNameValue, setInputNameValue] = useState('');
   const [inputCommentValue, setInputCommentValue] = useState('');
   const [comments, setComments] = useState<Comment[]>([]);
 
-  const containerRef = useRef<HTMLDivElement>(null!);
+  // 다이얼로그
+  const [isOpen, setIsOpen] = useState(false);
+  const [dialogMessage, setDialogMessage] = useState('');
 
+  // gsap
+  const containerRef = useRef<HTMLDivElement>(null!);
   useGsapFadeInOnScroll(containerRef);
 
-  // input value
-  const onChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputNameValue(e.target.value);
+  // 다이얼로그 열기 함수
+  const openDialog = (message: string) => {
+    setDialogMessage(message);
+    setIsOpen(true);
   };
+
+  // input value
   const onChangeComment = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputCommentValue(e.target.value);
   };
 
   // button click
   const onClickRegisterButton = async () => {
-    console.log('등록 버튼 클릭');
-    if (!inputNameValue.trim() || !inputCommentValue.trim()) {
-      alert('이름과 댓글을 모두 입력해 주세요.');
+    if (!inputCommentValue.trim()) {
+      openDialog('댓글을 입력해 주세요.');
       return;
     }
 
+    const randomNickname = generateRandomNickname();
+
     const { error } = await supabase
       .from('comments')
-      .insert([{ name: inputNameValue, text: inputCommentValue }]);
+      .insert([{ name: randomNickname, text: inputCommentValue }]);
 
     if (error) {
       console.error('댓글 등록 실패 : ', error);
-      alert('댓글 등록에 실패했습니다. 다시 시도해 주세요.');
+      openDialog('댓글 등록에 실패했습니다. 다시 시도해 주세요.');
     } else {
       // 등록 성공 : 상태 초기화 + 새로 고침
-      setInputNameValue('');
       setInputCommentValue('');
       fetchComments();
     }
-  };
-
-  const onClickRandomName = () => {
-    console.log('랜덤 생성 버튼 클릭!');
-    const nickname = generateRandomNickname();
-    setInputNameValue(nickname);
   };
 
   // data fetch
   const fetchComments = async () => {
     const { data, error } = await supabase
       .from('comments')
-      .select('id, text,name, created_at')
+      .select('id, text, name, created_at')
       .order('created_at', { ascending: false });
 
     if (error) {
       console.error('댓글 가져오기 실패 : ', error);
+      openDialog('댓글을 가져오는데 실패했습니다.');
     } else {
       setComments(data);
     }
@@ -79,65 +81,94 @@ export default function CommentsSection() {
   }, []);
 
   return (
-    <section className="bg-primary-lighter px-6 py-20">
+    <section className="px-6 py-20">
       <div ref={containerRef} className="m-auto flex max-w-4xl flex-col gap-12">
         <header className="gsap-fade-in flex flex-col gap-4 text-center">
-          <SectionTitle title="Comments" />
-          <p>잘 보셨나요? 한 마디 남겨주세요!</p>
+          <SectionTitle title="Comments" className="text-primary-darker" />
+          <div className="text-primary-darker text-sm">
+            <p>제 포트폴리오를 잘 보셨다면, 한 마디 남겨주세요!</p>
+            <p>여러분의 한 마디는 제게 큰 힘이 됩니다!</p>
+          </div>
         </header>
-        <div className="gsap-fade-in flex flex-col gap-8">
-          <div className="flex flex-col gap-2 sm:flex-row">
-            <div className="relative sm:w-3/12">
-              <input
-                type="text"
-                placeholder="이름"
-                value={inputNameValue}
-                onChange={onChangeName}
-                className="focus:ring-primary w-full rounded-lg bg-white/60 px-4 py-2 pr-21 focus:ring-2 focus:outline-none"
-              />
-              <button
-                onClick={onClickRandomName}
-                className="text-success absolute right-3 h-full cursor-pointer px-1 text-sm"
-              >
-                랜덤 생성
-              </button>
-            </div>
+        <div className="gsap-fade-in m-auto flex w-full flex-col gap-8 sm:max-w-lg">
+          <div
+            className={`focus-within:ring-primary/50 flex items-center gap-2 rounded-full border-4 border-white bg-white pl-3 focus-within:ring-2`}
+          >
+            <span aria-hidden className="text-2xl">
+              🥹
+            </span>
             <input
               type="text"
               placeholder="텍스트를 입력해 주세요."
               value={inputCommentValue}
               onChange={onChangeComment}
-              className="focus:ring-primary rounded-lg bg-white/60 px-4 py-2 focus:ring-2 focus:outline-none sm:w-7/12"
+              className="h-10 grow outline-none"
             />
-            <Button onClick={onClickRegisterButton} className="sm:w-2/12">
+            <Button
+              shape="circle"
+              onClick={onClickRegisterButton}
+              className="h-10"
+            >
               등록
             </Button>
           </div>
           {comments.length === 0 ? (
-            <div className="text-primary-darker flex flex-col items-center rounded-lg bg-white/20 py-4">
+            <div className="text-primary-darker flex flex-col items-center rounded-lg bg-white py-4">
               <p>아직 아무 얘기도 없네요. 🥲</p>
               <p>첫 번째 한 마디를 남겨주세요!</p>
             </div>
           ) : (
             <ul className="border-primary-lighter flex flex-col gap-2">
-              {comments.map((comment) => (
-                <li
-                  key={comment.id}
-                  className="text-primary-darker flex items-center gap-4 rounded-lg bg-white/20 px-6 py-4"
-                >
-                  <span className="w-10/12 text-base">{comment.text}</span>
-                  <span className="w-2/12 text-center text-sm">
-                    {comment.name}
-                  </span>
-                  <span className="shrink-0 text-sm">
-                    {formatCommentDate(comment.created_at)}
-                  </span>
-                </li>
-              ))}
+              {comments.map((comment) => {
+                const avatarUrl = `https://api.dicebear.com/9.x/big-smile/svg?seed=${comment.id}`;
+
+                return (
+                  <li
+                    key={comment.id}
+                    className="flex flex-col gap-2 rounded-lg bg-white p-4"
+                  >
+                    <dl className="text-primary-darkest grid grid-cols-[auto_1fr] items-center gap-x-3 text-sm">
+                      <div className="row-span-2">
+                        <dt className="sr-only">프로필 이미지</dt>
+                        <dd>
+                          <img
+                            src={avatarUrl}
+                            alt={`${comment.name} 프로필`}
+                            width={40}
+                            height={40}
+                            loading="lazy"
+                            className="h-10 w-10 rounded-full"
+                          />
+                        </dd>
+                      </div>
+
+                      <div>
+                        <dt className="sr-only">작성자</dt>
+                        <dd>{comment.name}</dd>
+                      </div>
+
+                      <div className="col-start-2 text-[13px]">
+                        <dt className="sr-only">작성일</dt>
+                        <dd>{formatCommentDate(comment.created_at)}</dd>
+                      </div>
+                    </dl>
+                    <p className="w-10/12 text-base">{comment.text}</p>
+                  </li>
+                );
+              })}
             </ul>
           )}
         </div>
       </div>
+
+      {/* 다이얼로그 컴포넌트 */}
+      <Dialog isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        <h3 className="mb-4 text-lg font-bold">⚠️ comments 알림</h3>
+        <p className="mb-4">{dialogMessage}</p>
+        <Button onClick={() => setIsOpen(false)} className="float-right">
+          확인
+        </Button>
+      </Dialog>
     </section>
   );
 }
