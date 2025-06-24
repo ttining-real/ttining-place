@@ -7,49 +7,75 @@ import { generateRandomNickname } from '@/lib/generateRandomNickname';
 import { formatCommentDate } from '@/lib/formatCommentDate';
 import Dialog from '@/components/dialog';
 import Button from '@/components/button';
+import Icon from '../icon';
 
 type Comment = {
   id: string;
+  user_id: string;
   text: string;
   name: string;
   created_at: string;
 };
 
+const USER_ID_KEY = 'comments_user_id';
+
 export default function CommentsSection() {
+  const [userId, setUserId] = useState<string | null>(null);
   const [inputCommentValue, setInputCommentValue] = useState('');
   const [comments, setComments] = useState<Comment[]>([]);
+  const [targetCommentId, setTargetCommentId] = useState<string | null>(null);
 
   // 다이얼로그
   const [isOpen, setIsOpen] = useState(false);
   const [dialogMessage, setDialogMessage] = useState('');
+  const [dialogType, setDialogType] = useState<'alert' | 'confirm'>('alert');
 
   // gsap
   const containerRef = useRef<HTMLDivElement>(null!);
   useGsapFadeInOnScroll(containerRef);
 
-  // 다이얼로그 열기 함수
-  const openDialog = (message: string) => {
+  // 컴포넌트 마운트 후 userId 세팅
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      let storedUserId = localStorage.getItem(USER_ID_KEY);
+      if (!storedUserId) {
+        storedUserId = crypto.randomUUID();
+        localStorage.setItem(USER_ID_KEY, storedUserId);
+      }
+      setUserId(storedUserId);
+    }
+  }, []);
+
+  // 다이얼로그 열기
+  const openDialog = (message: string, type: 'alert' | 'confirm' = 'alert') => {
     setDialogMessage(message);
+    setDialogType(type);
     setIsOpen(true);
   };
 
-  // input value
+  // comment 입력 핸들러
   const onChangeComment = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputCommentValue(e.target.value);
   };
 
-  // button click
+  // 등록 버튼
   const onClickRegisterButton = async () => {
     if (!inputCommentValue.trim()) {
       openDialog('댓글을 입력해 주세요.');
       return;
     }
 
+    if (!userId) {
+      openDialog('사용자 정보가 없습니다. 잠시 후 다시 시도해 주세요.');
+    }
+
     const randomNickname = generateRandomNickname();
 
     const { error } = await supabase
       .from('comments')
-      .insert([{ name: randomNickname, text: inputCommentValue }]);
+      .insert([
+        { name: randomNickname, text: inputCommentValue, user_id: userId },
+      ]);
 
     if (error) {
       console.error('댓글 등록 실패 : ', error);
@@ -65,7 +91,7 @@ export default function CommentsSection() {
   const fetchComments = async () => {
     const { data, error } = await supabase
       .from('comments')
-      .select('id, text, name, created_at')
+      .select('id, user_id, text, name, created_at')
       .order('created_at', { ascending: false });
 
     if (error) {
@@ -80,9 +106,35 @@ export default function CommentsSection() {
     fetchComments();
   }, []);
 
+  // 댓글 삭제 (id 기준)
+  const onClickDeleteComment = async (commentId: string) => {
+    const { error } = await supabase
+      .from('comments')
+      .delete()
+      .eq('id', commentId);
+
+    if (error) {
+      console.error('댓글 삭제 실패 : ', error);
+      openDialog('댓글 삭제에 실패했습니다. 다시 시도해 주세요.');
+    } else {
+      fetchComments();
+    }
+  };
+
+  if (!userId) {
+    // userId 준비 전 로딩 혹은 빈 화면 처리
+    return null;
+  }
+
+  const beforeBlur = `before:z-[-1] before:absolute before:content-[''] before:w-[740px] before:h-[740px] before:rounded-full before:bg-[rgba(219,172,120,0.3)] before:blur-3xl before:top-[-10%] before:left-[-10%] before:translate-x-[-50%] before:translate-y-[-50%]`;
+  const afterBlur = `after:z-[-1] after:absolute after:content-[''] after:w-[320px] after:h-[320px] after:rounded-full after:bg-[rgba(219,172,120,0.3)] after:blur-3xl after:bottom-[-140px] after:right-[-100px]`;
+
   return (
     <section className="px-6 py-20">
-      <div ref={containerRef} className="m-auto flex max-w-4xl flex-col gap-12">
+      <div
+        ref={containerRef}
+        className={`relative m-auto flex max-w-4xl flex-col gap-12 ${beforeBlur} ${afterBlur}`}
+      >
         <header className="gsap-fade-in flex flex-col gap-4 text-center">
           <SectionTitle title="Comments" className="text-primary-darker" />
           <div className="text-primary-darker text-sm">
@@ -92,9 +144,9 @@ export default function CommentsSection() {
         </header>
         <div className="gsap-fade-in m-auto flex w-full flex-col gap-8 sm:max-w-lg">
           <div
-            className={`focus-within:ring-primary/50 flex items-center gap-2 rounded-full border-4 border-white bg-white pl-3 focus-within:ring-2`}
+            className={`focus-within:ring-primary/50 flex items-center justify-between gap-2 rounded-full border-4 border-white bg-white focus-within:ring-2`}
           >
-            <span aria-hidden className="text-2xl">
+            <span aria-hidden className="pl-2 text-xl sm:text-2xl">
               🥹
             </span>
             <input
@@ -102,12 +154,12 @@ export default function CommentsSection() {
               placeholder="텍스트를 입력해 주세요."
               value={inputCommentValue}
               onChange={onChangeComment}
-              className="h-10 grow outline-none"
+              className="h-10 grow text-sm outline-none sm:text-base"
             />
             <Button
               shape="circle"
               onClick={onClickRegisterButton}
-              className="h-10"
+              className="h-10 text-sm whitespace-nowrap sm:text-base"
             >
               등록
             </Button>
@@ -120,12 +172,13 @@ export default function CommentsSection() {
           ) : (
             <ul className="border-primary-lighter flex flex-col gap-2">
               {comments.map((comment) => {
-                const avatarUrl = `https://api.dicebear.com/9.x/big-smile/svg?seed=${comment.id}`;
+                const avatarUrl = `https://api.dicebear.com/9.x/big-smile/svg?seed=${comment.user_id}`;
+                const isMyComment = comment.user_id === userId;
 
                 return (
                   <li
                     key={comment.id}
-                    className="flex flex-col gap-2 rounded-lg bg-white p-4"
+                    className="relative flex flex-col gap-2 rounded-lg bg-white p-4"
                   >
                     <dl className="text-primary-darkest grid grid-cols-[auto_1fr] items-center gap-x-3 text-sm">
                       <div className="row-span-2">
@@ -153,6 +206,20 @@ export default function CommentsSection() {
                       </div>
                     </dl>
                     <p className="w-10/12 text-base">{comment.text}</p>
+
+                    {/* 내가 작성한 댓글일 때만 삭제 버튼 표시 */}
+                    {isMyComment && (
+                      <button
+                        onClick={() => {
+                          setTargetCommentId(comment.id);
+                          openDialog('댓글을 삭제하시겠습니까?', 'confirm');
+                        }}
+                        className="focus-ring hover:bg-primary-lighter absolute top-4 right-4 flex h-6 w-6 cursor-pointer items-center justify-center rounded-sm"
+                        aria-label="댓글 삭제"
+                      >
+                        <Icon id="close" size={20} className="text-primary" />
+                      </button>
+                    )}
                   </li>
                 );
               })}
@@ -165,9 +232,31 @@ export default function CommentsSection() {
       <Dialog isOpen={isOpen} onClose={() => setIsOpen(false)}>
         <h3 className="mb-4 text-lg font-bold">⚠️ comments 알림</h3>
         <p className="mb-4">{dialogMessage}</p>
-        <Button onClick={() => setIsOpen(false)} className="float-right">
-          확인
-        </Button>
+        <div className="flex justify-end gap-2">
+          {dialogType === 'confirm' && (
+            <Button
+              onClick={() => {
+                setIsOpen(false);
+                setTargetCommentId(null);
+              }}
+              className="text-sm"
+            >
+              취소
+            </Button>
+          )}
+          <Button
+            onClick={() => {
+              if (dialogType === 'confirm' && targetCommentId) {
+                onClickDeleteComment(targetCommentId);
+                setTargetCommentId(null);
+              }
+              setIsOpen(false);
+            }}
+            className="text-sm"
+          >
+            확인
+          </Button>
+        </div>
       </Dialog>
     </section>
   );
