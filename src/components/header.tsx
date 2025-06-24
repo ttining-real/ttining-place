@@ -1,4 +1,4 @@
-import { Agbalumo, pretendard } from '@/fonts/font';
+import { Agbalumo } from '@/fonts/font';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
@@ -19,29 +19,29 @@ export default function Header() {
 
   return (
     <header
-      className={`${pretendard.className} border-primary-lightest/30 fixed top-0 right-0 left-0 z-10 flex h-14 items-center justify-between border-b px-6 backdrop-blur-lg`}
+      className={`${Agbalumo.className} border-primary-lighter fixed top-0 right-0 left-0 z-50 flex h-16 items-center justify-between border-b bg-[rgba(255,255,255,0.2)] px-2 backdrop-blur-lg`}
     >
-      <h1 className={`${Agbalumo.className} text-primary`}>
-        <Link href="/">
+      <h1>
+        <Link href="/" className="focus-ring flex items-center rounded-sm px-3">
           <Logo />
         </Link>
       </h1>
-      <nav className="flex items-center">
-        <ul className="flex gap-4">
-          {NAVIGATE.map((nav) => (
-            <li key={nav.label}>
-              <Link
-                href={nav.href}
-                className={`px-3 py-2 transition ${
-                  pathname === nav.href
-                    ? 'text-primary-darker before:bg-primary/30 relative font-semibold before:absolute before:bottom-1 before:left-0 before:h-4 before:w-full'
-                    : 'text-primary-darkest'
-                }`}
-              >
-                {nav.label}
-              </Link>
-            </li>
-          ))}
+      <nav>
+        <ul className="flex items-center gap-2">
+          {NAVIGATE.map((nav) => {
+            const isActive = pathname === nav.href;
+
+            return (
+              <li key={nav.label}>
+                <Link
+                  href={nav.href}
+                  className={`hover-transition hover-underline-animation focus-ring flex items-center rounded-sm px-4 py-3 ${isActive ? 'active text-primary-darkest' : 'text-primary-darker'}`}
+                >
+                  {nav.label}
+                </Link>
+              </li>
+            );
+          })}
         </ul>
       </nav>
     </header>

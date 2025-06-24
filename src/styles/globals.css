@@ -91,3 +91,38 @@ body {
   overflow: hidden;
   height: 100%;
 }
+
+/* 공통 포커스 스타일 */
+.focus-ring {
+  @apply focus:ring-primary focus-visible:ring-primary focus:ring-1 focus:ring-offset-1 focus:ring-offset-transparent focus:outline-none focus-visible:outline-none;
+}
+
+/* 헤더 내비게이션 - hover 시 텍스트 색상 변경 */
+.hover-transition {
+  @apply hover:text-primary-darkest transition-colors duration-200 ease-in-out;
+}
+
+/* 가상 요소 밑줄 효과 */
+.hover-underline-animation {
+  position: relative;
+}
+
+.hover-underline-animation::before {
+  content: '';
+  position: absolute;
+  width: 0%;
+  height: 4px;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--primary);
+  transition: width 0.3s ease-in-out;
+}
+
+.hover-underline-animation:hover::before {
+  width: 100%;
+}
+
+.hover-underline-animation.active::before {
+  width: 100%;
+}
