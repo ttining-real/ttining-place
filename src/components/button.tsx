@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 
 type ButtonProps = {
   variant?: 'primary' | 'secondary';
+  shape?: 'rect' | 'circle';
   href?: string;
   external?: boolean;
   onClick?: () => void;
@@ -12,11 +13,12 @@ type ButtonProps = {
 
 export default function Button({
   variant = 'primary',
+  shape = 'rect',
   href,
   external,
   onClick,
   children,
-  className,
+  className = '',
 }: ButtonProps) {
   // 내부 링크 여부 판단 (href가 있고, '/'로 시작하면 내부)
   const isInternalLink = href && !external && href.startsWith('/');
@@ -27,16 +29,23 @@ export default function Button({
     secondary: 'bg-primary-lighter text-primary-darkest',
   };
 
+  const shapeClassMap = {
+    rect: 'rounded-lg',
+    circle: 'rounded-full',
+  };
+
   const baseClassName =
-    'px-4 py-2 text-sm rounded-lg cursor-pointer ease-in-out transition-colors duration-200 hover:brightness-110';
+    'px-4 py-2 text-sm cursor-pointer ease-in-out transition-colors duration-200 hover:brightness-110';
 
   const variantClassName = variantClassMap[variant];
 
-  const combinedClassName = `${baseClassName} ${variantClassName} ${className}`;
+  const shapeClassName = shapeClassMap[shape];
+
+  const combinedClassName = `focus-ring ${baseClassName} ${variantClassName} ${shapeClassName} ${className}`;
 
   if (isInternalLink) {
     return (
-      <Link href={href} className={`${combinedClassName} ${className}`}>
+      <Link href={href} className={`${combinedClassName}`}>
         {children}
       </Link>
     );
@@ -48,7 +57,7 @@ export default function Button({
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className={`${combinedClassName} ${className} `}
+        className={`${combinedClassName} `}
       >
         {children}
       </a>
@@ -56,7 +65,7 @@ export default function Button({
   }
 
   return (
-    <button onClick={onClick} className={`${combinedClassName} ${className}`}>
+    <button onClick={onClick} className={`${combinedClassName}`}>
       {children}
     </button>
   );
