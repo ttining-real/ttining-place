@@ -6,7 +6,6 @@ import AboutSection from '@/components/home/about';
 import CircleSection from '@/components/home/circle';
 import ExperienceSection from '@/components/home/experience';
 import ProjectsSection from '@/components/home/projects';
-import ContactSection from '@/components/home/contact';
 import CommentsSection from '@/components/home/comments';
 import { supabase } from '@/lib/supabase';
 
@@ -75,11 +74,10 @@ export default function Home({
   return (
     <>
       <Visual />
-      <AboutSection introduction={personalData[0].introduction} />
+      <AboutSection introduction={personalData[0].greeting} />
       <CircleSection keywords={circleKeywords} />
       <ExperienceSection data={experienceData} />
       <ProjectsSection data={projectsData} />
-      <ContactSection />
       <CommentsSection />
     </>
   );
