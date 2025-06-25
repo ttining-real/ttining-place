@@ -47,6 +47,7 @@ export default function Carousel({ children, className }: CarouselProps) {
             onClick={() => paginate(-1)}
             whileFocus={{ outline: `2px solid ${color}` }}
             whileTap={{ scale: 0.9 }}
+            className="focus-ring rounded-sm"
           >
             <Icon id="arrow-left" size={24} />
           </motion.button>
@@ -57,6 +58,7 @@ export default function Carousel({ children, className }: CarouselProps) {
             onClick={() => paginate(1)}
             whileFocus={{ outline: `2px solid ${color}` }}
             whileTap={{ scale: 0.9 }}
+            className="focus-ring rounded-sm"
           >
             <Icon id="arrow-right" size={24} />
           </motion.button>

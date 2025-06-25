@@ -47,8 +47,11 @@ export default function Card({
   const chipClassName = chipClassMap[type] ?? '';
 
   return (
-    <article className="">
-      <Link href="/" className="flex h-full flex-col">
+    <article>
+      <Link
+        href={`/${type}/${title}`}
+        className="focus-ring flex h-full flex-col rounded-xl"
+      >
         <figure
           className={`flex aspect-video items-center justify-center overflow-hidden rounded-xl border backdrop-blur-lg ${figureClassName}`}
         >

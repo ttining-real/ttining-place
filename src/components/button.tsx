@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { ReactNode } from 'react';
 
 type ButtonProps = {
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary' | 'tertiary';
   shape?: 'rect' | 'circle';
   href?: string;
   external?: boolean;
@@ -27,6 +27,7 @@ export default function Button({
   const variantClassMap = {
     primary: 'bg-primary text-white',
     secondary: 'bg-primary-lighter text-primary-darkest',
+    tertiary: 'bg-transparent text-primary',
   };
 
   const shapeClassMap = {
@@ -41,11 +42,11 @@ export default function Button({
 
   const shapeClassName = shapeClassMap[shape];
 
-  const combinedClassName = `focus-ring ${baseClassName} ${variantClassName} ${shapeClassName} ${className}`;
+  const combinedClassName = `focus-ring ${baseClassName} ${variantClassName} ${shapeClassName}`;
 
   if (isInternalLink) {
     return (
-      <Link href={href} className={`${combinedClassName}`}>
+      <Link href={href} className={`${combinedClassName} ${className}`}>
         {children}
       </Link>
     );
@@ -57,7 +58,7 @@ export default function Button({
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className={`${combinedClassName} `}
+        className={`${combinedClassName} ${className}`}
       >
         {children}
       </a>
@@ -65,7 +66,7 @@ export default function Button({
   }
 
   return (
-    <button onClick={onClick} className={`${combinedClassName}`}>
+    <button onClick={onClick} className={`${combinedClassName} ${className}`}>
       {children}
     </button>
   );

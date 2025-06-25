@@ -1,9 +1,9 @@
-import Link from 'next/link';
 import { useRef } from 'react';
 
 import SectionTitle from '@/components/section-title';
 import Carousel from '@/components/carousel';
 import Card from '@/components/home/card';
+import Button from '@/components/button';
 import { useGsapFadeInOnScroll } from '@/hooks/useGsapFadeInOnScroll';
 import { sortedData } from '@/lib/sortedData';
 import { formatDate } from '@/lib/formatDate';
@@ -26,9 +26,11 @@ export default function ProjectsSection({
       <div ref={containerRef} className="m-auto flex max-w-5xl flex-col gap-12">
         <header className="gsap-fade-in flex items-end gap-8 text-white">
           <SectionTitle title="projects" className="text-white" />
-          <Link href="/projects">자세히 보기</Link>
+          <Button href="/projects" variant="tertiary">
+            자세히 보기
+          </Button>
         </header>
-        <Carousel>
+        <Carousel className="gsap-fade-in">
           {sortData.map((item) => (
             <Card
               key={item.id}
