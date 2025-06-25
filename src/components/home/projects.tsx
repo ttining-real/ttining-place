@@ -22,15 +22,22 @@ export default function ProjectsSection({
   const sortData = sortedData(data);
 
   return (
-    <section className="bg-[url(/images/home/bg_projects.png)] bg-cover bg-center px-6 py-20">
+    <section className="bg-[url(/images/home/bg_projects.png)] bg-cover bg-fixed bg-center px-6 py-20">
       <div ref={containerRef} className="m-auto flex max-w-5xl flex-col gap-12">
-        <header className="gsap-fade-in flex items-end gap-8 text-white">
-          <SectionTitle title="projects" className="text-white" />
-          <Button href="/projects" variant="tertiary">
+        <header className="gsap-fade-in flex items-end gap-6 text-white">
+          <SectionTitle title="projects" className="text-primary-darkest" />
+          <Button
+            href="/projects"
+            variant="tertiary"
+            className="text-primary-darkest px-[8px]"
+          >
             자세히 보기
           </Button>
         </header>
-        <Carousel className="gsap-fade-in">
+        <Carousel
+          className="gsap-fade-in"
+          buttonClassName="text-primary-darker bg-white/10 backdrop-blur-lg border-white/20 border hover:text-primary-darkest hover:bg-white/20"
+        >
           {sortData.map((item) => (
             <Card
               key={item.id}

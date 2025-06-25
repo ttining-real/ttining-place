@@ -7,9 +7,14 @@ import Icon from '@/components/icon';
 type CarouselProps = {
   children: ReactNode;
   className?: string;
+  buttonClassName?: string;
 };
 
-export default function Carousel({ children, className }: CarouselProps) {
+export default function Carousel({
+  children,
+  className,
+  buttonClassName,
+}: CarouselProps) {
   const ITEMS_SLIDE = 3;
 
   // children을 배열로 변환
@@ -29,7 +34,8 @@ export default function Carousel({ children, className }: CarouselProps) {
     setDirection(newDirection);
   }
 
-  const color = `var(--color-primary)`;
+  const buttonBaseClassName =
+    'flex items-center justify-center w-10 h-10 rounded-full bg-transparent text-primary transition-colors duration-200 cursor-pointer';
 
   return (
     <div style={container} className={className}>
@@ -43,22 +49,18 @@ export default function Carousel({ children, className }: CarouselProps) {
           <motion.button
             initial={false}
             aria-label="이전 슬라이드"
-            style={button}
             onClick={() => paginate(-1)}
-            whileFocus={{ outline: `2px solid ${color}` }}
             whileTap={{ scale: 0.9 }}
-            className="focus-ring rounded-sm"
+            className={`focus-ring ${buttonBaseClassName} ${buttonClassName ?? ''}`}
           >
             <Icon id="arrow-left" size={24} />
           </motion.button>
           <motion.button
             initial={false}
             aria-label="다음 슬라이드"
-            style={button}
             onClick={() => paginate(1)}
-            whileFocus={{ outline: `2px solid ${color}` }}
             whileTap={{ scale: 0.9 }}
-            className="focus-ring rounded-sm"
+            className={`focus-ring ${buttonBaseClassName} ${buttonClassName ?? ''}`}
           >
             <Icon id="arrow-right" size={24} />
           </motion.button>
@@ -118,16 +120,4 @@ const box: React.CSSProperties = {
   height: 'auto',
   textAlign: 'left',
   borderRadius: '10px',
-};
-
-const button: React.CSSProperties = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: 40,
-  height: 40,
-  color: 'var(--color-primary)',
-  outlineOffset: 2,
-  // borderRadius: '50%',
-  backgroundColor: 'transparent',
 };

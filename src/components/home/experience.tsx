@@ -24,13 +24,16 @@ export default function ExperienceSection({
   return (
     <section className="px-6 py-20">
       <div ref={containerRef} className="m-auto flex max-w-5xl flex-col gap-12">
-        <header className="gsap-fade-in text-primary flex items-end gap-8">
+        <header className="gsap-fade-in text-primary flex items-end gap-6">
           <SectionTitle title="experience" />
-          <Button href="/experience" variant="tertiary">
+          <Button href="/experience" variant="tertiary" className="px-[8px]">
             자세히 보기
           </Button>
         </header>
-        <Carousel className="gsap-fade-in">
+        <Carousel
+          className="gsap-fade-in"
+          buttonClassName="border border-primary/40 hover:text-primary-darker hover:border-primary/60 hover:bg-primary/10"
+        >
           {sortData.map((item) => (
             <Card
               key={item.id}

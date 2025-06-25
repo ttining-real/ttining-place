@@ -136,7 +136,7 @@ export default function CommentsSection() {
         className={`relative m-auto flex max-w-4xl flex-col gap-12 ${beforeBlur} ${afterBlur}`}
       >
         <header className="gsap-fade-in flex flex-col gap-4 text-center">
-          <SectionTitle title="Comments" className="text-primary-darker" />
+          <SectionTitle title="Comments" className="text-primary" />
           <div className="text-primary-darker text-sm">
             <p>제 포트폴리오를 잘 보셨다면, 한 마디 남겨주세요!</p>
             <p>여러분의 한 마디는 제게 큰 힘이 됩니다!</p>
@@ -144,7 +144,10 @@ export default function CommentsSection() {
         </header>
         <div className="gsap-fade-in m-auto flex w-full flex-col gap-8 sm:max-w-lg">
           <div
-            className={`focus-within:ring-primary/50 flex items-center justify-between gap-2 rounded-full border-4 border-white bg-white focus-within:ring-2`}
+            className={`focus-within:ring-primary/50 flex items-center justify-between gap-2 rounded-full border-4 border-white bg-white shadow-md focus-within:ring-2`}
+            style={{
+              boxShadow: '0 8px 16px -4px rgba(162, 132, 94, 0.25)',
+            }}
           >
             <span aria-hidden className="pl-2 text-xl sm:text-2xl">
               🥹
@@ -165,12 +168,17 @@ export default function CommentsSection() {
             </Button>
           </div>
           {comments.length === 0 ? (
-            <div className="text-primary-darker flex flex-col items-center rounded-lg bg-white py-4">
+            <div
+              className="text-primary-darker flex flex-col items-center rounded-lg bg-white py-4 shadow-md"
+              style={{
+                boxShadow: '0 8px 16px -4px rgba(162, 132, 94, 0.25)',
+              }}
+            >
               <p>아직 아무 얘기도 없네요. 🥲</p>
               <p>첫 번째 한 마디를 남겨주세요!</p>
             </div>
           ) : (
-            <ul className="border-primary-lighter flex flex-col gap-2">
+            <ul className="border-primary-lighter flex flex-col gap-3">
               {comments.map((comment) => {
                 const avatarUrl = `https://api.dicebear.com/9.x/big-smile/svg?seed=${comment.user_id}`;
                 const isMyComment = comment.user_id === userId;
@@ -178,7 +186,10 @@ export default function CommentsSection() {
                 return (
                   <li
                     key={comment.id}
-                    className="relative flex flex-col gap-2 rounded-lg bg-white p-4"
+                    className="relative flex flex-col gap-2 rounded-lg bg-white p-4 shadow-md"
+                    style={{
+                      boxShadow: '0 8px 16px -4px rgba(162, 132, 94, 0.25)',
+                    }}
                   >
                     <dl className="text-primary-darkest grid grid-cols-[auto_1fr] items-center gap-x-3 text-sm">
                       <div className="row-span-2">
