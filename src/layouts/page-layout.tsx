@@ -1,10 +1,10 @@
-import Footer from '@/components/footer';
-import Header from '@/components/header';
-import ToTheTop from '@/components/to-the-top';
-import { Agbalumo, pretendard } from '@/fonts/font';
-// import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/router';
 import { ReactNode } from 'react';
+
+import { Agbalumo, pretendard } from '@/fonts/font';
+import Header from '@/components/header';
+import ToTheTop from '@/components/to-the-top';
+import Footer from '@/components/footer';
 
 export default function PageLayout({ children }: { children: ReactNode }) {
   const router = useRouter();
@@ -12,15 +12,15 @@ export default function PageLayout({ children }: { children: ReactNode }) {
 
   const titleMap: Record<string, string> = {
     '/about': 'about',
-    '/careers': 'careers',
+    '/resume': 'resume',
+    '/experience': 'experience',
     '/projects': 'projects',
-    '/example': 'example',
   };
 
   const matchedKey = Object.keys(titleMap).find((key) =>
     pathname?.startsWith(key),
   );
-  const pageTitle = matchedKey ? titleMap[matchedKey] : '';
+  const pageTitle = matchedKey ? titleMap[matchedKey] : 'Not Found';
 
   return (
     <>
