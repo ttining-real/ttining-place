@@ -28,7 +28,7 @@ export default function CircleSection({ keywords }: { keywords: string[] }) {
             <li key={text} className={`gsap-fade-in sm:-mx-2 sm:w-1/4`}>
               <Link
                 href={`/about/#${text}`}
-                className={`border border-white/80 ${circleLayout} ${circleAnimate}`}
+                className={`focus-ring border border-white/80 ${circleLayout} ${circleAnimate}`}
               >
                 {text}
               </Link>

@@ -1,13 +1,13 @@
 import { useEffect, useState, useRef } from 'react';
 
 import SectionTitle from '@/components/section-title';
+import Button from '@/components/button';
+import Icon from '@/components/icon';
+import Dialog from '@/components/dialog';
 import { useGsapFadeInOnScroll } from '@/hooks/useGsapFadeInOnScroll';
 import { supabase } from '@/lib/supabase';
 import { generateRandomNickname } from '@/lib/generateRandomNickname';
 import { formatCommentDate } from '@/lib/formatCommentDate';
-import Dialog from '@/components/dialog';
-import Button from '@/components/button';
-import Icon from '../icon';
 
 type Comment = {
   id: string;
@@ -32,7 +32,8 @@ export default function CommentsSection() {
 
   // gsap
   const containerRef = useRef<HTMLDivElement>(null!);
-  useGsapFadeInOnScroll(containerRef);
+
+  useGsapFadeInOnScroll(containerRef, '.gsap-fade-in', comments.length > 0);
 
   // 컴포넌트 마운트 후 userId 세팅
   useEffect(() => {
@@ -143,11 +144,9 @@ export default function CommentsSection() {
           </div>
         </header>
         <div className="gsap-fade-in m-auto flex w-full flex-col gap-8 sm:max-w-lg">
+          {/* border-4 border-white */}
           <div
-            className={`focus-within:ring-primary/50 flex items-center justify-between gap-2 rounded-full border-4 border-white bg-white shadow-md focus-within:ring-2`}
-            style={{
-              boxShadow: '0 8px 16px -4px rgba(162, 132, 94, 0.25)',
-            }}
+            className={`focus-within:ring-primary/50 border-primary-lighter/60 flex items-center justify-between gap-2 rounded-full border bg-white p-1 focus-within:ring-2`}
           >
             <span aria-hidden className="pl-2 text-xl sm:text-2xl">
               🥹
@@ -168,12 +167,7 @@ export default function CommentsSection() {
             </Button>
           </div>
           {comments.length === 0 ? (
-            <div
-              className="text-primary-darker flex flex-col items-center rounded-lg bg-white py-4 shadow-md"
-              style={{
-                boxShadow: '0 8px 16px -4px rgba(162, 132, 94, 0.25)',
-              }}
-            >
+            <div className="text-primary-darker border-primary-lighter/60 flex flex-col items-center rounded-lg border bg-white py-4">
               <p>아직 아무 얘기도 없네요. 🥲</p>
               <p>첫 번째 한 마디를 남겨주세요!</p>
             </div>
@@ -186,10 +180,7 @@ export default function CommentsSection() {
                 return (
                   <li
                     key={comment.id}
-                    className="relative flex flex-col gap-2 rounded-lg bg-white p-4 shadow-md"
-                    style={{
-                      boxShadow: '0 8px 16px -4px rgba(162, 132, 94, 0.25)',
-                    }}
+                    className="border-primary-lighter/60 relative flex flex-col gap-2 rounded-lg border bg-white p-4"
                   >
                     <dl className="text-primary-darkest grid grid-cols-[auto_1fr] items-center gap-x-3 text-sm">
                       <div className="row-span-2">

@@ -9,16 +9,10 @@ import ProjectsSection from '@/components/home/projects';
 import CommentsSection from '@/components/home/comments';
 import { supabase } from '@/lib/supabase';
 
-import { PersonalDataTypes } from '@/types/personal-data-types';
 import { ExperienceDataTypes } from '@/types/experience-data-type';
 import { ProjectsDataTypes } from '@/types/projects-data-type';
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  // personal
-  const { data: personalData, error: personalError } = await supabase
-    .from('personal')
-    .select('*');
-
   // experience
   const { data: experienceData, error: experienceError } = await supabase
     .from('experience')
@@ -29,21 +23,13 @@ export const getServerSideProps: GetServerSideProps = async () => {
     .from('projects')
     .select('*');
 
-  if (
-    personalError ||
-    experienceError ||
-    projectsError ||
-    !personalData ||
-    !experienceData ||
-    !projectsData
-  ) {
+  if (experienceError || projectsError || !experienceData || !projectsData) {
     return {
       props: {
         personalData: [],
         experienceData: [],
         projectsData: [],
         error:
-          personalError?.message ||
           experienceError?.message ||
           projectsError?.message ||
           '🚫 알 수 없는 오류가 발생했어요.',
@@ -53,7 +39,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   return {
     props: {
-      personalData: personalData ?? [],
       experienceData: experienceData ?? [],
       projectsData: projectsData ?? [],
     },
@@ -61,20 +46,18 @@ export const getServerSideProps: GetServerSideProps = async () => {
 };
 
 export default function Home({
-  personalData,
   experienceData,
   projectsData,
 }: {
-  personalData: PersonalDataTypes[];
   experienceData: ExperienceDataTypes[];
   projectsData: ProjectsDataTypes[];
 }) {
-  const circleKeywords = ['Overall', 'Design', 'Develop', 'Cooperation'];
+  const circleKeywords = ['Overall', 'Design', 'Development', 'Cooperation'];
 
   return (
     <>
       <Visual />
-      <AboutSection introduction={personalData[0].greeting} />
+      <AboutSection />
       <CircleSection keywords={circleKeywords} />
       <ExperienceSection data={experienceData} />
       <ProjectsSection data={projectsData} />

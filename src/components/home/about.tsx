@@ -1,117 +1,91 @@
 'use client';
 
-import Link from 'next/link';
 import React, { useRef } from 'react';
 
 import SectionTitle from '@/components/section-title';
+import Button from '@/components/button';
 import Icon from '@/components/icon';
 import IconImg from '@/components/icon-image';
 import StackIcon from '@/components/stack-icon';
 import { useGsapFadeInOnScroll } from '@/hooks/useGsapFadeInOnScroll';
+import { homeAboutMenu } from '@/constants/personal';
+import Image from 'next/image';
 
-export default function AboutSection({
-  introduction,
-}: {
-  introduction: string[];
-}) {
+export default function AboutSection() {
   const containerRef = useRef<HTMLDivElement>(null!);
 
   useGsapFadeInOnScroll(containerRef);
 
-  const aboutMenu = [
-    {
-      icon: 'github',
-      label: 'GitHub',
-      link: process.env.NEXT_PUBLIC_GITHUB!,
-      isExternal: true,
-    },
-    {
-      icon: 'velog',
-      label: 'Velog',
-      link: process.env.NEXT_PUBLIC_VELOG!,
-      isExternal: true,
-    },
-    {
-      icon: 'download',
-      label: '이력서 다운로드',
-      link: '/',
-      download: true,
-    },
-  ];
-
   return (
     <section className="px-6 py-20">
-      <div ref={containerRef} className="relative m-auto w-4xl">
-        <div className="gsap-fade-in absolute top-12 left-[420px] z-10 flex flex-col gap-8">
-          <header className="text-primary flex items-end gap-8">
+      <div
+        ref={containerRef}
+        className="flex flex-col gap-8 sm:relative sm:m-auto sm:max-w-4xl"
+      >
+        <div className="gsap-fade-in flex flex-col gap-4 sm:absolute sm:top-6 sm:right-[160px] sm:z-10 sm:gap-6">
+          <header className="flex items-end gap-4">
             <SectionTitle title="about" />
-            <Link href="/about">자세히 보기</Link>
+            <Button href="/about" variant="tertiary">
+              자세히 보기
+            </Button>
           </header>
-          <div className="max-w-[400px] whitespace-normal">
-            {introduction.map((intro, index) => {
-              const splitText = intro.split(/(사용자 경험을|웹을)/);
-              return (
-                <p key={index}>
-                  {splitText.map((part, idx) => {
-                    if (part === '사용자 경험을' || part === '웹을') {
-                      return (
-                        <React.Fragment key={idx}>
-                          {part}
-                          <br />
-                        </React.Fragment>
-                      );
-                    }
-                    return <React.Fragment key={idx}>{part}</React.Fragment>;
-                  })}
-                </p>
-              );
-            })}
+          <div className="text-sm sm:text-base">
+            <p>
+              안녕하세요. 기술과 디자인의 경계에서
+              <br />더 나은 사용자 경험을 설계하고 구현하는
+              <br />
+              UI 개발자 안지인입니다.
+            </p>
+            <p>
+              UX/UI 디자인과 퍼블리싱 경험을 바탕으로
+              <br />
+              사용자 중심의 웹을 고민하며 프론트엔드 개발자로
+              <br />한 걸음씩 성장해가고 있습니다.
+            </p>
           </div>
         </div>
-        <div className="gsap-fade-in absolute right-0 bottom-[48px]">
-          <ul className="flex flex-col gap-6">
-            {aboutMenu.map(({ icon, label, link, isExternal, download }) => {
-              const content = (
-                <>
-                  {isExternal ? (
-                    <StackIcon id={icon} size={20} className="shrink-0" />
-                  ) : (
-                    <IconImg
-                      src="/icons/open_file_folder.png"
-                      alt="이력서 다운로드 아이콘"
-                      className="shrink-0"
-                    />
-                  )}
-                  <span className="w-full">{label}</span>
-                  <Icon id="direction-right" size={20} className="shrink-0" />
-                </>
-              );
 
-              return (
-                <li key={label}>
-                  {download ? (
-                    <a
-                      href={link}
-                      download
-                      className="hover:text-primary flex items-center justify-between gap-4"
-                    >
-                      {content}
-                    </a>
-                  ) : (
-                    <Link
-                      href={link}
-                      target="_blank"
-                      className="hover:text-primary flex items-center justify-between gap-4"
-                    >
-                      {content}
-                    </Link>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-        <figure className="gsap-fade-in flex h-[614px] w-[460px] items-center justify-center bg-white"></figure>
+        <ul className="gsap-fade-in order-3 flex flex-col gap-2 sm:absolute sm:right-6 sm:bottom-6 sm:z-10">
+          {homeAboutMenu.map(({ label, href, isExternal, download }) => {
+            const icon = isExternal ? (
+              <StackIcon id={label} size={20} />
+            ) : (
+              <IconImg
+                src="/icons/open_file_folder.png"
+                alt="이력서 다운로드 아이콘"
+                size={20}
+              />
+            );
+
+            const linkProps = {
+              href,
+              className:
+                'focus-ring flex items-center justify-between gap-2 px-4 py-2 rounded-sm sm:bg-primary-lightest/40',
+              ...(download
+                ? { download: true }
+                : { target: '_blank', rel: 'noopener noreferrer' }),
+            };
+
+            return (
+              <li key={`${label}-${href}`}>
+                <a {...linkProps}>
+                  {icon}
+                  <span className="grow text-left">{label}</span>
+                  <Icon id="direction-right" size={20} />
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+
+        <figure className="gsap-fade-in aspect-square overflow-hidden sm:aspect-auto">
+          <Image
+            src="/images/home/bg_about.png"
+            alt="사막"
+            width={460}
+            height={614}
+          />
+        </figure>
       </div>
     </section>
   );
