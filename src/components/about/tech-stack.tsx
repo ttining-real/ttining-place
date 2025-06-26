@@ -23,8 +23,9 @@ export default function TechStack({ data }: Props) {
         </header>
         <div className="flex flex-col gap-6">
           {data.map((section) => (
-            <div
+            <article
               key={section.id}
+              id={section.title}
               className="gsap-fade-in border-primary/10 rounded-lg border bg-white p-6 shadow-sm"
               style={{
                 boxShadow: '0 0 16px 0 rgba(162, 132, 94, 0.25)',
@@ -56,7 +57,7 @@ export default function TechStack({ data }: Props) {
                   </div>
                 ))}
               </div>
-            </div>
+            </article>
           ))}
         </div>
       </div>

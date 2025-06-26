@@ -1,103 +1,102 @@
-import ActivitiesSection from '@/components/about/activities-section';
-import CareerSection from '@/components/about/career-section';
-import CertificatesSection from '@/components/about/certificates-section';
-import EducationSection from '@/components/about/education-section';
-import PersonalSection from '@/components/about/personal-section';
-import TrainingSection from '@/components/about/training-section';
-import { supabase } from '@/lib/supabase';
-import { CareersDataTypes } from '@/types/career-types';
-import { EducationDataTypes } from '@/types/education-types';
-import { CertificatesDataTypes } from '@/types/certificates-types';
-import { TrainingDataTypes } from '@/types/training-types';
-import { ActivitiesDataTypes } from '@/types/activities-types';
 import { GetServerSideProps } from 'next';
-import { PersonalDataTypes } from '@/types/personal-types';
+import React from 'react';
+
+import Introduce from '@/components/about/introduce';
+import Profile from '@/components/about/profile';
+import TechStack from '@/components/about/tech-stack';
+import { supabase } from '@/lib/supabase';
+import { ExperienceDataTypes } from '@/types/experience-data-type';
+import { EducationDataTypes } from '@/types/education-data-types';
+import { CertificatesDataTypes } from '@/types/certificates-data-types';
+import { TrainingDataTypes } from '@/types/training-data-types';
+import { StackDataTypes } from '@/types/stacks-data-types';
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const { data: personalData, error: personalError } = await supabase
-    .from('personal')
-    .select('*');
-  const { data: careerData, error: careerError } = await supabase
-    .from('careers')
-    .select('*');
+  const { data: experienceData, error: experienceError } = await supabase
+    .from('experience')
+    .select('id, type, company_name, department, start_date, end_date')
+    .order('start_date', { ascending: false });
+
   const { data: educationData, error: educationError } = await supabase
     .from('education')
-    .select('*');
-  const { data: trainingData, error: trainingError } = await supabase
-    .from('training')
-    .select('*');
+    .select('id, school_name, major, start_date, end_date, note')
+    .order('start_date', { ascending: false });
+
   const { data: certificatesData, error: certificatesError } = await supabase
     .from('certificates')
-    .select('*');
-  const { data: activitiesData, error: activitiesError } = await supabase
-    .from('activities')
-    .select('*');
+    .select('id, title, organization, issued_date')
+    .order('issued_date', { ascending: false });
 
-  if (
-    personalError ||
-    careerError ||
-    educationError ||
-    certificatesError ||
-    activitiesError
-  ) {
+  const { data: trainingData, error: trainingError } = await supabase
+    .from('training')
+    .select('id, title, organization, start_date, end_date')
+    .order('start_date', { ascending: false });
+
+  const { data: stackData, error: stackError } = await supabase.from(
+    'stack_sections',
+  ).select(`
+    *,
+    stack_items (
+      *,
+      stack_icons (
+        *
+      )
+    )
+  `);
+
+  if (experienceError) {
     return {
       props: {
-        personalData: null,
-        careerData: null,
-        educationData: null,
-        trainingnData: null,
-        certificatesData: null,
-        activitiesData: null,
+        experienceData: [],
+        educationData: [],
+        certificatesData: [],
+        trainingData: [],
+        stackData: [],
         error:
-          personalError?.message ||
-          careerError?.message ||
+          experienceError?.message ||
           educationError?.message ||
-          trainingError?.message ||
           certificatesError?.message ||
-          activitiesError?.message,
+          trainingError?.message ||
+          stackError?.message ||
+          '🚫 알 수 없는 오류가 발생했어요!',
       },
     };
   }
 
   return {
     props: {
-      personalData: personalData as PersonalDataTypes[],
-      careerData: careerData as CareersDataTypes[],
-      educationData: educationData as EducationDataTypes[],
-      trainingData: trainingData as TrainingDataTypes[],
-      certificatesData: certificatesData as CertificatesDataTypes[],
-      activitiesData: activitiesData as ActivitiesDataTypes[],
+      experienceData: experienceData ?? [],
+      educationData: educationData ?? [],
+      certificatesData: certificatesData ?? [],
+      trainingData: trainingData ?? [],
+      stackData: stackData ?? [],
     },
   };
 };
 
 export default function Page({
-  personalData,
-  careerData,
+  experienceData,
   educationData,
-  trainingData,
   certificatesData,
-  activitiesData,
+  trainingData,
+  stackData,
 }: {
-  personalData: PersonalDataTypes[] | null;
-  careerData: CareersDataTypes[] | null;
-  educationData: EducationDataTypes[] | null;
-  trainingData: TrainingDataTypes[] | null;
-  certificatesData: CertificatesDataTypes[] | null;
-  activitiesData: ActivitiesDataTypes[] | null;
+  experienceData: ExperienceDataTypes[];
+  educationData: EducationDataTypes[];
+  certificatesData: CertificatesDataTypes[];
+  trainingData: TrainingDataTypes[];
+  stackData: StackDataTypes[];
 }) {
-  console.log(careerData);
-
   return (
-    <>
-      <PersonalSection personalData={personalData} />
-      {careerData && <CareerSection careerData={careerData} />}
-      {educationData && <EducationSection educationData={educationData} />}
-      {certificatesData && (
-        <CertificatesSection certificatesData={certificatesData} />
-      )}
-      {activitiesData && <ActivitiesSection activitiesData={activitiesData} />}
-      {trainingData && <TrainingSection trainingData={trainingData} />}
-    </>
+    <div className="flex flex-col">
+      <Introduce />
+      <Profile
+        experienceData={experienceData}
+        educationData={educationData}
+        certificatesData={certificatesData}
+        trainingData={trainingData}
+      />
+      <TechStack data={stackData} />
+    </div>
   );
 }
