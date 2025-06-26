@@ -4,6 +4,10 @@ export const NAVIGATE = [
     label: 'about',
   },
   {
+    href: '/resume',
+    label: 'resume',
+  },
+  {
     href: '/experience',
     label: 'experience',
   },
