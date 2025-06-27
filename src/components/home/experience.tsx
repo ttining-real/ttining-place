@@ -37,6 +37,7 @@ export default function ExperienceSection({
           {sortData.map((item) => (
             <Card
               key={item.id}
+              href={`/experience/#${item.slug}`}
               type="experience"
               title={item.company_name}
               position={item.position}

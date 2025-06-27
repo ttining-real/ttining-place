@@ -41,6 +41,7 @@ export default function ProjectsSection({
           {sortData.map((item) => (
             <Card
               key={item.id}
+              href={item.slug ? `/projects/${item.slug}` : '/projects'}
               type="projects"
               title={item.title}
               period={`${formatDate(item.start_date)} ~ ${formatDate(item.end_date)}`}

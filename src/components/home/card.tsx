@@ -6,6 +6,7 @@ import Chip from '@/components/chip';
 
 type CardProps = {
   type: 'experience' | 'projects';
+  href: string;
   title: string;
   position?: string;
   department?: string;
@@ -16,6 +17,7 @@ type CardProps = {
 
 export default function Card({
   type,
+  href,
   title,
   position,
   department,
@@ -44,10 +46,7 @@ export default function Card({
 
   return (
     <article>
-      <Link
-        href={`/${type}/${title}`}
-        className="focus-ring flex h-full flex-col rounded-xl"
-      >
+      <Link href={href} className="focus-ring flex h-full flex-col rounded-xl">
         <figure
           className={`flex aspect-video items-center justify-center overflow-hidden rounded-xl border backdrop-blur-lg ${figureClassName}`}
         >

@@ -1,5 +1,6 @@
 export interface ExperienceDataTypes {
   id: string;
+  slug: string;
   type: 'career' | 'activity';
   company_name: string;
   department: string;

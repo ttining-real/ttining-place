@@ -84,6 +84,7 @@ export default function Page({ data }: { data: ExperienceDataTypes[] }) {
             return (
               <motion.div
                 key={item.id}
+                id={item.slug}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
@@ -122,14 +123,24 @@ export default function Page({ data }: { data: ExperienceDataTypes[] }) {
                       aria-controls={`details-${item.id}`}
                       className="focus-ring text-primary mt-2 inline-flex items-center gap-1 rounded-sm text-sm font-medium"
                     >
-                      <span>{isOpen ? '접기' : '자세히 보기'}</span>
-                      <motion.div
+                      <motion.span
                         animate={{ rotate: isOpen ? 180 : 0 }}
                         transition={{ duration: 0.3 }}
                         className="inline-block"
                       >
                         <Icon id="arrow-bottom" size={16} />
-                      </motion.div>
+                      </motion.span>
+                      <AnimatePresence mode="wait" initial={false}>
+                        <motion.span
+                          key={isOpen ? '접기' : '자세히 보기'}
+                          initial={{ opacity: 0, y: 4 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -4 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          {isOpen ? '접기' : '자세히 보기'}
+                        </motion.span>
+                      </AnimatePresence>
                     </button>
 
                     {/* 아코디언 상세 영역 */}
