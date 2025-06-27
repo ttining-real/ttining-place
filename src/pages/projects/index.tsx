@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { GetServerSideProps } from 'next';
 import { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -82,10 +83,13 @@ export default function Page({ data }: { data: ProjectsDataTypes[] }) {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3 }}
-                className="border-primary/20 flex flex-col gap-4 rounded-xl border bg-white p-4 shadow-sm"
+                className="border-primary/20 flex flex-col gap-4 rounded-xl border bg-white shadow-sm"
                 style={{ boxShadow: '0px 0px 16px 0px rgba(162,132,94,0.25)' }}
               >
-                <div className="flex flex-col gap-6">
+                <Link
+                  href={`/projects/${item.slug}`}
+                  className="focus-ring flex h-full flex-col gap-6 rounded-xl p-4"
+                >
                   <div className="order-2">
                     <h3 className="mb-2 font-semibold">{item.title}</h3>
                     <dl className="flex flex-col gap-2 text-sm">
@@ -123,7 +127,7 @@ export default function Page({ data }: { data: ProjectsDataTypes[] }) {
                       <LoadingSpinner />
                     )}
                   </figure>
-                </div>
+                </Link>
               </motion.div>
             );
           })}
