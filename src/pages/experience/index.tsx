@@ -5,9 +5,10 @@ import { GetServerSideProps } from 'next';
 import { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+import { experienceTabs as tabs } from '@/constants/tabs';
 import Icon from '@/components/icon';
 import StackIcon from '@/components/stack-icon';
-import { experienceTabs as tabs } from '@/constants/tabs';
+import TabSelector from '@/components/tab-selector';
 import { supabase } from '@/lib/supabase';
 import { formatDate } from '@/lib/formatDate';
 import { ExperienceDataTypes } from '@/types/experience-data-type';
@@ -69,32 +70,12 @@ export default function Page({ data }: { data: ExperienceDataTypes[] }) {
   };
 
   return (
-    <section className="m-auto flex min-h-[calc(100vh-273px)] w-full max-w-4xl flex-col items-start gap-6 px-6 py-12">
+    <section className="m-auto min-h-[calc(100vh-273px)] max-w-5xl px-6 py-12">
       {/* 탭 메뉴 */}
-      <div className="bg-primary/20 relative flex w-full items-center gap-2 rounded-full p-1.5 sm:w-fit">
-        {tabs.map((tab) => {
-          const isActive = selected === tab;
-          return (
-            <button
-              key={tab}
-              onClick={() => setSelected(tab)}
-              className={`focus-ring relative z-10 flex flex-1 items-center justify-center rounded-full py-2 font-medium capitalize transition-colors sm:px-6 ${isActive ? 'text-white' : 'text-primary'}`}
-            >
-              {isActive && (
-                <motion.div
-                  layoutId="pill"
-                  transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-                  className="bg-primary absolute inset-0 z-0 rounded-full shadow-sm"
-                />
-              )}
-              <span className="relative z-10">{tab}</span>
-            </button>
-          );
-        })}
-      </div>
+      <TabSelector tabs={tabs} selected={selected} onChange={setSelected} />
 
       {/* 리스트 영역 */}
-      <div className="space-y-4">
+      <div className="space-y-6">
         <AnimatePresence>
           {filtered.map((item) => {
             const isOpen = openId === item.id;
@@ -106,11 +87,11 @@ export default function Page({ data }: { data: ExperienceDataTypes[] }) {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3 }}
-                className="border-primary/20 flex flex-col gap-4 rounded-xl border bg-white p-4 shadow-sm"
+                className="border-primary/20 flex flex-col gap-4 rounded-2xl border bg-white p-6 shadow-sm"
                 style={{ boxShadow: '0px 0px 16px 0px rgba(162,132,94,0.25)' }}
               >
-                <div className="flex flex-col items-start gap-6 sm:flex-row">
-                  <figure className="bg-primary/10 flex aspect-4/3 w-full shrink-0 items-center justify-center overflow-hidden rounded-xl backdrop-blur-lg sm:max-w-[240px]">
+                <div className="xs:flex-row flex flex-col items-start gap-6">
+                  <figure className="bg-primary/10 xs:max-w-[180px] flex aspect-4/3 w-full shrink-0 items-center justify-center overflow-hidden rounded-xl backdrop-blur-lg sm:max-w-[240px]">
                     <Image
                       src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/careers/${item.image_url}`}
                       alt={`${item.company_name} 로고`}

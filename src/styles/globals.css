@@ -126,3 +126,13 @@ body {
 .hover-underline-animation.active::before {
   width: 100%;
 }
+
+/* breakpoint customizing */
+@theme {
+  --breakpoint-xs: 30rem; /* 480px */
+  /* sm : 640px */
+  /* md : 768px */
+  /* lg : 1024px */
+  /* xl : 1280px */
+  /* 2xl : 1536px */
+}
