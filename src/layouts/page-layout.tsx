@@ -26,13 +26,13 @@ export default function PageLayout({ children }: { children: ReactNode }) {
     <>
       <Header />
       <main className={`${pretendard.className}`}>
-        <div
-          className={`${Agbalumo.className} h-full bg-[url(/images/bg_subpage.png)] bg-cover bg-center px-6 pt-14 pb-6`}
+        <header
+          className={`${Agbalumo.className} bg-blue-200 bg-[url(/images/bg_subpage.png)] bg-cover bg-center pt-16`}
         >
-          <h2 className="m-auto max-w-5xl px-6 pt-10 text-2xl text-white sm:pt-20 sm:text-4xl">
+          <h2 className="m-auto max-w-5xl px-6 pt-20 pb-8 text-[32px] text-white">
             {pageTitle}
           </h2>
-        </div>
+        </header>
         {children}
         <ToTheTop />
       </main>
