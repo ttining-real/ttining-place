@@ -7,11 +7,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 import { experienceTabs as tabs } from '@/constants/tabs';
 import Icon from '@/components/icon';
-import StackIcon from '@/components/stack-icon';
+import Chip from '@/components/chip';
 import TabSelector from '@/components/tab-selector';
 import { supabase } from '@/lib/supabase';
 import { formatDate } from '@/lib/formatDate';
 import { ExperienceDataTypes } from '@/types/experience-data-type';
+import LoadingSpinner from './../../components/loading-spinner';
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const { data, error } = await supabase.from('experience').select('*');
@@ -92,13 +93,17 @@ export default function Page({ data }: { data: ExperienceDataTypes[] }) {
               >
                 <div className="xs:flex-row flex flex-col items-start gap-6">
                   <figure className="bg-primary/10 xs:max-w-[180px] flex aspect-4/3 w-full shrink-0 items-center justify-center overflow-hidden rounded-xl backdrop-blur-lg sm:max-w-[240px]">
-                    <Image
-                      src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/careers/${item.image_url}`}
-                      alt={`${item.company_name} 로고`}
-                      width={340}
-                      height={200}
-                      className="aspect-video w-full"
-                    />
+                    {item.image_url ? (
+                      <Image
+                        src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/careers/${item.image_url}`}
+                        alt={`${item.company_name} 로고`}
+                        width={340}
+                        height={200}
+                        className="aspect-video w-full"
+                      />
+                    ) : (
+                      <LoadingSpinner />
+                    )}
                   </figure>
 
                   <div className="order-2 flex flex-1 flex-col gap-2">
@@ -163,18 +168,10 @@ export default function Page({ data }: { data: ExperienceDataTypes[] }) {
                               <dt className="text-primary mb-2 font-medium">
                                 기술 스택
                               </dt>
-                              <dd>
-                                <ul className="text-primary-darker flex flex-wrap gap-1">
-                                  {item.tech_stack.map((stack, index) => (
-                                    <li
-                                      key={index}
-                                      className="border-primary-lighter flex items-center gap-1 rounded-2xl border px-3 py-1"
-                                    >
-                                      <StackIcon id={stack} size={20} />
-                                      {stack}
-                                    </li>
-                                  ))}
-                                </ul>
+                              <dd className="flex flex-wrap gap-1">
+                                {item.tech_stack.map((stack, index) => (
+                                  <Chip key={index} id={stack} icon={true} />
+                                ))}
                               </dd>
                             </div>
                             <div>

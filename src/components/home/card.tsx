@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
+
 import LoadingSpinner from '@/components/loading-spinner';
+import Chip from '@/components/chip';
 
 type CardProps = {
   type: 'experience' | 'projects';
@@ -38,13 +40,7 @@ export default function Card({
     projects: 'bg-white/10 border-white/30',
   };
 
-  const chipClassMap = {
-    experience: 'border-primary/60 text-primary-darker',
-    projects: 'bg-white/10 border-white/30',
-  };
-
   const figureClassName = figureClassMap[type] ?? '';
-  const chipClassName = chipClassMap[type] ?? '';
 
   return (
     <article>
@@ -95,17 +91,17 @@ export default function Card({
 
           <div className="pt-2">
             <dt className="sr-only">담당 업무</dt>
-            <dd>
-              <ul className="flex flex-wrap gap-1">
-                {role.map((item, index) => (
-                  <li
-                    key={index}
-                    className={`rounded-2xl border px-3 py-1 ${chipClassName}`}
-                  >
-                    {item}
-                  </li>
-                ))}
-              </ul>
+            <dd className="flex flex-wrap gap-1">
+              {role.map((item, index) => (
+                <Chip
+                  key={index}
+                  id={item}
+                  {...(type === 'projects' && {
+                    className:
+                      'border-white/40 text-primary-darkest bg-white/5',
+                  })}
+                />
+              ))}
             </dd>
           </div>
         </dl>
