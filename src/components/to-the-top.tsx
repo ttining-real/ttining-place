@@ -9,7 +9,7 @@ export default function ToTheTop() {
 
   return (
     <button
-      className="bg-primary/90 focus:outline-primary/50 border-primary/30 hover:bg-primary fixed right-6 bottom-6 flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border-2 focus:outline-2 focus:outline-offset-2"
+      className="bg-primary/90 border-primary/30 hover:bg-primary focus-ring fixed right-6 bottom-6 flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border-2"
       onClick={handleTopPosition}
       aria-label="맨 위로 이동"
     >
