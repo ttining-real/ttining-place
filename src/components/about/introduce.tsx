@@ -70,7 +70,7 @@ export default function Introduce() {
             {contact.map((item, index) => (
               <div key={index} className="flex items-center gap-4">
                 <dt>
-                  <IconImg src={item.src} alt={item.alt} />
+                  <IconImg id={item.src} alt={item.alt} />
                 </dt>
                 <dd className="flex items-center gap-4">
                   {item.site ? (

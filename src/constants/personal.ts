@@ -1,16 +1,16 @@
 export const contact = [
   {
     href: process.env.NEXT_PUBLIC_PHONE,
-    src: '/icons/telephone.png',
+    src: 'telephone',
     alt: '연락처 아이콘',
   },
   {
     href: process.env.NEXT_PUBLIC_EMAIL,
-    src: '/icons/e-mail.png',
+    src: 'e-mail',
     alt: '이메일 아이콘',
   },
   {
-    src: '/icons/web_site.png',
+    src: 'web_site',
     alt: '웹 사이트 아이콘',
     site: [
       {

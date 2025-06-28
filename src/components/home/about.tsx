@@ -51,7 +51,7 @@ export default function AboutSection() {
               <StackIcon id={label} size={20} />
             ) : (
               <IconImg
-                src="/icons/open_file_folder.png"
+                id="open_file_folder"
                 alt="이력서 다운로드 아이콘"
                 size={20}
               />

@@ -1,25 +1,26 @@
 import Image from 'next/image';
 
 type IconImgProps = {
-  src: string;
+  id: string;
   alt: string;
   size?: number;
   className?: string;
 };
 
+// icons 폴더 내 png 이미지만 사용
 export default function IconImg({
-  src,
+  id,
   alt,
   size = 24,
   className,
 }: IconImgProps) {
   return (
     <Image
-      src={src}
+      src={`/icons/${id}.png`}
+      alt={alt}
       width={size}
       height={size}
       className={className}
-      alt={alt}
     />
   );
 }
