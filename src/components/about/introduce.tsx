@@ -19,11 +19,11 @@ export default function Introduce() {
     <section id="introduce" className="py-12">
       <div
         ref={containerRef}
-        className="m-auto flex max-w-5xl flex-col items-center justify-between gap-8 px-6 sm:flex-row sm:gap-10 md:gap-20"
+        className="m-auto flex max-w-5xl flex-col justify-between gap-8 px-6 sm:flex-row sm:items-center sm:gap-10 md:gap-20"
       >
         <div className="flex flex-col gap-8">
           <header className="gsap-fade-in flex items-baseline gap-4">
-            <SectionTitle title="introduce" className="text-[20px]" />
+            <SectionTitle title="introduce" />
           </header>
           <div className="gsap-fade-in flex flex-col">
             <p>
@@ -98,13 +98,13 @@ export default function Introduce() {
             ))}
           </dl>
         </div>
-        <figure className="gsap-fade-in bg-primary/20 flex aspect-square w-[300px] min-w-[200px] items-center justify-center rounded-3xl">
+        <figure className="gsap-fade-in bg-primary/20 flex aspect-video items-center justify-center rounded-3xl p-6 sm:aspect-square sm:w-[300px] sm:min-w-[200px]">
           <Image
             src="/images/memoji.png"
             alt="지인의 미모티콘"
             width={390}
             height={422}
-            className="w-2/3"
+            className="w-1/2 sm:w-2/3"
             priority
           />
         </figure>

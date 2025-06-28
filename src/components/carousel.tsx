@@ -45,7 +45,7 @@ export default function Carousel({
         </Slide>
       </AnimatePresence>
       {childArray.length > ITEMS_SLIDE && (
-        <div className="absolute top-[-80px] right-0 flex gap-2">
+        <div className="absolute top-[-92px] right-0 flex gap-2">
           <motion.button
             initial={false}
             aria-label="이전 슬라이드"
@@ -80,6 +80,14 @@ const Slide = forwardRef(function Slide(
   },
   ref: React.Ref<HTMLDivElement>,
 ) {
+  const childArray = Children.toArray(children);
+  const placeholders = Array.from({ length: 3 - childArray.length }, (_, i) => (
+    <div
+      key={`placeholder-${i}`}
+      className="bg-primary-darker/10 rounded-2xl"
+    />
+  ));
+
   return (
     <motion.div
       ref={ref}
@@ -98,6 +106,7 @@ const Slide = forwardRef(function Slide(
     >
       <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-3">
         {children}
+        {placeholders}
       </div>
     </motion.div>
   );

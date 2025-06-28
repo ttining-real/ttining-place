@@ -19,8 +19,8 @@ export default function TabSelector<T extends string>({
           <button
             key={tab}
             onClick={() => onChange(tab)}
-            className={`focus-ring relative z-10 flex flex-1 items-center justify-center rounded-full py-2 font-medium capitalize transition-colors sm:px-6 ${
-              isActive ? 'text-white' : 'text-primary'
+            className={`focus-ring hover:bg-primary/20 hover:text-primary-darker relative z-10 flex flex-1 items-center justify-center rounded-full py-2 font-medium whitespace-nowrap capitalize transition-colors sm:px-6 ${
+              isActive ? 'text-white hover:text-white' : 'text-primary'
             }`}
           >
             {isActive && (

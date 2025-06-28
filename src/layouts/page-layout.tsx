@@ -29,7 +29,7 @@ export default function PageLayout({ children }: { children: ReactNode }) {
         <header
           className={`${Agbalumo.className} bg-blue-200 bg-[url(/images/bg_subpage.png)] bg-cover bg-center pt-16`}
         >
-          <h2 className="m-auto max-w-5xl px-6 pt-20 pb-8 text-[32px] text-white">
+          <h2 className="xs:text-[48px] m-auto max-w-5xl px-6 pt-20 pb-8 text-3xl text-white">
             {pageTitle}
           </h2>
         </header>

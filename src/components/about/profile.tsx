@@ -40,7 +40,7 @@ export default function Profile({
     <section className="bg-primary/20 py-12">
       <div
         ref={containerRef}
-        className="m-auto flex max-w-5xl flex-col gap-8 px-6"
+        className="m-auto flex max-w-5xl flex-col gap-12 px-6"
       >
         <header className="gsap-fade-in">
           <SectionTitle title="profile" />
