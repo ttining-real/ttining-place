@@ -10,6 +10,8 @@ import Chip from '@/components/chip';
 import TabSelector from '@/components/tab-selector';
 import { supabase } from '@/lib/supabase';
 import { formatDate } from '@/lib/formatDate';
+import { sortedProjectsData } from '@/lib/sortedData';
+
 import { ProjectsDataTypes } from '@/types/projects-data-type';
 
 export const getServerSideProps: GetServerSideProps = async () => {
@@ -35,17 +37,7 @@ type Tab = (typeof tabs)[number];
 export default function Page({ data }: { data: ProjectsDataTypes[] }) {
   const [selected, setSelected] = useState<Tab>('all');
 
-  const sortedData = useMemo(() => {
-    return [...data].sort((a, b) => {
-      // 1. type 기준 정렬: main이 먼저
-      if (a.type !== b.type) {
-        return a.type === 'main' ? -1 : 1;
-      }
-
-      // 2. 같은 type이면 display_order 오름차순
-      return a.display_order - b.display_order;
-    });
-  }, [data]);
+  const sortedData = useMemo(() => sortedProjectsData(data), [data]);
 
   const main = useMemo(
     () => sortedData.filter((item) => item.type === 'main'),

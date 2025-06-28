@@ -9,10 +9,12 @@ import { experienceTabs as tabs } from '@/constants/tabs';
 import Icon from '@/components/icon';
 import Chip from '@/components/chip';
 import TabSelector from '@/components/tab-selector';
+import LoadingSpinner from '@/components/loading-spinner';
 import { supabase } from '@/lib/supabase';
 import { formatDate } from '@/lib/formatDate';
+import { sortedExperienceData } from '@/lib/sortedData';
+
 import { ExperienceDataTypes } from '@/types/experience-data-type';
-import LoadingSpinner from './../../components/loading-spinner';
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const { data, error } = await supabase.from('experience').select('*');
@@ -38,12 +40,7 @@ export default function Page({ data }: { data: ExperienceDataTypes[] }) {
   const [selected, setSelected] = useState<Tab>('all');
   const [openId, setOpenId] = useState<string | null>(null); // 아코디언 열린 항목 ID
 
-  const sortedData = useMemo(() => {
-    return [...data].sort(
-      (a, b) =>
-        new Date(b.start_date).getTime() - new Date(a.start_date).getTime(),
-    );
-  }, [data]);
+  const sortedData = useMemo(() => sortedExperienceData(data), [data]);
 
   const careers = useMemo(
     () => sortedData.filter((item) => item.type === 'career'),

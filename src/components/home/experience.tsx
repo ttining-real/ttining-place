@@ -1,11 +1,11 @@
-import { useRef } from 'react';
+import { useMemo, useRef } from 'react';
 
 import SectionTitle from '@/components/section-title';
 import Carousel from '@/components/carousel';
 import Card from '@/components/home/card';
 import Button from '@/components/button';
 import { useGsapFadeInOnScroll } from '@/hooks/useGsapFadeInOnScroll';
-import { sortedData } from '@/lib/sortedData';
+import { sortedExperienceData } from '@/lib/sortedData';
 import { formatDate } from '@/lib/formatDate';
 
 import { ExperienceDataTypes } from '@/types/experience-data-type';
@@ -19,7 +19,7 @@ export default function ExperienceSection({
 
   useGsapFadeInOnScroll(containerRef);
 
-  const sortData = sortedData(data);
+  const sortData = useMemo(() => sortedExperienceData(data), [data]);
 
   return (
     <section className="px-6 py-20">
