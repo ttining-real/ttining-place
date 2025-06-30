@@ -3,6 +3,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { NAVIGATE } from '@/constants/navigate';
+import { useEffect, useState } from 'react';
+import { useIsMobile } from '@/hooks/useIsMobile';
 
 type LogoIconProps = {
   size?: number;
@@ -15,7 +17,19 @@ function Logo({ size = 40 }: LogoIconProps) {
 }
 
 export default function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const isMobile = useIsMobile();
   const pathname = usePathname();
+
+  const toggleMenu = () => {
+    setIsMenuOpen((prev) => !prev);
+  };
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      setIsMenuOpen(false);
+    }
+  }, [pathname]);
 
   return (
     <header
@@ -26,24 +40,80 @@ export default function Header() {
           <Logo />
         </Link>
       </h1>
-      <nav>
-        <ul className="flex items-center gap-2">
-          {NAVIGATE.map((nav) => {
-            const isActive = pathname === nav.href;
-
-            return (
-              <li key={nav.label}>
-                <Link
-                  href={nav.href}
-                  className={`hover-transition hover-underline-animation focus-ring flex items-center rounded-sm px-4 py-3 ${isActive ? 'active text-primary-darkest' : 'text-primary-darker'}`}
-                >
-                  {nav.label}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      </nav>
+      {isMobile && (
+        <button
+          type="button"
+          className="flex h-6 w-6 cursor-pointer flex-col justify-between border-none bg-none px-0.5 py-1 sm:hidden"
+          aria-label="메뉴 열기"
+          aria-expanded={isMenuOpen}
+          aria-pressed={isMenuOpen}
+          aria-controls="main-nav"
+          onClick={toggleMenu}
+        >
+          <span
+            className={`bg-primary-darker block h-[2px] w-full origin-center rounded transition-transform duration-300 ease-in-out ${
+              isMenuOpen ? 'translate-y-[7px] rotate-45' : ''
+            }`}
+          ></span>
+          <span
+            className={`bg-primary-darker block h-[2px] w-full rounded transition-opacity duration-300 ease-in-out ${
+              isMenuOpen ? 'opacity-0' : ''
+            }`}
+          ></span>
+          <span
+            className={`bg-primary-darker block h-[2px] w-full origin-center rounded transition-transform duration-300 ease-in-out ${
+              isMenuOpen ? 'translate-y-[-7px] -rotate-45' : ''
+            }`}
+          ></span>
+        </button>
+      )}
+      {isMobile ? (
+        <nav
+          className={`fixed top-[64px] right-0 z-50 h-[calc(100vh-64px)] w-[80%] transform bg-white transition-transform duration-300 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} `}
+        >
+          <ul className="flex flex-col gap-2 px-4 py-6">
+            {NAVIGATE.map((nav) => {
+              const isActive = pathname === nav.href;
+              return (
+                <li key={nav.label}>
+                  <Link
+                    href={nav.href}
+                    className={`hover:bg-primary/20 block rounded px-4 py-3 text-base ${
+                      isActive
+                        ? 'text-primary-darkest bg-primary/20'
+                        : 'text-primary-darker'
+                    }`}
+                  >
+                    {nav.label}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+      ) : (
+        <nav>
+          <ul className="flex flex-row items-center gap-4">
+            {NAVIGATE.map((nav) => {
+              const isActive = pathname === nav.href;
+              return (
+                <li key={nav.label}>
+                  <Link
+                    href={nav.href}
+                    className={`hover-underline-animation px-4 py-3 text-sm ${
+                      isActive
+                        ? 'text-primary-darkest active'
+                        : 'text-primary-darker'
+                    }`}
+                  >
+                    <span className="relative">{nav.label}</span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+      )}
     </header>
   );
 }
