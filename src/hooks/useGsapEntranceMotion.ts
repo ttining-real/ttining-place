@@ -9,8 +9,7 @@ export function useGsapEntranceMotion<T extends HTMLElement>(
   useEffect(() => {
     if (!containerRef.current || !condition) return;
 
-    let ctx: gsap.Context | null = null;
-    let tweens: gsap.core.Tween[] = [];
+    let ctx: gsap.Context;
 
     const loadAnimation = async () => {
       const { ScrollTrigger } = await import('gsap/ScrollTrigger');
@@ -19,14 +18,14 @@ export function useGsapEntranceMotion<T extends HTMLElement>(
       requestAnimationFrame(() => {
         if (!containerRef.current) return;
 
-        const targets = containerRef.current.querySelectorAll(selector);
-        if (targets.length === 0) return;
-
         ctx = gsap.context(() => {
-          tweens = Array.from(targets).map((target) =>
+          const targets = containerRef.current!.querySelectorAll(selector);
+          if (targets.length === 0) return;
+
+          targets.forEach((target) => {
             gsap.fromTo(
               target,
-              { opacity: 0, scale: 0.8 },
+              { opacity: 0, scale: 0.2 },
               {
                 opacity: 1,
                 scale: 1,
@@ -34,13 +33,14 @@ export function useGsapEntranceMotion<T extends HTMLElement>(
                 ease: 'power3.out',
                 scrollTrigger: {
                   trigger: target,
-                  start: 'top 80%',
+                  start: 'top 90%',
                   toggleActions: 'play reverse play reverse', // ✅ 진입시 play, 벗어나면 reverse
+                  invalidateOnRefresh: true,
                   markers: false, // 디버깅 시 true로
                 },
               },
-            ),
-          );
+            );
+          });
         }, containerRef);
       });
     };
@@ -48,10 +48,7 @@ export function useGsapEntranceMotion<T extends HTMLElement>(
     loadAnimation();
 
     return () => {
-      if (ctx) ctx.revert();
-      tweens.forEach((tween) => tween.scrollTrigger?.kill());
-      ctx = null;
-      tweens = [];
+      ctx?.revert(); // ScrollTrigger 포함한 모든 애니메이션 정리
     };
   }, [containerRef, selector, condition]);
 }

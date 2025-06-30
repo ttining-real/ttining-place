@@ -9,27 +9,24 @@ export function useGsapFadeInOnScroll<T extends HTMLElement>(
   useEffect(() => {
     if (!containerRef.current || !condition) return;
 
-    let ctx: gsap.Context | null = null;
-    let tweens: gsap.core.Tween[] = [];
+    let ctx: gsap.Context;
 
     const loadAnimation = async () => {
       const { ScrollTrigger } = await import('gsap/ScrollTrigger');
       gsap.registerPlugin(ScrollTrigger);
 
-      // requestAnimationFrame 사용 (DOM 렌더링이 보장된 후 실행)
+      // 렌더링이 완료된 다음에 실행되도록 보장
       requestAnimationFrame(() => {
         if (!containerRef.current) return;
 
-        const targets = containerRef.current.querySelectorAll(selector);
-        if (targets.length === 0) return;
-
         ctx = gsap.context(() => {
           const targets = containerRef.current!.querySelectorAll(selector);
+          if (!targets.length) return;
 
-          tweens = Array.from(targets).map((target) =>
+          targets.forEach((target) => {
             gsap.fromTo(
               target,
-              { opacity: 0, y: 50 },
+              { opacity: 0, y: 80 },
               {
                 opacity: 1,
                 y: 0,
@@ -37,12 +34,13 @@ export function useGsapFadeInOnScroll<T extends HTMLElement>(
                 ease: 'power3.out',
                 scrollTrigger: {
                   trigger: target,
-                  start: 'top 80%',
+                  start: 'top 90%',
                   toggleActions: 'play none none reset',
+                  invalidateOnRefresh: true,
                 },
               },
-            ),
-          );
+            );
+          });
         }, containerRef);
       });
     };
@@ -50,15 +48,7 @@ export function useGsapFadeInOnScroll<T extends HTMLElement>(
     loadAnimation();
 
     return () => {
-      // gsap context가 생성된 경우에만 revert
-      if (ctx) ctx.revert();
-
-      // ScrollTrigger 해제
-      tweens.forEach((tween) => tween.scrollTrigger?.kill());
-
-      // 메모리 초기화
-      ctx = null;
-      tweens = [];
+      ctx?.revert(); // ScrollTrigger 포함한 모든 애니메이션 정리
     };
   }, [containerRef, selector, condition]);
 }
