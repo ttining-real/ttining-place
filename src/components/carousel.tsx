@@ -3,6 +3,7 @@
 import { AnimatePresence, motion, wrap } from 'motion/react';
 import { Children, forwardRef, ReactNode, useState } from 'react';
 import Icon from '@/components/icon';
+import { useResponsiveItems } from '@/hooks/useResponsiveItems';
 
 type CarouselProps = {
   children: ReactNode;
@@ -15,7 +16,8 @@ export default function Carousel({
   className,
   buttonClassName,
 }: CarouselProps) {
-  const ITEMS_SLIDE = 3;
+  // const ITEMS_SLIDE = 3;
+  const ITEMS_SLIDE = useResponsiveItems(3, 1);
 
   // children을 배열로 변환
   const childArray = Children.toArray(children);
