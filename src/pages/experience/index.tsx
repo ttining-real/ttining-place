@@ -93,7 +93,7 @@ export default function Page({ data }: { data: ExperienceDataTypes[] }) {
                   <figure className="bg-primary/10 xs:max-w-[180px] flex aspect-4/3 w-full shrink-0 items-center justify-center overflow-hidden rounded-xl backdrop-blur-lg sm:max-w-[240px]">
                     {item.image_url ? (
                       <Image
-                        src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/careers/${item.image_url}`}
+                        src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/experience/${item.image_url}.png`}
                         alt={`${item.company_name} 로고`}
                         width={340}
                         height={200}

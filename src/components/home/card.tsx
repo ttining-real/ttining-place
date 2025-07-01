@@ -1,8 +1,8 @@
-import Image from 'next/image';
 import Link from 'next/link';
 
-import LoadingSpinner from '@/components/loading-spinner';
 import Chip from '@/components/chip';
+import ImageWithFallback from '@/components/image-with-fallback';
+import NoImageFallback from '@/components/no-image-fallback';
 
 type CardProps = {
   type: 'experience' | 'projects';
@@ -25,12 +25,6 @@ export default function Card({
   role,
   image_url,
 }: CardProps) {
-  // type별로 이미지 경로 설정
-  const imageFolder = {
-    experience: 'experience',
-    projects: 'projects',
-  }[type];
-
   // type별로 타이틀 라벨 설정
   const titleLabel = {
     experience: '회사명',
@@ -51,17 +45,9 @@ export default function Card({
           className={`flex aspect-video items-center justify-center overflow-hidden rounded-xl border backdrop-blur-lg ${figureClassName}`}
         >
           {image_url ? (
-            <Image
-              src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${imageFolder}/${image_url}`}
-              alt={title}
-              width={240}
-              height={135}
-              className="w-full"
-            />
+            <ImageWithFallback type={type} imageUrl={image_url} title={title} />
           ) : (
-            <div>
-              <LoadingSpinner />
-            </div>
+            <NoImageFallback />
           )}
         </figure>
 

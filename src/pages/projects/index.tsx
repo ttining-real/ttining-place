@@ -1,13 +1,13 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { GetServerSideProps } from 'next';
 import { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import { projectsTabs as tabs } from '@/constants/tabs';
-import LoadingSpinner from '@/components/loading-spinner';
 import Chip from '@/components/chip';
 import TabSelector from '@/components/tab-selector';
+import ImageWithFallback from '@/components/image-with-fallback';
+import NoImageFallback from '@/components/no-image-fallback';
 import { supabase } from '@/lib/supabase';
 import { formatDate } from '@/lib/formatDate';
 import { sortedProjectsData } from '@/lib/sortedData';
@@ -75,7 +75,7 @@ export default function Page({ data }: { data: ProjectsDataTypes[] }) {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3 }}
-                className="border-primary/20 flex flex-col gap-4 rounded-xl border bg-white shadow-sm"
+                className="border-primary/20 flex flex-col gap-4 rounded-2xl border bg-white shadow-sm"
                 style={{ boxShadow: '0px 0px 16px 0px rgba(162,132,94,0.25)' }}
               >
                 <Link
@@ -105,18 +105,15 @@ export default function Page({ data }: { data: ProjectsDataTypes[] }) {
                       </div>
                     </dl>
                   </div>
-                  <figure className="bg-primary/10 order-1 flex aspect-video w-full shrink-0 items-center justify-center overflow-hidden rounded-xl backdrop-blur-lg">
+                  <figure className="bg-primary/10 border-primary/20 order-1 flex aspect-video w-full shrink-0 items-center justify-center overflow-hidden rounded-xl border backdrop-blur-lg">
                     {item.image_url ? (
-                      <Image
-                        src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/careers/${item.image_url}`}
-                        alt={`${item.title} 썸네일`}
-                        width={340}
-                        height={200}
-                        className="aspect-video w-full"
-                        priority
+                      <ImageWithFallback
+                        type="projects"
+                        imageUrl={item.image_url}
+                        title={item.title}
                       />
                     ) : (
-                      <LoadingSpinner />
+                      <NoImageFallback />
                     )}
                   </figure>
                 </Link>
