@@ -13,6 +13,7 @@ import { formatDate } from '@/lib/formatDate';
 import { sortedProjectsData } from '@/lib/sortedData';
 
 import { ProjectsDataTypes } from '@/types/projects-data-type';
+import Head from 'next/head';
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const { data, error } = await supabase.from('projects').select('*');
@@ -60,68 +61,81 @@ export default function Page({ data }: { data: ProjectsDataTypes[] }) {
   }, [selected, sortedData, main, side]);
 
   return (
-    <div className="m-auto max-w-5xl px-6 py-12">
-      {/* 탭 메뉴 */}
-      <TabSelector tabs={tabs} selected={selected} onChange={setSelected} />
+    <>
+      <Head>
+        <title>Jiin의 포트폴리오 - projects</title>
+        <meta property="og:image" content="/thumbnail.png" />
+        <meta property="og:title" content="Jiin의 포트폴리오 - projects" />
+        <meta
+          property="og:description"
+          content="안녕하세요. UI 개발자 안지인입니다."
+        />
+      </Head>
+      <div className="m-auto max-w-5xl px-6 py-12">
+        {/* 탭 메뉴 */}
+        <TabSelector tabs={tabs} selected={selected} onChange={setSelected} />
 
-      {/* 리스트 영역 */}
-      <div className="xs:grid-cols-2 grid grid-cols-1 gap-6 md:grid-cols-3">
-        <AnimatePresence>
-          {filtered.map((item) => {
-            return (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3 }}
-                className="border-primary/20 flex flex-col gap-4 rounded-2xl border bg-white shadow-sm"
-                style={{ boxShadow: '0px 0px 16px 0px rgba(162,132,94,0.25)' }}
-              >
-                <Link
-                  href={`/projects/${item.slug}`}
-                  className="focus-ring flex h-full flex-col gap-6 rounded-xl p-4"
+        {/* 리스트 영역 */}
+        <div className="xs:grid-cols-2 grid grid-cols-1 gap-6 md:grid-cols-3">
+          <AnimatePresence>
+            {filtered.map((item) => {
+              return (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                  className="border-primary/20 flex flex-col gap-4 rounded-2xl border bg-white shadow-sm"
+                  style={{
+                    boxShadow: '0px 0px 16px 0px rgba(162,132,94,0.25)',
+                  }}
                 >
-                  <div className="order-2">
-                    <h3 className="mb-2 font-semibold">{item.title}</h3>
-                    <dl className="flex flex-col gap-2 text-sm">
-                      <div>
-                        <dt className="sr-only">작업 기간</dt>
-                        <dd>
-                          {`${formatDate(item.start_date)} - ${formatDate(item.end_date)}`}
-                        </dd>
-                      </div>
-                      <div>
-                        <dt className="sr-only">요약</dt>
-                        <dd>{item.summary}</dd>
-                      </div>
-                      <div className="mt-1">
-                        <dt className="sr-only">역할</dt>
-                        <dd className="flex gap-1">
-                          {item.role.map((r, i) => (
-                            <Chip key={i} id={r} />
-                          ))}
-                        </dd>
-                      </div>
-                    </dl>
-                  </div>
-                  <figure className="bg-primary/10 border-primary/20 order-1 flex aspect-video w-full shrink-0 items-center justify-center overflow-hidden rounded-xl border backdrop-blur-lg">
-                    {item.image_url ? (
-                      <ImageWithFallback
-                        type="projects"
-                        imageUrl={item.image_url}
-                        title={item.title}
-                      />
-                    ) : (
-                      <NoImageFallback />
-                    )}
-                  </figure>
-                </Link>
-              </motion.div>
-            );
-          })}
-        </AnimatePresence>
+                  <Link
+                    href={`/projects/${item.slug}`}
+                    className="focus-ring flex h-full flex-col gap-6 rounded-xl p-4"
+                  >
+                    <div className="order-2">
+                      <h3 className="mb-2 font-semibold">{item.title}</h3>
+                      <dl className="flex flex-col gap-2 text-sm">
+                        <div>
+                          <dt className="sr-only">작업 기간</dt>
+                          <dd>
+                            {`${formatDate(item.start_date)} - ${formatDate(item.end_date)}`}
+                          </dd>
+                        </div>
+                        <div>
+                          <dt className="sr-only">요약</dt>
+                          <dd>{item.summary}</dd>
+                        </div>
+                        <div className="mt-1">
+                          <dt className="sr-only">역할</dt>
+                          <dd className="flex gap-1">
+                            {item.role.map((r, i) => (
+                              <Chip key={i} id={r} />
+                            ))}
+                          </dd>
+                        </div>
+                      </dl>
+                    </div>
+                    <figure className="bg-primary/10 border-primary/20 order-1 flex aspect-video w-full shrink-0 items-center justify-center overflow-hidden rounded-xl border backdrop-blur-lg">
+                      {item.image_url ? (
+                        <ImageWithFallback
+                          type="projects"
+                          imageUrl={item.image_url}
+                          title={item.title}
+                        />
+                      ) : (
+                        <NoImageFallback />
+                      )}
+                    </figure>
+                  </Link>
+                </motion.div>
+              );
+            })}
+          </AnimatePresence>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
