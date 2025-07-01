@@ -84,10 +84,7 @@ const Slide = forwardRef(function Slide(
 ) {
   const childArray = Children.toArray(children);
   const placeholders = Array.from({ length: 3 - childArray.length }, (_, i) => (
-    <div
-      key={`placeholder-${i}`}
-      className="bg-primary-darker/10 rounded-2xl"
-    />
+    <div key={`placeholder-${i}`} className="rounded-2xl bg-transparent" />
   ));
 
   return (
