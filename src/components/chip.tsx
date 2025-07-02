@@ -9,7 +9,7 @@ type ChipProps = {
 export default function Chip({ id, icon = false, className = '' }: ChipProps) {
   return (
     <span
-      className={`border-primary/60 text-primary-darker flex w-fit flex-row items-center gap-1 rounded-2xl border px-3 py-1 text-sm ${className}`}
+      className={`text-primary-darker bg-primary/15 flex w-fit flex-row items-center gap-1 rounded-2xl px-3 py-1 text-sm ${className}`}
     >
       {icon && <StackIcon id={id} size={16} />}
       {id}

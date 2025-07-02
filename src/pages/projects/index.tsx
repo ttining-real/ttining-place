@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import Link from 'next/link';
 import { GetServerSideProps } from 'next';
 import { useMemo, useState } from 'react';
@@ -13,7 +14,6 @@ import { formatDate } from '@/lib/formatDate';
 import { sortedProjectsData } from '@/lib/sortedData';
 
 import { ProjectsDataTypes } from '@/types/projects-data-type';
-import Head from 'next/head';
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const { data, error } = await supabase.from('projects').select('*');
@@ -93,7 +93,7 @@ export default function Page({ data }: { data: ProjectsDataTypes[] }) {
                 >
                   <Link
                     href={`/projects/${item.slug}`}
-                    className="focus-ring flex h-full flex-col gap-6 rounded-xl p-4"
+                    className="focus-ring flex h-full flex-col gap-6 rounded-2xl p-4"
                   >
                     <div className="order-2">
                       <h3 className="mb-2 font-semibold">{item.title}</h3>
