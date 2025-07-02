@@ -33,7 +33,7 @@ export default function Card({
 
   const figureClassMap = {
     experience: 'border-primary-lighter bg-white/30',
-    projects: 'bg-white/10 border-white/30',
+    projects: 'bg-white/10 border-white/20',
   };
 
   const figureClassName = figureClassMap[type] ?? '';
@@ -47,7 +47,9 @@ export default function Card({
           {image_url ? (
             <ImageWithFallback type={type} imageUrl={image_url} title={title} />
           ) : (
-            <NoImageFallback />
+            <NoImageFallback
+              className={type === 'projects' ? '!text-black' : ''}
+            />
           )}
         </figure>
 
@@ -83,7 +85,7 @@ export default function Card({
                   id={item}
                   {...(type === 'projects' && {
                     className:
-                      'border-white/40 text-primary-darkest bg-white/5',
+                      'bg-white/15 text-primary-darkest backdrop-blur-lg border border-white/20',
                   })}
                 />
               ))}
