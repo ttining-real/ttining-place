@@ -4,6 +4,7 @@ import SectionTitle from '@/components/section-title';
 import Carousel from '@/components/carousel';
 import Card from '@/components/home/card';
 import Button from '@/components/button';
+import Icon from '@/components/icon';
 import { useGsapFadeInOnScroll } from '@/hooks/useGsapFadeInOnScroll';
 import { sortedExperienceData } from '@/lib/sortedData';
 import { formatDate } from '@/lib/formatDate';
@@ -26,14 +27,12 @@ export default function ExperienceSection({
       <div ref={containerRef} className="m-auto flex max-w-5xl flex-col gap-12">
         <header className="gsap-fade-in text-primary flex items-end gap-6">
           <SectionTitle title="experience" />
-          <Button href="/experience" variant="tertiary" className="px-[8px]">
+          <Button href="/experience" variants="tertiary" size="sm">
             자세히 보기
+            <Icon id="direction-right" size={14} />
           </Button>
         </header>
-        <Carousel
-          className="gsap-fade-in"
-          buttonClassName="border border-primary/40 hover:text-primary-darker hover:border-primary/60 hover:bg-primary/10"
-        >
+        <Carousel className="gsap-fade-in">
           {sortData.map((item) => (
             <Card
               key={item.id}

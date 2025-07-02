@@ -4,6 +4,7 @@ import SectionTitle from '@/components/section-title';
 import Carousel from '@/components/carousel';
 import Card from '@/components/home/card';
 import Button from '@/components/button';
+import Icon from '@/components/icon';
 import { useGsapFadeInOnScroll } from '@/hooks/useGsapFadeInOnScroll';
 import { sortedProjectsData } from '@/lib/sortedData';
 import { formatDate } from '@/lib/formatDate';
@@ -28,15 +29,17 @@ export default function ProjectsSection({
           <SectionTitle title="projects" className="text-primary-darkest" />
           <Button
             href="/projects"
-            variant="tertiary"
-            className="text-primary-darkest px-[8px]"
+            variants="tertiary"
+            size="sm"
+            className="text-primary-darkest"
           >
             자세히 보기
+            <Icon id="direction-right" size={14} />
           </Button>
         </header>
         <Carousel
           className="gsap-fade-in"
-          buttonClassName="text-primary-darker bg-white/10 backdrop-blur-lg border-white/20 border hover:text-primary-darkest hover:bg-white/20"
+          buttonClassName="text-primary-darkest hover:text-primary-darkest hover:bg-white/20"
         >
           {sortData.map((item) => (
             <Card

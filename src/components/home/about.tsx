@@ -1,15 +1,15 @@
 'use client';
 
+import Image from 'next/image';
 import React, { useRef } from 'react';
 
+import { homeAboutMenu } from '@/constants/personal';
 import SectionTitle from '@/components/section-title';
 import Button from '@/components/button';
 import Icon from '@/components/icon';
 import IconImg from '@/components/icon-image';
 import StackIcon from '@/components/stack-icon';
 import { useGsapFadeInOnScroll } from '@/hooks/useGsapFadeInOnScroll';
-import { homeAboutMenu } from '@/constants/personal';
-import Image from 'next/image';
 
 export default function AboutSection() {
   const containerRef = useRef<HTMLDivElement>(null!);
@@ -23,10 +23,11 @@ export default function AboutSection() {
         className="flex flex-col gap-8 sm:relative sm:m-auto sm:max-w-4xl"
       >
         <div className="gsap-fade-in flex flex-col gap-4 sm:absolute sm:top-6 sm:right-[160px] sm:z-10 sm:gap-6">
-          <header className="flex items-end gap-4">
+          <header className="flex items-end gap-6 sm:gap-12">
             <SectionTitle title="about" />
-            <Button href="/about" variant="tertiary">
+            <Button href="/about" variants="tertiary" size="sm">
               자세히 보기
+              <Icon id="direction-right" size={14} />
             </Button>
           </header>
           <div className="text-sm sm:text-base">

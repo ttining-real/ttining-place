@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion, wrap } from 'motion/react';
 import { Children, forwardRef, ReactNode, useState } from 'react';
+
 import Icon from '@/components/icon';
 import { useResponsiveItems } from '@/hooks/useResponsiveItems';
 
@@ -16,7 +17,6 @@ export default function Carousel({
   className,
   buttonClassName,
 }: CarouselProps) {
-  // const ITEMS_SLIDE = 3;
   const ITEMS_SLIDE = useResponsiveItems(3, 1);
 
   // children을 배열로 변환
@@ -37,7 +37,7 @@ export default function Carousel({
   }
 
   const buttonBaseClassName =
-    'flex items-center justify-center w-10 h-10 rounded-full bg-transparent text-primary transition-colors duration-200 cursor-pointer';
+    'flex items-center justify-center w-10 h-10 text-base text-primary border border-transparent rounded-full hover:bg-primary/20 hover:text-primary-darker/80 focus-ring transition-colors duration-200 cursor-pointer';
 
   return (
     <div style={container} className={className}>
@@ -47,7 +47,7 @@ export default function Carousel({
         </Slide>
       </AnimatePresence>
       {childArray.length > ITEMS_SLIDE && (
-        <div className="absolute top-[-92px] right-0 flex gap-2">
+        <div className="absolute top-[-90px] right-0 flex gap-2">
           <motion.button
             initial={false}
             aria-label="이전 슬라이드"

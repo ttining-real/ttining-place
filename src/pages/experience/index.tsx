@@ -1,11 +1,13 @@
 'use client';
 
+import Head from 'next/head';
 import Image from 'next/image';
 import { GetServerSideProps } from 'next';
 import { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import { experienceTabs as tabs } from '@/constants/tabs';
+import Button from '@/components/button';
 import Icon from '@/components/icon';
 import Chip from '@/components/chip';
 import TabSelector from '@/components/tab-selector';
@@ -15,7 +17,6 @@ import { formatDate } from '@/lib/formatDate';
 import { sortedExperienceData } from '@/lib/sortedData';
 
 import { ExperienceDataTypes } from '@/types/experience-data-type';
-import Head from 'next/head';
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const { data, error } = await supabase.from('experience').select('*');
@@ -127,11 +128,11 @@ export default function Page({ data }: { data: ExperienceDataTypes[] }) {
                       </div>
 
                       {/* 자세히 보기 버튼 */}
-                      <button
+                      <Button
+                        size="sm"
+                        variants="secondary"
                         onClick={() => toggleOpen(item.id)}
-                        aria-expanded={isOpen}
-                        aria-controls={`details-${item.id}`}
-                        className="focus-ring text-primary mt-2 inline-flex items-center gap-1 rounded-sm text-sm font-medium"
+                        className="border-primary/40 mt-2 w-fit"
                       >
                         <motion.span
                           animate={{ rotate: isOpen ? 180 : 0 }}
@@ -151,7 +152,7 @@ export default function Page({ data }: { data: ExperienceDataTypes[] }) {
                             {isOpen ? '접기' : '자세히 보기'}
                           </motion.span>
                         </AnimatePresence>
-                      </button>
+                      </Button>
 
                       {/* 아코디언 상세 영역 */}
                       <AnimatePresence initial={false}>
