@@ -1,73 +1,116 @@
-import Link from 'next/link';
 import { ReactNode } from 'react';
+import Icon from '@/components/icon';
+import Link from 'next/link';
 
-type ButtonProps = {
-  variant?: 'primary' | 'secondary' | 'tertiary';
-  shape?: 'rect' | 'circle';
-  href?: string;
-  external?: boolean;
-  onClick?: () => void;
-  children: ReactNode;
+type ButtonSize = 'sm' | 'md' | 'lg';
+type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
+
+type BaseProps = {
+  variants?: ButtonVariant;
+  size?: ButtonSize;
+  isIconOnly?: boolean;
+  iconId?: string;
+  children?: ReactNode;
   className?: string;
+  onClick?: () => void;
+  href?: string;
 };
 
+type IconOnlyButtonProps = BaseProps & {
+  isIconOnly: true;
+  iconId: string;
+  ariaLabel: string;
+  children?: never;
+};
+
+type TextButtonProps = BaseProps & {
+  isIconOnly?: false;
+  children: ReactNode;
+  ariaLabel?: never;
+};
+
+type ButtonProps = IconOnlyButtonProps | TextButtonProps;
+
 export default function Button({
-  variant = 'primary',
-  shape = 'rect',
-  href,
-  external,
-  onClick,
+  variants = 'primary',
+  size = 'md',
+  isIconOnly = false,
+  iconId,
   children,
-  className = '',
+  className,
+  onClick,
+  href,
+  ariaLabel,
 }: ButtonProps) {
-  // 내부 링크 여부 판단 (href가 있고, '/'로 시작하면 내부)
-  const isInternalLink = href && !external && href.startsWith('/');
-
-  // variant별 클래스 분리
-  const variantClassMap = {
-    primary: 'bg-primary text-white',
-    secondary: 'bg-primary-lighter text-primary-darkest',
-    tertiary: 'bg-transparent text-primary',
+  // classMap
+  const variantsClassMap: Record<ButtonVariant, string> = {
+    primary: 'bg-primary border-primary text-white hover:bg-primary-darker/85',
+    secondary:
+      'border-primary text-primary hover:bg-primary/20 hover:text-primary-darker',
+    tertiary:
+      'border-transparent text-primary hover:bg-primary/20 hover:text-primary-darker/80',
   };
 
-  const shapeClassMap = {
-    rect: 'rounded-lg',
-    circle: 'rounded-full',
+  const sizeClassMap: Record<ButtonSize, string> = {
+    sm: isIconOnly ? 'h-8 w-8 text-sm' : 'h-8 px-4 gap-2 text-sm',
+    md: isIconOnly ? 'h-10 w-10 text-base' : 'h-10 px-6 gap-3 text-base',
+    lg: isIconOnly ? 'h-12 w-12 text-lg' : 'h-12 px-8 gap-4 text-lg',
   };
 
+  const iconSizeMap: Record<ButtonSize, number> = {
+    sm: 14,
+    md: 16,
+    lg: 18,
+  };
+
+  // className
   const baseClassName =
-    'px-4 py-2 text-sm cursor-pointer ease-in-out transition-colors duration-200 hover:brightness-110';
+    'focus-ring border flex items-center justify-center rounded-full cursor-pointer';
 
-  const variantClassName = variantClassMap[variant];
+  const buttonCombineStyle = [
+    baseClassName,
+    variantsClassMap[variants],
+    sizeClassMap[size],
+    className,
+  ]
+    .filter(Boolean)
+    .join(' ');
 
-  const shapeClassName = shapeClassMap[shape];
+  // button content
+  const content = isIconOnly
+    ? iconId && <Icon id={iconId} size={iconSizeMap[size]} />
+    : children;
 
-  const combinedClassName = `focus-ring ${baseClassName} ${variantClassName} ${shapeClassName}`;
+  const sharedProps = {
+    className: buttonCombineStyle,
+    'aria-label': isIconOnly ? ariaLabel : undefined,
+    onClick,
+    type: 'button' as const,
+  };
 
-  if (isInternalLink) {
-    return (
-      <Link href={href} className={`${combinedClassName} ${className}`}>
-        {children}
-      </Link>
-    );
+  // href 유무 및 내부, 외부 판단 조건 분기
+  if (href) {
+    const isInternal = href.startsWith('/');
+
+    if (isInternal) {
+      return (
+        <Link href={href} {...sharedProps}>
+          {content}
+        </Link>
+      );
+    } else {
+      return (
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          {...sharedProps}
+        >
+          {content}
+        </a>
+      );
+    }
   }
 
-  if (href && !isInternalLink) {
-    return (
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={`${combinedClassName} ${className}`}
-      >
-        {children}
-      </a>
-    );
-  }
-
-  return (
-    <button onClick={onClick} className={`${combinedClassName} ${className}`}>
-      {children}
-    </button>
-  );
+  return <button {...sharedProps}>{content}</button>;
 }
