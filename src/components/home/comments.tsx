@@ -2,7 +2,6 @@ import { useEffect, useState, useRef } from 'react';
 
 import SectionTitle from '@/components/section-title';
 import Button from '@/components/button';
-import Icon from '@/components/icon';
 import Dialog from '@/components/dialog';
 import { useGsapFadeInOnScroll } from '@/hooks/useGsapFadeInOnScroll';
 import { supabase } from '@/lib/supabase';
@@ -29,6 +28,12 @@ export default function CommentsSection() {
   const [isOpen, setIsOpen] = useState(false);
   const [dialogMessage, setDialogMessage] = useState('');
   const [dialogType, setDialogType] = useState<'alert' | 'confirm'>('alert');
+
+  // 코멘트 표시 개수
+  const [visibleCount, setVisibleCount] = useState(4);
+
+  // 표시할 댓글 목록
+  const visibleComments = comments.slice(0, visibleCount);
 
   // gsap
   const containerRef = useRef<HTMLDivElement>(null!);
@@ -143,12 +148,11 @@ export default function CommentsSection() {
             <p>여러분의 한 마디는 제게 큰 힘이 됩니다!</p>
           </div>
         </header>
-        <div className="gsap-fade-in m-auto flex w-full flex-col gap-8 sm:max-w-lg">
-          {/* border-4 border-white */}
+        <div className="gsap-fade-in m-auto flex w-full flex-col gap-4 sm:max-w-lg">
           <div
-            className={`focus-within:ring-primary/50 border-primary-lighter/60 flex items-center justify-between gap-2 rounded-full border bg-white p-1 focus-within:ring-2`}
+            className={`focus-within:ring-primary/50 border-primary-lighter/60 mx-1 flex items-center justify-between gap-2 rounded-full border bg-white p-1 focus-within:ring-2`}
           >
-            <span aria-hidden className="pl-2 text-xl sm:text-2xl">
+            <span aria-hidden className="xs:text-lg pl-2 text-base sm:text-2xl">
               🥹
             </span>
             <input
@@ -158,11 +162,7 @@ export default function CommentsSection() {
               onChange={onChangeComment}
               className="h-10 grow text-sm outline-none sm:text-base"
             />
-            <Button
-              shape="circle"
-              onClick={onClickRegisterButton}
-              className="h-10 text-sm whitespace-nowrap sm:text-base"
-            >
+            <Button onClick={onClickRegisterButton} className="shrink-0">
               등록
             </Button>
           </div>
@@ -172,60 +172,75 @@ export default function CommentsSection() {
               <p>첫 번째 한 마디를 남겨주세요!</p>
             </div>
           ) : (
-            <ul className="border-primary-lighter flex flex-col gap-3">
-              {comments.map((comment) => {
-                const avatarUrl = `https://api.dicebear.com/9.x/big-smile/svg?seed=${comment.user_id}`;
-                const isMyComment = comment.user_id === userId;
+            <div className="flex flex-col items-center gap-4">
+              <ul className="flex w-full flex-col gap-2 p-1">
+                {visibleComments.map((comment) => {
+                  const avatarUrl = `https://api.dicebear.com/9.x/big-smile/svg?seed=${comment.user_id}`;
+                  const isMyComment = comment.user_id === userId;
 
-                return (
-                  <li
-                    key={comment.id}
-                    className="border-primary-lighter/60 relative flex flex-col gap-2 rounded-lg border bg-white p-4"
-                  >
-                    <dl className="text-primary-darkest grid grid-cols-[auto_1fr] items-center gap-x-3 text-sm">
-                      <div className="row-span-2">
-                        <dt className="sr-only">프로필 이미지</dt>
-                        <dd>
-                          <img
-                            src={avatarUrl}
-                            alt={`${comment.name} 프로필`}
-                            width={40}
-                            height={40}
-                            loading="lazy"
-                            className="h-10 w-10 rounded-full"
-                          />
-                        </dd>
-                      </div>
+                  return (
+                    <li
+                      key={comment.id}
+                      className="border-primary-lighter/60 relative flex flex-col gap-2 rounded-xl border bg-white p-4"
+                    >
+                      <dl className="text-primary-darkest grid grid-cols-[auto_1fr] items-center gap-x-3 text-sm">
+                        <div className="row-span-2">
+                          <dt className="sr-only">프로필 이미지</dt>
+                          <dd>
+                            <img
+                              src={avatarUrl}
+                              alt={`${comment.name} 프로필`}
+                              width={40}
+                              height={40}
+                              loading="lazy"
+                              className="h-10 w-10 rounded-full"
+                            />
+                          </dd>
+                        </div>
 
-                      <div>
-                        <dt className="sr-only">작성자</dt>
-                        <dd>{comment.name}</dd>
-                      </div>
+                        <div>
+                          <dt className="sr-only">작성자</dt>
+                          <dd>{comment.name}</dd>
+                        </div>
 
-                      <div className="col-start-2 text-[13px]">
-                        <dt className="sr-only">작성일</dt>
-                        <dd>{formatCommentDate(comment.created_at)}</dd>
-                      </div>
-                    </dl>
-                    <p className="w-10/12 text-base">{comment.text}</p>
+                        <div className="col-start-2 text-[13px]">
+                          <dt className="sr-only">작성일</dt>
+                          <dd>{formatCommentDate(comment.created_at)}</dd>
+                        </div>
+                      </dl>
+                      <p className="w-10/12 text-base">{comment.text}</p>
 
-                    {/* 내가 작성한 댓글일 때만 삭제 버튼 표시 */}
-                    {isMyComment && (
-                      <button
-                        onClick={() => {
-                          setTargetCommentId(comment.id);
-                          openDialog('댓글을 삭제하시겠습니까?', 'confirm');
-                        }}
-                        className="focus-ring hover:bg-primary-lighter absolute top-4 right-4 flex h-6 w-6 cursor-pointer items-center justify-center rounded-sm"
-                        aria-label="댓글 삭제"
-                      >
-                        <Icon id="close" size={20} className="text-primary" />
-                      </button>
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
+                      {/* 내가 작성한 댓글일 때만 삭제 버튼 표시 */}
+                      {isMyComment && (
+                        <Button
+                          variants="tertiary"
+                          size="sm"
+                          isIconOnly
+                          iconId="close"
+                          ariaLabel="댓글 삭제"
+                          onClick={() => {
+                            setTargetCommentId(comment.id);
+                            openDialog('댓글을 삭제하시겠습니까?', 'confirm');
+                          }}
+                          className="absolute top-2.5 right-2.5"
+                        />
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+
+              {/* 더 보기 버튼 */}
+              {visibleCount < comments.length && (
+                <Button
+                  size="sm"
+                  variants="secondary"
+                  onClick={() => setVisibleCount((prev) => prev + 4)}
+                >
+                  댓글 더 보기
+                </Button>
+              )}
+            </div>
           )}
         </div>
       </div>
@@ -237,11 +252,11 @@ export default function CommentsSection() {
         <div className="flex justify-end gap-2">
           {dialogType === 'confirm' && (
             <Button
+              variants="secondary"
               onClick={() => {
                 setIsOpen(false);
                 setTargetCommentId(null);
               }}
-              className="text-sm"
             >
               취소
             </Button>
@@ -254,7 +269,6 @@ export default function CommentsSection() {
               }
               setIsOpen(false);
             }}
-            className="text-sm"
           >
             확인
           </Button>
