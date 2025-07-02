@@ -1,20 +1,11 @@
-import { Agbalumo } from '@/fonts/font';
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { NAVIGATE } from '@/constants/navigate';
 import { useEffect, useState } from 'react';
+
+import { Agbalumo } from '@/fonts/font';
+import { NAVIGATE } from '@/constants/navigate';
+import Logo from '@/components/logo';
 import { useIsMobile } from '@/hooks/useIsMobile';
-
-type LogoIconProps = {
-  size?: number;
-};
-
-function Logo({ size = 40 }: LogoIconProps) {
-  return (
-    <Image src="/images/logo.svg" width={size} height={size} alt="Jiin 로고" />
-  );
-}
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
@@ -36,9 +27,7 @@ export default function Header() {
       className={`${Agbalumo.className} border-primary-lighter fixed top-0 right-0 left-0 z-50 flex h-16 items-center justify-between border-b bg-[rgba(255,255,255,0.2)] px-2 backdrop-blur-lg`}
     >
       <h1>
-        <Link href="/" className="focus-ring flex items-center rounded-sm px-3">
-          <Logo />
-        </Link>
+        <Logo />
       </h1>
       {isMobile && (
         <button
