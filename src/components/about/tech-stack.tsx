@@ -4,6 +4,7 @@ import { Agbalumo } from '@/fonts/font';
 import SectionTitle from '@/components/section-title';
 import StackIcon from '@/components/stack-icon';
 import { useGsapFadeInOnScroll } from '@/hooks/useGsapFadeInOnScroll';
+
 import { StackDataTypes } from '@/types/stacks-data-types';
 
 type Props = {

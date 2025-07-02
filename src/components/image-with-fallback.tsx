@@ -2,8 +2,9 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+
 import LoadingSpinner from '@/components/loading-spinner';
-import NoImageFallback from './no-image-fallback';
+import NoImageFallback from '@/components/no-image-fallback';
 
 type Props = {
   type: 'experience' | 'projects';
