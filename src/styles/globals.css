@@ -79,12 +79,34 @@ html {
 
 body {
   background-color: var(--primary-lightest);
-  color: var(--color-text-primary);
+  color: var(--text-primary);
 }
 
 ::selection {
   background: var(--primary);
   color: var(--bg);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 6px;
+  background-color: #dfd1c4;
+}
+
+::-webkit-scrollbar-thumb {
+  border: 2px solid #dfd1c4;
+  border-radius: 6px;
+  box-sizing: border-box;
+  background-color: #c0a888;
+  transition: background-color 0.2s ease-in-out;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--primary);
 }
 
 #__next {
