@@ -1,7 +1,6 @@
 'use client';
 
 import Head from 'next/head';
-import Image from 'next/image';
 import { GetServerSideProps } from 'next';
 import { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -11,7 +10,7 @@ import Button from '@/components/button';
 import Icon from '@/components/icon';
 import Chip from '@/components/chip';
 import TabSelector from '@/components/tab-selector';
-import LoadingSpinner from '@/components/loading-spinner';
+import ImageCard from '@/components/image-card';
 import { supabase } from '@/lib/supabase';
 import { formatDate } from '@/lib/formatDate';
 import { sortedExperienceData } from '@/lib/sortedData';
@@ -103,20 +102,12 @@ export default function Page({ data }: { data: ExperienceDataTypes[] }) {
                     boxShadow: '0px 0px 16px 0px rgba(162,132,94,0.25)',
                   }}
                 >
-                  <div className="xs:flex-row flex flex-col items-start gap-6">
-                    <figure className="bg-primary/10 xs:max-w-[180px] flex aspect-4/3 w-full shrink-0 items-center justify-center overflow-hidden rounded-xl backdrop-blur-lg sm:max-w-[240px]">
-                      {item.image_url ? (
-                        <Image
-                          src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/experience/${item.image_url}.png`}
-                          alt={`${item.company_name} 로고`}
-                          width={340}
-                          height={200}
-                          className="aspect-video w-full"
-                        />
-                      ) : (
-                        <LoadingSpinner />
-                      )}
-                    </figure>
+                  <div className="xs:flex-row flex flex-col items-start gap-8">
+                    <ImageCard
+                      src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/experience/${item.image_url}.png`}
+                      alt={`${item.company_name} 로고`}
+                      className="xs:max-w-[180px] aspect-4/3 w-full shrink-0 backdrop-blur-lg sm:max-w-[300px]"
+                    />
 
                     <div className="order-2 flex flex-1 flex-col gap-2">
                       <h3 className="font-semibold">{item.company_name}</h3>

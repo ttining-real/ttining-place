@@ -1,8 +1,7 @@
 import Link from 'next/link';
 
 import Chip from '@/components/chip';
-import ImageWithFallback from '@/components/image-with-fallback';
-import NoImageFallback from '@/components/no-image-fallback';
+import ImageCard from '@/components/image-card';
 
 type CardProps = {
   type: 'experience' | 'projects';
@@ -31,27 +30,14 @@ export default function Card({
     projects: '프로젝트명',
   }[type];
 
-  const figureClassMap = {
-    experience: 'border-primary-lighter bg-white/30',
-    projects: 'bg-white/10 border-white/20',
-  };
-
-  const figureClassName = figureClassMap[type] ?? '';
-
   return (
     <article>
       <Link href={href} className="focus-ring flex h-full flex-col rounded-xl">
-        <figure
-          className={`flex aspect-video items-center justify-center overflow-hidden rounded-xl border backdrop-blur-lg ${figureClassName}`}
-        >
-          {image_url ? (
-            <ImageWithFallback type={type} imageUrl={image_url} title={title} />
-          ) : (
-            <NoImageFallback
-              className={type === 'projects' ? '!text-black' : ''}
-            />
-          )}
-        </figure>
+        <ImageCard
+          src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${type}/${image_url}.png`}
+          alt={`${type === 'experience' ? `${title} 로고` : `${title} 썸네일`}`}
+          className={`aspect-video ${type === 'projects' ? 'text-primary-darkest border-white/20 bg-white/10' : ''}`}
+        />
 
         <dl className="flex flex-col gap-1 px-2 pt-4 text-sm">
           <div>

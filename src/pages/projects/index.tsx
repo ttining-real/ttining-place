@@ -7,8 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { projectsTabs as tabs } from '@/constants/tabs';
 import Chip from '@/components/chip';
 import TabSelector from '@/components/tab-selector';
-import ImageWithFallback from '@/components/image-with-fallback';
-import NoImageFallback from '@/components/no-image-fallback';
+import ImageCard from '@/components/image-card';
 import { supabase } from '@/lib/supabase';
 import { formatDate } from '@/lib/formatDate';
 import { sortedProjectsData } from '@/lib/sortedData';
@@ -118,17 +117,11 @@ export default function Page({ data }: { data: ProjectsDataTypes[] }) {
                         </div>
                       </dl>
                     </div>
-                    <figure className="bg-primary/10 border-primary/20 order-1 flex aspect-video w-full shrink-0 items-center justify-center overflow-hidden rounded-xl border backdrop-blur-lg">
-                      {item.image_url ? (
-                        <ImageWithFallback
-                          type="projects"
-                          imageUrl={item.image_url}
-                          title={item.title}
-                        />
-                      ) : (
-                        <NoImageFallback />
-                      )}
-                    </figure>
+                    <ImageCard
+                      src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/projects/${item.image_url}.png`}
+                      alt={`${item.title} 썸네일`}
+                      className="aspect-video"
+                    />
                   </Link>
                 </motion.div>
               );

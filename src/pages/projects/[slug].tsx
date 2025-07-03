@@ -8,8 +8,7 @@ import Chip from '@/components/chip';
 import Button from '@/components/button';
 import Breadcrumb from '@/components/breadcrumb';
 import Icon from '@/components/icon';
-import NoImageFallback from '@/components/no-image-fallback';
-import ImageWithFallback from '@/components/image-with-fallback';
+import ImageCard from '@/components/image-card';
 import { useGsapFadeInOnScroll } from '@/hooks/useGsapFadeInOnScroll';
 import { supabase } from '@/lib/supabase';
 import { formatDate } from '@/lib/formatDate';
@@ -71,8 +70,8 @@ export default function ProjectDetail({
 
         <section className={sectionClassName}>
           <SectionTitle title="summary" />
-          <div className="flex gap-12">
-            <dl className="w-2/3 space-y-4 sm:space-y-1">
+          <div className="flex flex-col gap-12 sm:flex-row">
+            <dl className="space-y-4 sm:space-y-1">
               <div className="xs:flex-row flex flex-col items-baseline gap-2 sm:gap-4">
                 <dt className="bg-primary/20 text-primary-darkest min-w-[100px] rounded-full px-3 py-1 text-center font-medium">
                   기간
@@ -98,17 +97,10 @@ export default function ProjectDetail({
                 </dd>
               </div>
             </dl>
-            <figure className="bg-primary/10 border-primary/20 w-1/3 overflow-hidden rounded-xl border">
-              {project.image_url ? (
-                <ImageWithFallback
-                  type="projects"
-                  title={project.title}
-                  imageUrl={project.image_url}
-                />
-              ) : (
-                <NoImageFallback />
-              )}
-            </figure>
+            <ImageCard
+              src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/projects/${project.image_url}.png`}
+              className="aspect-video sm:w-1/3"
+            />
           </div>
         </section>
 
