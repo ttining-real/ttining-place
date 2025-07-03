@@ -22,7 +22,7 @@ export default function AboutSection() {
         ref={containerRef}
         className="flex flex-col gap-8 sm:relative sm:m-auto sm:max-w-4xl"
       >
-        <div className="gsap-fade-in flex flex-col gap-4 sm:absolute sm:top-6 sm:right-[160px] sm:z-10 sm:gap-6">
+        <div className="gsap-fade-in flex flex-col gap-4 sm:absolute sm:top-12 sm:right-[144px] sm:z-10 sm:gap-6">
           <header className="flex items-end gap-6 sm:gap-12">
             <SectionTitle title="about" />
             <Button href="/about" variants="tertiary" size="sm">
@@ -49,31 +49,33 @@ export default function AboutSection() {
         <ul className="gsap-fade-in order-3 flex flex-col gap-2 sm:absolute sm:right-6 sm:bottom-6 sm:z-10">
           {homeAboutMenu.map(({ label, href, isExternal, download }) => {
             const icon = isExternal ? (
-              <StackIcon id={label} size={20} />
+              <StackIcon id={label} size={16} />
             ) : (
               <IconImg
                 id="open_file_folder"
-                alt="이력서 다운로드 아이콘"
-                size={20}
+                alt={`${label} 아이콘`}
+                size={16}
               />
             );
 
             const linkProps = {
               href,
               className:
-                'focus-ring flex items-center justify-between gap-2 px-4 py-2 rounded-sm sm:bg-primary-lightest/40',
+                'bg-primary-lightest/80 hover:bg-primary text-primary-darker hover:text-primary-darkest',
               ...(download
                 ? { download: true }
                 : { target: '_blank', rel: 'noopener noreferrer' }),
             };
 
             return (
-              <li key={`${label}-${href}`}>
-                <a {...linkProps}>
+              <li key={label}>
+                <Button variants="tertiary" {...linkProps}>
                   {icon}
-                  <span className="grow text-left">{label}</span>
-                  <Icon id="direction-right" size={20} />
-                </a>
+                  <span className="grow">
+                    {download ? label : `${label} 열기`}
+                  </span>
+                  <Icon id="direction-right" size={16} />
+                </Button>
               </li>
             );
           })}
@@ -85,6 +87,7 @@ export default function AboutSection() {
             alt="사막"
             width={460}
             height={614}
+            priority
           />
         </figure>
       </div>

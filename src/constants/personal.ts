@@ -40,7 +40,7 @@ export const homeAboutMenu = [
   },
   {
     label: '이력서 다운로드',
-    href: '/',
+    href: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/personal//Anjiin_resume.pdf`,
     download: true,
   },
 ];
