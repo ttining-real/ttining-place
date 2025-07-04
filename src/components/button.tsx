@@ -14,6 +14,7 @@ type BaseProps = {
   className?: string;
   onClick?: () => void;
   href?: string;
+  ariaLabel?: string;
 };
 
 type IconOnlyButtonProps = BaseProps & {
@@ -26,7 +27,6 @@ type IconOnlyButtonProps = BaseProps & {
 type TextButtonProps = BaseProps & {
   isIconOnly?: false;
   children: ReactNode;
-  ariaLabel?: never;
 };
 
 type ButtonProps = IconOnlyButtonProps | TextButtonProps;
@@ -83,9 +83,8 @@ export default function Button({
 
   const sharedProps = {
     className: buttonCombineStyle,
-    'aria-label': isIconOnly ? ariaLabel : undefined,
+    'aria-label': ariaLabel,
     onClick,
-    type: 'button' as const,
   };
 
   // href 유무 및 내부, 외부 판단 조건 분기
@@ -112,5 +111,9 @@ export default function Button({
     }
   }
 
-  return <button {...sharedProps}>{content}</button>;
+  return (
+    <button type="button" {...sharedProps}>
+      {content}
+    </button>
+  );
 }
