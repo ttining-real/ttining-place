@@ -32,16 +32,15 @@ export default function Header() {
       {isMobile && (
         <button
           type="button"
-          className="flex h-6 w-6 cursor-pointer flex-col justify-between border-none bg-none px-0.5 py-1 sm:hidden"
-          aria-label="메뉴 열기"
+          className="focus-ring flex h-8 w-8 cursor-pointer flex-col justify-between rounded-sm border-none bg-none px-2 py-2.5 sm:hidden"
+          aria-label={`${isMenuOpen ? '메뉴 닫기' : '메뉴 열기'}`}
           aria-expanded={isMenuOpen}
-          aria-pressed={isMenuOpen}
           aria-controls="main-nav"
           onClick={toggleMenu}
         >
           <span
             className={`bg-primary-darker block h-[2px] w-full origin-center rounded transition-transform duration-300 ease-in-out ${
-              isMenuOpen ? 'translate-y-[7px] rotate-45' : ''
+              isMenuOpen ? 'translate-y-[5px] rotate-45' : ''
             }`}
           ></span>
           <span
@@ -51,13 +50,14 @@ export default function Header() {
           ></span>
           <span
             className={`bg-primary-darker block h-[2px] w-full origin-center rounded transition-transform duration-300 ease-in-out ${
-              isMenuOpen ? 'translate-y-[-7px] -rotate-45' : ''
+              isMenuOpen ? 'translate-y-[-5px] -rotate-45' : ''
             }`}
           ></span>
         </button>
       )}
       {isMobile ? (
         <nav
+          id="main-nav"
           className={`fixed top-[64px] right-0 z-50 h-[calc(100vh-64px)] w-[80%] transform bg-white transition-transform duration-300 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} `}
         >
           <ul className="flex flex-col gap-2 px-4 py-6">
@@ -67,7 +67,7 @@ export default function Header() {
                 <li key={nav.label}>
                   <Link
                     href={nav.href}
-                    className={`hover:bg-primary/20 block rounded px-4 py-3 text-base ${
+                    className={`focus-ring hover:bg-primary/20 block rounded px-4 py-3 text-base ${
                       isActive
                         ? 'text-primary-darkest bg-primary/20'
                         : 'text-primary-darker'
@@ -89,7 +89,7 @@ export default function Header() {
                 <li key={nav.label}>
                   <Link
                     href={nav.href}
-                    className={`hover-underline-animation px-4 py-3 text-sm ${
+                    className={`focus-ring hover-underline-animation rounded-sm px-4 py-3 text-sm ${
                       isActive
                         ? 'text-primary-darkest active'
                         : 'text-primary-darker'
