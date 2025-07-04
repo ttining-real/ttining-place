@@ -24,8 +24,13 @@ export default function AboutSection() {
       >
         <div className="gsap-fade-in flex flex-col gap-4 sm:absolute sm:top-12 sm:right-[144px] sm:z-10 sm:gap-6">
           <header className="flex items-end gap-6 sm:gap-12">
-            <SectionTitle title="about" />
-            <Button href="/about" variants="tertiary" size="sm">
+            <SectionTitle level={2} title="about" />
+            <Button
+              href="/about"
+              variants="tertiary"
+              size="sm"
+              ariaLabel="about 페이지로 이동"
+            >
               자세히 보기
               <Icon id="direction-right" size={14} />
             </Button>

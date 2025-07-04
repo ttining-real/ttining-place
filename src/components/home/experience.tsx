@@ -26,8 +26,13 @@ export default function ExperienceSection({
     <section className="px-6 py-20">
       <div ref={containerRef} className="m-auto flex max-w-5xl flex-col gap-12">
         <header className="gsap-fade-in text-primary flex items-end gap-6">
-          <SectionTitle title="experience" />
-          <Button href="/experience" variants="tertiary" size="sm">
+          <SectionTitle level={2} title="experience" />
+          <Button
+            href="/experience"
+            variants="tertiary"
+            size="sm"
+            ariaLabel="experience 페이지로 이동"
+          >
             자세히 보기
             <Icon id="direction-right" size={14} />
           </Button>

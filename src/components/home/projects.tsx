@@ -26,12 +26,17 @@ export default function ProjectsSection({
     <section className="bg-[url(/images/home/bg_projects.png)] bg-cover bg-fixed bg-center px-6 py-20">
       <div ref={containerRef} className="m-auto flex max-w-5xl flex-col gap-12">
         <header className="gsap-fade-in flex items-end gap-6 text-white">
-          <SectionTitle title="projects" className="text-primary-darkest" />
+          <SectionTitle
+            level={2}
+            title="projects"
+            className="text-primary-darkest"
+          />
           <Button
             href="/projects"
             variants="tertiary"
             size="sm"
             className="text-primary-darkest"
+            ariaLabel="projects 페이지로 이동"
           >
             자세히 보기
             <Icon id="direction-right" size={14} />
