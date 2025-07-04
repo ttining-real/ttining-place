@@ -22,7 +22,7 @@ export default function Page() {
       </div>
       <div className="flex w-full flex-col gap-2 sm:flex-row sm:justify-center">
         <Button
-          variant="secondary"
+          variants="secondary"
           onClick={() => {
             if (window.history.length > 1) {
               router.back();
