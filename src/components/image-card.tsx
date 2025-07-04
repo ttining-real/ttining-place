@@ -9,7 +9,6 @@ type ImageCardProps = {
   width?: number;
   height?: number;
   className?: string;
-  innerClassName?: string;
 };
 
 export default function ImageCard({
@@ -17,8 +16,7 @@ export default function ImageCard({
   alt = '이미지',
   width = 420,
   height = 236,
-  className,
-  innerClassName,
+  className = '',
 }: ImageCardProps) {
   const [loading, setLoading] = useState(false);
   const hasImage = !!src && !src.endsWith('/.png') && src.trim() !== '';
@@ -41,7 +39,7 @@ export default function ImageCard({
           height={height}
           onLoad={() => setLoading(false)}
           onError={() => setLoading(false)}
-          className={`aspect-video w-full transition-opacity duration-300 ${loading && 'opacity-0'} ${innerClassName}`}
+          className={`aspect-video w-full transition-opacity duration-300 ${loading ? 'opacity-0' : ''}`}
         />
       ) : (
         <div className="flex flex-col items-center justify-center gap-4">
