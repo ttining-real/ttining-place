@@ -13,7 +13,7 @@ export default function Logo({ size = 40, className }: LogoIconProps) {
         src="/images/logo.svg"
         width={size}
         height={size}
-        alt="Jiin 로고"
+        alt="안지인 포트폴리오 로고"
         priority
         className={['aspect-square', className].filter(Boolean).join(' ')}
       />

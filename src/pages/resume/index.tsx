@@ -73,9 +73,9 @@ export default function Page({
   return (
     <>
       <Head>
-        <title>Jiin의 포트폴리오 - resume</title>
+        <title>안지인 | 포트폴리오 - resume</title>
         <meta property="og:image" content="/thumbnail.png" />
-        <meta property="og:title" content="Jiin의 포트폴리오 - resume" />
+        <meta property="og:title" content="안지인 | 포트폴리오 - resume" />
         <meta
           property="og:description"
           content="안녕하세요. UI 개발자 안지인입니다."
