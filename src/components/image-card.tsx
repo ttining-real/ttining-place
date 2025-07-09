@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-import LoadingSpinner from './loading-spinner';
+import LoadingSpinner from '@/components/loading-spinner';
 
 type ImageCardProps = {
   src?: string | null;
@@ -9,6 +9,7 @@ type ImageCardProps = {
   width?: number;
   height?: number;
   className?: string;
+  noneClassName?: string;
 };
 
 export default function ImageCard({
@@ -17,16 +18,17 @@ export default function ImageCard({
   width = 420,
   height = 236,
   className = '',
+  noneClassName = '',
 }: ImageCardProps) {
   const [loading, setLoading] = useState(false);
   const hasImage = !!src && !src.endsWith('/.png') && src.trim() !== '';
 
   return (
     <figure
-      className={`bg-primary/10 border-primary/20 text-primary relative flex items-center justify-center overflow-hidden rounded-xl border ${className}`}
+      className={`bg-surface relative flex w-full items-center justify-center ${className}`}
     >
       {loading && hasImage && (
-        <div className="bg-primary/10 absolute inset-0 z-10 flex items-center justify-center">
+        <div className="bg-surface absolute inset-0 z-10 flex items-center justify-center">
           <LoadingSpinner />
         </div>
       )}
@@ -39,10 +41,12 @@ export default function ImageCard({
           height={height}
           onLoad={() => setLoading(false)}
           onError={() => setLoading(false)}
-          className={`aspect-video w-full transition-opacity duration-300 ${loading ? 'opacity-0' : ''}`}
+          className={`w-full transition-opacity duration-300 ${loading ? 'opacity-0' : ''}`}
         />
       ) : (
-        <div className="flex flex-col items-center justify-center gap-4">
+        <div
+          className={`bg-bg flex h-full flex-col items-center justify-center gap-4 ${noneClassName}`}
+        >
           <Image
             src="/icons/fearful_face.png"
             alt="두려운 얼굴 아이콘"
@@ -50,7 +54,9 @@ export default function ImageCard({
             height={40}
             className="h-8 w-8"
           />
-          <figcaption className="text-center text-sm">이미지 없음</figcaption>
+          <figcaption className="text-text-secondary text-center text-sm">
+            이미지 없음
+          </figcaption>
         </div>
       )}
     </figure>
