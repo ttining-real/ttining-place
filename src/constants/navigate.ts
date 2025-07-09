@@ -1,18 +1,14 @@
 export const NAVIGATE = [
   {
-    href: '/about',
     label: 'about',
+    href: '/about',
   },
   {
-    href: '/resume',
-    label: 'resume',
-  },
-  {
-    href: '/experience',
     label: 'experience',
+    href: '/experience',
   },
   {
-    href: '/projects',
     label: 'projects',
+    href: '/projects',
   },
 ];
