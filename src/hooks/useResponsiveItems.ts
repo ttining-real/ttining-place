@@ -1,18 +1,29 @@
 import { useEffect, useState } from 'react';
 
-export function useResponsiveItems(desktopCount = 3, mobileCount = 1) {
-  const [itemsPerSlide, setItemsPerSlide] = useState(desktopCount);
+export function useResponsiveItems(
+  large: number,
+  medium: number,
+  small: number,
+  breakpoints = { medium: 880, small: 600 },
+): number {
+  const [items, setItems] = useState(large);
 
   useEffect(() => {
-    function handleResize() {
-      setItemsPerSlide(window.innerWidth < 640 ? mobileCount : desktopCount);
+    function updateItems() {
+      const width = window.innerWidth;
+      if (width < breakpoints.small) {
+        setItems(small);
+      } else if (width < breakpoints.medium) {
+        setItems(medium);
+      } else {
+        setItems(large);
+      }
     }
 
-    handleResize();
+    updateItems();
+    window.addEventListener('resize', updateItems);
+    return () => window.removeEventListener('resize', updateItems);
+  }, [large, medium, small, breakpoints]);
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [desktopCount, mobileCount]);
-
-  return itemsPerSlide;
+  return items;
 }

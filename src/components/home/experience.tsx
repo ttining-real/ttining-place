@@ -1,13 +1,11 @@
-import { useMemo, useRef } from 'react';
+import { useMemo } from 'react';
 
-import SectionTitle from '@/components/section-title';
+import { montserrat } from '@/fonts/font';
+import SectionLayout from '@/components/section-layout';
 import Carousel from '@/components/carousel';
 import Card from '@/components/home/card';
 import Button from '@/components/button';
-import Icon from '@/components/icon';
-import { useGsapFadeInOnScroll } from '@/hooks/useGsapFadeInOnScroll';
 import { sortedExperienceData } from '@/lib/sortedData';
-import { formatDate } from '@/lib/formatDate';
 
 import { ExperienceDataTypes } from '@/types/experience-data-type';
 
@@ -16,43 +14,33 @@ export default function ExperienceSection({
 }: {
   data: ExperienceDataTypes[];
 }) {
-  const containerRef = useRef<HTMLDivElement>(null!);
-
-  useGsapFadeInOnScroll(containerRef);
-
   const sortData = useMemo(() => sortedExperienceData(data), [data]);
 
   return (
-    <section className="px-6 py-20">
-      <div ref={containerRef} className="m-auto flex max-w-5xl flex-col gap-12">
-        <header className="gsap-fade-in text-primary flex items-end gap-6">
-          <SectionTitle level={2} title="experience" />
-          <Button
-            href="/experience"
-            variants="tertiary"
-            size="sm"
-            ariaLabel="experience 페이지로 이동"
-          >
-            자세히 보기
-            <Icon id="direction-right" size={14} />
+    <SectionLayout>
+      <header className={`${montserrat.className}`}>
+        <h3 className="mb-4 text-sm uppercase sm:mb-8 sm:text-base">
+          Experience
+        </h3>
+        <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:gap-12">
+          <p className="text-2xl font-bold sm:text-3xl">Careers & Activities</p>
+          <Button variants="secondary" href="/experience">
+            Work History
           </Button>
-        </header>
-        <Carousel className="gsap-fade-in">
-          {sortData.map((item) => (
-            <Card
-              key={item.id}
-              href={`/experience/#${item.slug}`}
-              type="experience"
-              title={item.company_name}
-              position={item.position}
-              department={item.department}
-              period={`${formatDate(item.start_date)} ~ ${formatDate(item.end_date)}`}
-              role={item.role}
-              image_url={item.image_url}
-            />
-          ))}
-        </Carousel>
-      </div>
-    </section>
+        </div>
+      </header>
+      <Carousel>
+        {sortData.map((item) => (
+          <Card
+            key={item.id}
+            href={`/experience/#${item.slug}`}
+            title={item.company_name}
+            description={item.major_task}
+            startDate={item.start_date}
+            endDate={item.end_date}
+          />
+        ))}
+      </Carousel>
+    </SectionLayout>
   );
 }
