@@ -19,13 +19,14 @@ const DEFAULT_LABEL_MAP: Record<string, string> = {
 export default function Breadcrumb({ className, current }: BreadcrumbProps) {
   const router = useRouter();
 
-  // 현재 경로 (정의 기준: /projects/[slug])
+  // 현재 경로
   const pathSegments = router.pathname.split('/').filter(Boolean);
-  // 실제 URL 경로 (slug 값 포함: /projects/my-awesome-project)
+
+  // 실제 URL 경로
   const asSegments = router.asPath.split('?')[0].split('/').filter(Boolean);
 
-  // 앞에 '홈'을 넣기 위해 추가
-  const fullSegments = [''].concat(pathSegments); // ''은 '/'를 의미함
+  // Home
+  const fullSegments = [''].concat(pathSegments);
   const fullAsSegments = [''].concat(asSegments);
 
   const buildHref = (index: number) =>
@@ -47,7 +48,10 @@ export default function Breadcrumb({ className, current }: BreadcrumbProps) {
           }
 
           return (
-            <li key={href} className="text-primary flex items-center gap-1">
+            <li
+              key={href}
+              className="text-text-secondary flex items-center gap-1"
+            >
               {!isLast ? (
                 <Link href={href} className="hover:underline">
                   {label}

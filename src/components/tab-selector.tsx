@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
 
+import { montserrat } from '@/fonts/font';
+
 interface TabSelectorProps<T extends string> {
   tabs: readonly T[];
   selected: T;
@@ -12,25 +14,28 @@ export default function TabSelector<T extends string>({
   onChange,
 }: TabSelectorProps<T>) {
   return (
-    <div className="bg-primary/20 relative mb-8 flex w-full items-center gap-2 rounded-full p-1.5 sm:w-fit">
+    <div className="flex gap-2">
       {tabs.map((tab) => {
         const isActive = selected === tab;
+
         return (
           <button
             key={tab}
             onClick={() => onChange(tab)}
-            className={`focus-ring hover:bg-primary/20 hover:text-primary-darker relative z-10 flex flex-1 items-center justify-center rounded-full py-2 font-medium whitespace-nowrap capitalize transition-colors sm:px-6 ${
-              isActive ? 'text-white hover:text-white' : 'text-primary'
+            className={`${montserrat.className} focus-ring relative rounded-sm px-4 py-2 uppercase transition-colors duration-200 ${
+              isActive
+                ? 'text-primary'
+                : 'text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white'
             }`}
           >
+            {tab}
             {isActive && (
               <motion.div
-                layoutId="pill"
+                layoutId="underline"
+                className="bg-primary absolute -bottom-2 left-0 h-[2px] w-full"
                 transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-                className="bg-primary absolute inset-0 z-0 rounded-full shadow-sm"
               />
             )}
-            <span className="relative z-10">{tab}</span>
           </button>
         );
       })}

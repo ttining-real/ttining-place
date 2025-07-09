@@ -21,6 +21,7 @@ export default function IconImg({
       width={size}
       height={size}
       className={className}
+      priority
     />
   );
 }
