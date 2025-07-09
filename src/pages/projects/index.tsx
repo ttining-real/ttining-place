@@ -4,7 +4,9 @@ import { GetServerSideProps } from 'next';
 import { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+import { montserrat, pretendard } from '@/fonts/font';
 import { projectsTabs as tabs } from '@/constants/tabs';
+import SectionLayout from '@/components/section-layout';
 import Chip from '@/components/chip';
 import TabSelector from '@/components/tab-selector';
 import ImageCard from '@/components/image-card';
@@ -67,15 +69,25 @@ export default function Page({ data }: { data: ProjectsDataTypes[] }) {
         <meta property="og:title" content="안지인 | 포트폴리오 - projects" />
         <meta
           property="og:description"
-          content="안녕하세요. UI 개발자 안지인입니다."
+          content="UI 개발자 안지인의 포트폴리오입니다. 주요 프로젝트 및 사이드 프로젝트를 확인하실 수 있습니다."
+        />
+        <meta
+          name="description"
+          content="UI 개발자 안지인의 포트폴리오입니다. 주요 프로젝트 및 사이드 프로젝트를 확인하실 수 있습니다."
         />
       </Head>
-      <div className="m-auto max-w-5xl px-6 py-12">
-        {/* 탭 메뉴 */}
-        <TabSelector tabs={tabs} selected={selected} onChange={setSelected} />
-
+      <SectionLayout>
+        <header
+          className={`${montserrat.className} border-border flex flex-col justify-between border-b pb-2 sm:flex-row sm:items-center`}
+        >
+          <h3 className="mb-4 font-semibold uppercase sm:mb-0 sm:font-normal">
+            Projects
+          </h3>
+          {/* 탭 메뉴 */}
+          <TabSelector tabs={tabs} selected={selected} onChange={setSelected} />
+        </header>
         {/* 리스트 영역 */}
-        <div className="xs:grid-cols-2 grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-4">
           <AnimatePresence>
             {filtered.map((item) => {
               return (
@@ -85,33 +97,40 @@ export default function Page({ data }: { data: ProjectsDataTypes[] }) {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.3 }}
-                  className="border-primary/20 flex flex-col gap-4 rounded-2xl border bg-white shadow-sm"
-                  style={{
-                    boxShadow: '0px 0px 16px 0px rgba(162,132,94,0.25)',
-                  }}
+                  className="flex flex-col gap-4"
                 >
                   <Link
                     href={`/projects/${item.slug}`}
-                    className="focus-ring flex h-full flex-col gap-6 rounded-2xl p-4"
+                    className="focus-ring flex h-full flex-col gap-4 rounded-2xl sm:p-4"
                   >
-                    <div className="order-2">
-                      <h3 className="mb-2 font-semibold">{item.title}</h3>
-                      <dl className="flex flex-col gap-2 text-sm">
+                    <div className="order-2 p-2">
+                      <h3 className="mb-2 text-xl font-semibold sm:text-xl">
+                        {item.title}
+                      </h3>
+                      <dl className="flex flex-col gap-2">
                         <div>
                           <dt className="sr-only">작업 기간</dt>
-                          <dd>
+                          <dd
+                            className={`${montserrat.className} text-text-secondary text-sm`}
+                          >
                             {`${formatDate(item.start_date)} - ${formatDate(item.end_date)}`}
                           </dd>
                         </div>
-                        <div>
+                        <div className="mb-4">
                           <dt className="sr-only">요약</dt>
-                          <dd>{item.summary}</dd>
+                          <dd className="text-text-secondary">
+                            {item.summary}
+                          </dd>
                         </div>
                         <div className="mt-1">
                           <dt className="sr-only">역할</dt>
                           <dd className="flex gap-1">
                             {item.role.map((r, i) => (
-                              <Chip key={i} id={r} />
+                              <Chip
+                                key={i}
+                                id={r}
+                                className={`${pretendard.className} bg-section text-sm`}
+                              />
                             ))}
                           </dd>
                         </div>
@@ -120,7 +139,8 @@ export default function Page({ data }: { data: ProjectsDataTypes[] }) {
                     <ImageCard
                       src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/projects/${item.image_url}.png`}
                       alt={`${item.title} 썸네일`}
-                      className="aspect-video"
+                      className="aspect-video overflow-hidden"
+                      noneClassName="bg-surface"
                     />
                   </Link>
                 </motion.div>
@@ -128,7 +148,7 @@ export default function Page({ data }: { data: ProjectsDataTypes[] }) {
             })}
           </AnimatePresence>
         </div>
-      </div>
+      </SectionLayout>
     </>
   );
 }
