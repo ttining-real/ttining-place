@@ -12,7 +12,13 @@ export default function Hero() {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <section className="flex min-h-dvh items-center justify-center">
+    <section className="bg-background relative flex min-h-dvh items-center justify-center overflow-hidden">
+      {/* 그라디언트 배경 */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-0 bg-[conic-gradient(from_180deg_at_70%_60%,rgba(83,85,90,0.6),transparent_80%)] opacity-40"
+      />
+
       <motion.div
         className="flex flex-col gap-32 px-6"
         initial="hidden"

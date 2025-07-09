@@ -97,7 +97,7 @@ export default function Page({ data }: { data: ExperienceDataTypes[] }) {
         {/* 리스트 영역 */}
         <div className="flex flex-col gap-8 md:gap-0">
           <AnimatePresence>
-            {filtered.map((item) => {
+            {filtered.map((item, index) => {
               const isOpen = openId === item.id;
 
               return (
@@ -108,7 +108,7 @@ export default function Page({ data }: { data: ExperienceDataTypes[] }) {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.3 }}
-                  className="border-border flex scroll-mt-32 flex-col gap-2 border-t md:flex-row md:gap-4"
+                  className={`border-border flex scroll-mt-32 flex-col gap-2 border-t md:flex-row md:gap-4 ${index === 0 ? 'border-none' : ''}`}
                 >
                   <ImageCard
                     src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/experience/${item.image_url}.png`}

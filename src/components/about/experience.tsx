@@ -110,7 +110,7 @@ export default function ExperienceSection({ data }: ExperienceSectionProps) {
                 key={index}
                 className="border-border flex flex-col gap-6 border-t p-2 py-4 sm:flex-row sm:gap-12 sm:p-6"
               >
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2 sm:min-w-[200px]">
                   <h4 className="order-2 text-xl font-semibold sm:text-2xl">
                     {career.company_name}
                   </h4>
