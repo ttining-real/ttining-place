@@ -23,6 +23,7 @@ export interface StackSectionTypes {
 export interface StackDataTypes {
   id: number;
   title: string;
+  display_order: number;
   description?: string;
   stack_items: StackItemTypes[];
 }
