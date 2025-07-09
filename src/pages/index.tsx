@@ -2,9 +2,8 @@ import Head from 'next/head';
 import { GetServerSideProps } from 'next';
 
 // components
-import Visual from '@/components/home/visual';
+import Hero from '@/components/home/hero';
 import AboutSection from '@/components/home/about';
-import CircleSection from '@/components/home/circle';
 import ExperienceSection from '@/components/home/experience';
 import ProjectsSection from '@/components/home/projects';
 import CommentsSection from '@/components/home/comments';
@@ -22,7 +21,9 @@ export const getServerSideProps: GetServerSideProps = async () => {
   // projects
   const { data: projectsData, error: projectsError } = await supabase
     .from('projects')
-    .select('*');
+    .select('*')
+    .in('type', ['main', 'side'])
+    .in('display_order', [1, 2]);
 
   if (experienceError || projectsError || !experienceData || !projectsData) {
     return {
@@ -53,22 +54,24 @@ export default function Home({
   experienceData: ExperienceDataTypes[];
   projectsData: ProjectsDataTypes[];
 }) {
-  const circleKeywords = ['Overall', 'Design', 'Development', 'Cooperation'];
-
   return (
     <>
       <Head>
         <title>안지인 | 포트폴리오</title>
+        <link rel="icon" href="/favicon.ico" />
         <meta property="og:image" content="/thumbnail.png" />
         <meta property="og:title" content="안지인 | 포트폴리오" />
         <meta
           property="og:description"
-          content="안녕하세요. UI 개발자 안지인입니다."
+          content="UI 개발자 안지인의 포트폴리오입니다. 주요 프로젝트 및 경력을 확인하실 수 있습니다."
+        />
+        <meta
+          name="description"
+          content="UI 개발자 안지인의 포트폴리오입니다. 주요 프로젝트 및 경력을 확인하실 수 있습니다."
         />
       </Head>
-      <Visual />
+      <Hero />
       <AboutSection />
-      <CircleSection keywords={circleKeywords} />
       <ExperienceSection data={experienceData} />
       <ProjectsSection data={projectsData} />
       <CommentsSection />
