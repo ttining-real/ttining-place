@@ -1,6 +1,8 @@
-import { ReactNode } from 'react';
-import Icon from '@/components/icon';
 import Link from 'next/link';
+import { ReactNode } from 'react';
+
+import { pretendard } from '@/fonts/font';
+import Icon from '@/components/icon';
 
 type ButtonSize = 'sm' | 'md' | 'lg';
 type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
@@ -15,6 +17,7 @@ type BaseProps = {
   onClick?: () => void;
   href?: string;
   ariaLabel?: string;
+  disabled?: boolean;
 };
 
 type IconOnlyButtonProps = BaseProps & {
@@ -26,6 +29,8 @@ type IconOnlyButtonProps = BaseProps & {
 
 type TextButtonProps = BaseProps & {
   isIconOnly?: false;
+  iconId?: string;
+  ariaLabel?: string;
   children: ReactNode;
 };
 
@@ -41,14 +46,25 @@ export default function Button({
   onClick,
   href,
   ariaLabel,
+  disabled,
 }: ButtonProps) {
   // classMap
   const variantsClassMap: Record<ButtonVariant, string> = {
-    primary: 'bg-primary border-primary text-white hover:bg-primary-darker/85',
+    primary:
+      'focus-ring cursor-pointer bg-primary border-primary text-white hover:bg-primary-light active:bg-primary-dark',
     secondary:
-      'border-primary text-primary hover:bg-primary/20 hover:text-primary-darker',
+      'focus-ring cursor-pointer bg-transparent border-primary text-primary hover:border-primary-light hover:text-primary hover:bg-primary/10 active:border-primary-dark active:text-primary-dark active:bg-primary/15',
     tertiary:
-      'border-transparent text-primary hover:bg-primary/20 hover:text-primary-darker/80',
+      'focus-ring cursor-pointer bg-transparent border-transparent text-primary hover:bg-primary/10 hover:text-primary-light active:bg-primary/15 active:text-primary-dark',
+  };
+
+  const disabledClassMap: Record<ButtonVariant, string> = {
+    primary:
+      'bg-disabled-bg text-disabled-text border-gray-300 focus:outline-0 cursor-not-allowed',
+    secondary:
+      'bg-transparent text-[#aaaaaa] border-[#cccccc] focus:outline-0 cursor-not-allowed',
+    tertiary:
+      'bg-transparent text-[#aaaaaa] border-transparent focus:outline-0 cursor-not-allowed',
   };
 
   const sizeClassMap: Record<ButtonSize, string> = {
@@ -64,22 +80,16 @@ export default function Button({
   };
 
   // className
-  const baseClassName =
-    'focus-ring border flex items-center justify-center rounded-full cursor-pointer';
+  const baseClassName = `${pretendard.className} border flex items-center justify-center rounded-full`;
 
   const buttonCombineStyle = [
     baseClassName,
-    variantsClassMap[variants],
+    disabled ? disabledClassMap[variants] : variantsClassMap[variants],
     sizeClassMap[size],
     className,
   ]
     .filter(Boolean)
     .join(' ');
-
-  // button content
-  const content = isIconOnly
-    ? iconId && <Icon id={iconId} size={iconSizeMap[size]} />
-    : children;
 
   const sharedProps = {
     className: buttonCombineStyle,
@@ -94,7 +104,8 @@ export default function Button({
     if (isInternal) {
       return (
         <Link href={href} {...sharedProps}>
-          {content}
+          {/* {content} */}
+          {children}
         </Link>
       );
     } else {
@@ -105,7 +116,8 @@ export default function Button({
           rel="noopener noreferrer"
           {...sharedProps}
         >
-          {content}
+          {/* {content} */}
+          {children}
         </a>
       );
     }
@@ -113,7 +125,9 @@ export default function Button({
 
   return (
     <button type="button" {...sharedProps}>
-      {content}
+      {/* {content} */}
+      {children}
+      {iconId && <Icon id={iconId} size={iconSizeMap[size]} />}
     </button>
   );
 }
