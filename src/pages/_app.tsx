@@ -1,10 +1,11 @@
 import '@/styles/globals.css';
-import GlobalLayout from '@/layouts/global-layout';
-import PageLayout from '@/layouts/page-layout';
+
+import Head from 'next/head';
 import { NextPage } from 'next';
 import { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
-import { useEffect, useMemo, useState } from 'react';
+
+import GlobalLayout from '@/layouts/global-layout';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: React.ReactNode) => React.ReactNode;
@@ -16,24 +17,20 @@ export default function App({
 }: AppProps & {
   Component: NextPageWithLayout;
 }) {
-  const [isClient, setIsClient] = useState(false);
   const router = useRouter();
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  // pathname 기반으로 레이아웃 선택
-  const Layout = useMemo(() => {
-    if (!isClient) return GlobalLayout;
-
-    if (router.pathname === '/') {
-      return GlobalLayout;
-    }
-    return PageLayout;
-  }, [isClient, router.pathname]);
+  const subPageClassName = router.pathname !== '/';
 
   const getLayout = Component.getLayout ?? ((page) => page);
 
-  return <Layout>{getLayout(<Component {...pageProps} />)}</Layout>;
+  return (
+    <>
+      <Head>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <GlobalLayout className={`${subPageClassName ? 'mt-20' : ''}`}>
+        {getLayout(<Component {...pageProps} />)}
+      </GlobalLayout>
+    </>
+  );
 }
