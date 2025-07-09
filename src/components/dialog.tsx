@@ -1,6 +1,3 @@
-'use client';
-
-// components/Dialog.tsx
 import { ReactNode, useEffect, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -41,8 +38,8 @@ export default function Dialog({ isOpen, onClose, children }: DialogProps) {
     <AnimatePresence>
       {isOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
-          onClick={onClose} // 배경 클릭 시 닫기
+          className="bg-bg/60 fixed inset-0 z-50 flex items-center justify-center"
+          onClick={onClose}
         >
           <motion.div
             role="dialog"
@@ -51,8 +48,8 @@ export default function Dialog({ isOpen, onClose, children }: DialogProps) {
             ref={dialogRef}
             onClick={(e: React.MouseEvent<HTMLDivElement>) =>
               e.stopPropagation()
-            } // 내부 클릭 시 닫히지 않도록
-            className="focus-ring w-full max-w-md rounded-xl bg-white p-6 shadow-lg outline-none"
+            }
+            className="focus-ring bg-bg w-full max-w-md rounded-xl p-6 shadow-lg outline-none"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}

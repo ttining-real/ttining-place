@@ -1,9 +1,9 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 
-import SectionTitle from '@/components/section-title';
+import { montserrat } from '@/fonts/font';
+import SectionLayout from '@/components/section-layout';
 import Button from '@/components/button';
 import Dialog from '@/components/dialog';
-import { useGsapFadeInOnScroll } from '@/hooks/useGsapFadeInOnScroll';
 import { supabase } from '@/lib/supabase';
 import { generateRandomNickname } from '@/lib/generateRandomNickname';
 import { formatCommentDate } from '@/lib/formatCommentDate';
@@ -34,11 +34,6 @@ export default function CommentsSection() {
 
   // 표시할 댓글 목록
   const visibleComments = comments.slice(0, visibleCount);
-
-  // gsap
-  const containerRef = useRef<HTMLDivElement>(null!);
-
-  useGsapFadeInOnScroll(containerRef, '.gsap-fade-in', comments.length > 0);
 
   // 컴포넌트 마운트 후 userId 세팅
   useEffect(() => {
@@ -132,25 +127,23 @@ export default function CommentsSection() {
     return null;
   }
 
-  const beforeBlur = `before:z-[-1] before:absolute before:content-[''] before:w-[740px] before:h-[740px] before:rounded-full before:bg-[rgba(219,172,120,0.3)] before:blur-3xl before:top-[-10%] before:left-[-10%] before:translate-x-[-50%] before:translate-y-[-50%]`;
-  const afterBlur = `after:z-[-1] after:absolute after:content-[''] after:w-[320px] after:h-[320px] after:rounded-full after:bg-[rgba(219,172,120,0.3)] after:blur-3xl after:bottom-[-140px] after:right-[-100px]`;
-
   return (
-    <section className="px-6 py-20">
-      <div
-        ref={containerRef}
-        className={`relative m-auto flex max-w-4xl flex-col gap-12 ${beforeBlur} ${afterBlur}`}
-      >
-        <header className="gsap-fade-in flex flex-col gap-4 text-center">
-          <SectionTitle title="Comments" className="text-primary" />
-          <div className="text-primary-darker text-sm">
-            <p>제 포트폴리오를 잘 보셨다면, 한 마디 남겨주세요!</p>
-            <p>여러분의 한 마디는 제게 큰 힘이 됩니다!</p>
+    <>
+      <SectionLayout innerClassName="grid md:grid-cols-2 items-center">
+        <header
+          className={`${montserrat.className} md:bg-surface flex h-full flex-col items-center justify-center md:py-8`}
+        >
+          <h3 className="mb-4 text-2xl font-bold sm:mb-8 sm:text-3xl">
+            Comments
+          </h3>
+          <div className="text-center uppercase">
+            <p>Thanks for visiting!</p>
+            <p>Feel free to leave a note.</p>
           </div>
         </header>
-        <div className="gsap-fade-in m-auto flex w-full flex-col gap-4 sm:max-w-lg">
+        <div className="lg:p-8">
           <div
-            className={`focus-within:ring-primary/50 border-primary-lighter/60 mx-1 flex items-center justify-between gap-2 rounded-full border bg-white p-1 focus-within:ring-2`}
+            className={`focus-within:ring-primary-light/60 border-border bg-surface mx-1 mb-4 flex items-center justify-between gap-2 rounded-full border p-1 focus-within:ring-2`}
           >
             <span aria-hidden className="xs:text-lg pl-2 text-base sm:text-2xl">
               🥹
@@ -167,7 +160,7 @@ export default function CommentsSection() {
             </Button>
           </div>
           {comments.length === 0 ? (
-            <div className="text-primary-darker border-primary-lighter/60 flex flex-col items-center rounded-lg border bg-white py-4">
+            <div className="text-text-primary border-border bg-surface flex flex-col items-center rounded-lg border py-4">
               <p>아직 아무 얘기도 없네요. 🥲</p>
               <p>첫 번째 한 마디를 남겨주세요!</p>
             </div>
@@ -181,9 +174,9 @@ export default function CommentsSection() {
                   return (
                     <li
                       key={comment.id}
-                      className="border-primary-lighter/60 relative flex flex-col gap-2 rounded-xl border bg-white p-4"
+                      className="border-border bg-surface relative flex flex-col gap-2 rounded-xl border p-4"
                     >
-                      <dl className="text-primary-darkest grid grid-cols-[auto_1fr] items-center gap-x-3 text-sm">
+                      <dl className="text-text-secondary grid grid-cols-[auto_1fr] items-center gap-x-3 text-sm">
                         <div className="row-span-2">
                           <dt className="sr-only">프로필 이미지</dt>
                           <dd>
@@ -243,37 +236,37 @@ export default function CommentsSection() {
             </div>
           )}
         </div>
-      </div>
 
-      {/* 다이얼로그 컴포넌트 */}
-      <Dialog isOpen={isOpen} onClose={() => setIsOpen(false)}>
-        <h3 className="mb-4 text-lg font-bold">⚠️ comments 알림</h3>
-        <p className="mb-4">{dialogMessage}</p>
-        <div className="flex justify-end gap-2">
-          {dialogType === 'confirm' && (
+        {/* 다이얼로그 컴포넌트 */}
+        <Dialog isOpen={isOpen} onClose={() => setIsOpen(false)}>
+          <h3 className="mb-4 text-lg font-bold">⚠️ comments 알림</h3>
+          <p className="mb-4">{dialogMessage}</p>
+          <div className="flex justify-end gap-2">
+            {dialogType === 'confirm' && (
+              <Button
+                variants="secondary"
+                onClick={() => {
+                  setIsOpen(false);
+                  setTargetCommentId(null);
+                }}
+              >
+                취소
+              </Button>
+            )}
             <Button
-              variants="secondary"
               onClick={() => {
+                if (dialogType === 'confirm' && targetCommentId) {
+                  onClickDeleteComment(targetCommentId);
+                  setTargetCommentId(null);
+                }
                 setIsOpen(false);
-                setTargetCommentId(null);
               }}
             >
-              취소
+              확인
             </Button>
-          )}
-          <Button
-            onClick={() => {
-              if (dialogType === 'confirm' && targetCommentId) {
-                onClickDeleteComment(targetCommentId);
-                setTargetCommentId(null);
-              }
-              setIsOpen(false);
-            }}
-          >
-            확인
-          </Button>
-        </div>
-      </Dialog>
-    </section>
+          </div>
+        </Dialog>
+      </SectionLayout>
+    </>
   );
 }
