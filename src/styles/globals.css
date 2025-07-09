@@ -5,86 +5,117 @@
 
 :root {
   /* Primary */
-  --primary: #a2845e;
-  --primary-lightest: #f4ede7;
-  --primary-lighter: #d7c5ab;
-  --primary-darker: #7a5f3e;
-  --primary-darkest: #4e3c29;
+  --primary: #4a90e2;
+  --primary-light: #6ca0f6;
+  --primary-dark: #357abd;
 
-  /* Neutral */
-  --bg: #ffffff;
-  --surface: #f8f8f8;
-  --border: #e5e5e5;
-  --divider: #e5e5e5;
-  --text-primary: #1a1a1a;
-  --text-secondary: #6c6c6c;
-  --text-disabled: #b0b0b0;
+  /* Background */
+  --bg-primary: #f8f9fa;
+  --bg-surface: #ffffff;
+  --bg-section: #eff1f3;
 
-  /* Accent */
-  --success: #5c9c74;
-  --warning: #e3b04b;
-  --error: #d45c5c;
+  /* Text */
+  --text-primary: #2c2c2c;
+  --text-secondary: #6f6f6f;
+
+  /* Border */
+  --border: #dddddd;
+
+  /* Disabled */
+  --disabled-bg: #ececec;
+  --disabled-text: #b0b0b0;
+
+  /* Status */
+  --status-success: #27ae60;
+  --status-warning: #f2994a;
+  --status-error: #eb5757;
+  --status-info: #4a90e2;
+
+  /* Scroll */
+  --scroll-track: #ffffff;
+  --scroll-thumb: #b5b5b5;
+  --scroll-thumb-hover: #4a90e2;
 }
 
 .dark:root {
-  /* Primary (Same base) */
-  --primary: #a2845e;
-  --primary-lightest: #3a2d1f;
-  --primary-lighter: #5b4732;
-  --primary-darker: #7a5f3e;
-  --primary-darkest: #4e3c29;
+  /* Primary */
+  --primary: #4a90e2;
+  --primary-light: #6ca0f6;
+  --primary-dark: #357abd;
 
-  /* Neutral */
-  --bg: #121212;
-  --surface: #1e1e1e;
-  --border: #2a2a2a;
-  --divider: #3a3a3a;
-  --text-primary: #f4f4f4;
-  --text-secondary: #cccccc;
-  --text-disabled: #888888;
+  /* Background */
+  --bg-primary: #212427;
+  --bg-surface: #2c2f32;
+  --bg-section: #1a1d20;
 
-  /* Accent */
-  --success: #6ecf97;
-  --warning: #f4c56a;
-  --error: #e47c7c;
+  /* Text */
+  --text-primary: #ffffff;
+  --text-secondary: #aaaaaa;
+
+  /* Border */
+  --border: #3a3f44;
+
+  /* Disabled */
+  --disabled-bg: #444b50;
+  --disabled-text: #777c80;
+
+  /* Status */
+  --status-success: #6fcf97;
+  --status-warning: #f2c94c;
+  --status-error: #ff6b6b;
+  --status-info: #6ca0f6;
+
+  /* Scroll */
+  --scroll-track: #2c2f32;
+  --scroll-thumb: #62686e;
+  --scroll-thumb-hover: #6ca0f6;
 }
 
 @theme inline {
   /* Primary */
   --color-primary: var(--primary);
-  --color-primary-lightest: var(--primary-lightest);
-  --color-primary-lighter: var(--primary-lighter);
-  --color-primary-darker: var(--primary-darker);
-  --color-primary-darkest: var(--primary-darkest);
+  --color-primary-light: var(--primary-light);
+  --color-primary-dark: var(--primary-dark);
 
   /* Neutral */
-  --color-bg: var(--bg);
-  --color-surface: var(--surface);
+  --color-bg: var(--bg-primary);
+  --color-surface: var(--bg-surface);
+  --color-section: var(--bg-section);
+
   --color-border: var(--border);
-  --color-divider: var(--divider);
+
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
-  --color-text-disabled: var(--text-disabeld);
+
+  --color-disabled-bg: var(--disabled-bg);
+  --color-disabled-text: var(--disabled-text);
 
   /* Accent */
-  --color-success: var(--success);
-  --color-warning: var(--warning);
-  --color-error: var(--error);
+  --color-success: var(--status-success);
+  --color-warning: var(--status-warning);
+  --color-error: var(--status-error);
+
+  /* Scroll */
+  --color-scroll-track: var(--scroll-track);
+  --color-scroll-thumb: var(--scroll-thumb);
+  --color-scroll-thumb-hover: var(--scroll-thumb-hover);
 }
 
 html {
   @apply antialiased;
   scroll-behavior: smooth;
+  font-family: var(--font-pretendard), sans-serif;
 }
 
 body {
-  background-color: var(--primary-lightest);
+  background-color: var(--bg-primary);
   color: var(--text-primary);
+  font-family: var(--font-pretendard), 'Helvetica Neue', Arial, sans-serif;
 }
 
 ::selection {
-  background: var(--primary);
-  color: var(--bg);
+  background-color: var(--primary);
+  color: #ffffff;
 }
 
 ::-webkit-scrollbar {
@@ -94,19 +125,19 @@ body {
 
 ::-webkit-scrollbar-track {
   border-radius: 6px;
-  background-color: #dfd1c4;
+  background-color: var(--scroll-track);
 }
 
 ::-webkit-scrollbar-thumb {
-  border: 2px solid #dfd1c4;
+  border: 2px solid var(--scroll-track);
   border-radius: 6px;
   box-sizing: border-box;
-  background-color: #c0a888;
+  background-color: var(--scroll-thumb);
   transition: background-color 0.2s ease-in-out;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: var(--primary);
+  background-color: var(--scroll-thumb-hover);
 }
 
 #__next {
@@ -116,12 +147,12 @@ body {
 
 /* 공통 포커스 스타일 */
 .focus-ring {
-  @apply focus:outline-primary/50 focus:outline-2 focus:outline-offset-2;
+  @apply focus:outline-primary-light/60 focus:outline-2 focus:outline-offset-2;
 }
 
 /* 헤더 내비게이션 - hover 시 텍스트 색상 변경 */
 .hover-transition {
-  @apply hover:text-primary-darkest transition-colors duration-200 ease-in-out;
+  @apply hover:text-primary-dark transition-colors duration-200 ease-in-out;
 }
 
 /* 가상 요소 밑줄 효과 */
@@ -134,7 +165,7 @@ body {
   position: absolute;
   width: 0%;
   height: 4px;
-  bottom: -8px;
+  bottom: 0px;
   left: 50%;
   transform: translateX(-50%);
   background-color: var(--primary);
