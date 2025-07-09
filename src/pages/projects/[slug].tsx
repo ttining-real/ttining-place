@@ -1,15 +1,15 @@
 import Head from 'next/head';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
-import { useRef } from 'react';
 
-import SectionTitle from '@/components/section-title';
-import Chip from '@/components/chip';
-import Button from '@/components/button';
+import { montserrat } from '@/fonts/font';
+import SectionLayout from '@/components/section-layout';
 import Breadcrumb from '@/components/breadcrumb';
+import Button from '@/components/button';
+import Chip from '@/components/chip';
 import Icon from '@/components/icon';
 import ImageCard from '@/components/image-card';
-import { useGsapFadeInOnScroll } from '@/hooks/useGsapFadeInOnScroll';
+import StarDetail from '@/components/projects/star-detail';
 import { supabase } from '@/lib/supabase';
 import { formatDate } from '@/lib/formatDate';
 
@@ -42,10 +42,7 @@ export default function ProjectDetail({
 }) {
   const router = useRouter();
 
-  const sectionClassName = 'gsap-fade-in flex flex-col gap-6 text-[15px]';
-
-  const containerRef = useRef<HTMLDivElement>(null!);
-  useGsapFadeInOnScroll(containerRef);
+  const sectionClassName = 'flex flex-col gap-6 text-[15px]';
 
   return (
     <>
@@ -57,40 +54,37 @@ export default function ProjectDetail({
         />
         <meta property="og:title" content={project.title} />
         <meta property="og:description" content={project.summary} />
+        <meta name="description" content={project.summary} />
       </Head>
-      <div
-        ref={containerRef}
-        className="m-auto flex max-w-5xl flex-col gap-8 px-6 py-12"
-      >
-        <Breadcrumb className="gsap-fade-in" current={project.title} />
-        <div className="gsap-fade-in border-primary/40 text-primary-darkest flex flex-col items-start gap-2 border-b pb-6">
-          <h3 className="text-2xl font-bold">{project.title}</h3>
-          <p>{project.summary}</p>
-        </div>
-
-        <section className={sectionClassName}>
-          <SectionTitle title="summary" />
+      <>
+        <header className="px-6">
+          <div className="border-border m-auto flex max-w-5xl flex-col gap-4 border-b pt-2 pb-6 sm:pt-12 md:pt-20">
+            <div className="order-2">
+              <h2 className="mb-2 text-2xl font-bold">{project.title}</h2>
+              <p>{project.summary}</p>
+            </div>
+            <Breadcrumb className="order-1" current={project.title} />
+          </div>
+        </header>
+        <SectionLayout>
+          <h3 className={`${montserrat.className} text-2xl font-semibold`}>
+            Summary
+          </h3>
           <div className="flex flex-col gap-12 sm:flex-row">
             <dl className="space-y-4 sm:space-y-1">
               <div className="xs:flex-row flex flex-col items-baseline gap-2 sm:gap-4">
-                <dt className="bg-primary/20 text-primary-darkest min-w-[100px] rounded-full px-3 py-1 text-center font-medium">
-                  기간
-                </dt>
-                <dd>
+                <dt className="sr-only">기간</dt>
+                <dd className="text-text-primary">
                   {`${formatDate(project.start_date)} - ${formatDate(project.end_date)}`}
                 </dd>
               </div>
               <div className="xs:flex-row flex flex-col items-baseline gap-2 sm:gap-4">
-                <dt className="bg-primary/20 text-primary-darkest min-w-[100px] rounded-full px-3 py-1 text-center font-medium">
-                  주요 업무
-                </dt>
-                <dd>{project.role.join(', ')}</dd>
+                <dt className="sr-only">주요 업무</dt>
+                <dd className="text-text-primary">{project.role.join(', ')}</dd>
               </div>
               <div className="xs:flex-row flex flex-col items-baseline gap-2 sm:gap-4">
-                <dt className="bg-primary/20 text-primary-darkest min-w-[100px] rounded-full px-3 py-1 text-center font-medium">
-                  내용
-                </dt>
-                <dd>
+                <dt className="sr-only">내용</dt>
+                <dd className="text-text-primary">
                   {project.description.map((desc, index) => (
                     <p key={index}>{desc}</p>
                   ))}
@@ -100,91 +94,53 @@ export default function ProjectDetail({
             <ImageCard
               src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/projects/${project.image_url}.png`}
               className="aspect-video sm:w-1/3"
+              noneClassName="bg-transparent"
             />
           </div>
-        </section>
-
-        <section className={sectionClassName}>
-          <SectionTitle title="tech stack" />
-          <ul className="flex flex-wrap gap-1">
-            {project.stack.map((s, i) => (
-              <li key={i}>
-                <Chip id={s} icon={true} />
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        {/* 상세 내용 */}
-        <section className={sectionClassName}>
-          <SectionTitle title="situation" />
-          <div>
-            {Array.isArray(project.situation) &&
-              project.situation.map((text, i) => <p key={i}>{text}</p>)}
-          </div>
-        </section>
-        <section className={sectionClassName}>
-          <SectionTitle title="task" />
-          <div>
-            {Array.isArray(project.task) &&
-              project.task.map((text, i) => <p key={i}>{text}</p>)}
-          </div>
-        </section>
-        <section className={sectionClassName}>
-          <SectionTitle title="action" />
-          <div>
-            {Array.isArray(project.action) &&
-              project.action.map((obj, i) =>
-                Object.entries(obj).map(([key, val]) => (
-                  <div key={`${i}-${key}`} className="mb-4">
-                    <h4 className="text-primary font-semibold">{key}</h4>
-                    {Array.isArray(val) ? (
-                      <ul className="list-disc pl-5">
-                        {val.map((item, j) => (
-                          <li key={j}>{item}</li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p>{val}</p>
-                    )}
-                  </div>
-                )),
-              )}
-          </div>
-        </section>
-        <section className={sectionClassName}>
-          <SectionTitle title="result" />
-          <div>
-            {Array.isArray(project.result) &&
-              project.result.map((obj, i) =>
-                Object.entries(obj).map(([key, val]) => (
-                  <div key={`${i}-${key}`} className="mb-4">
-                    <h4 className="text-primary font-semibold">{key}</h4>
-                    {Array.isArray(val) ? (
-                      <ul className="list-disc pl-5">
-                        {val.map((item, j) => (
-                          <li key={j}>{item}</li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p>{val}</p>
-                    )}
-                  </div>
-                )),
-              )}
-          </div>
-        </section>
-        <Button
-          variants="secondary"
-          onClick={() => {
-            router.back();
-          }}
-          className="w-fit"
-        >
-          <Icon id="direction-left" size={16} />
-          이전 페이지로 이동
-        </Button>
-      </div>
+        </SectionLayout>
+        <SectionLayout outerClassName="bg-section">
+          <section className={sectionClassName}>
+            <h3 className={`${montserrat.className} text-2xl font-semibold`}>
+              Tech Stack
+            </h3>
+            <ul className="flex flex-wrap gap-2">
+              {project.stack.map((s, i) => (
+                <li key={i}>
+                  <Chip
+                    id={s}
+                    icon={true}
+                    className={`${montserrat.className}`}
+                  />
+                </li>
+              ))}
+            </ul>
+          </section>
+        </SectionLayout>
+        <SectionLayout innerClassName="gap-18">
+          <StarDetail
+            situation={project.situation}
+            task={project.task}
+            action={project.action}
+            result={project.action}
+          />
+        </SectionLayout>
+        <div className="m-auto max-w-5xl px-6 pb-12 md:px-0">
+          <Button
+            variants="secondary"
+            onClick={() => {
+              if (document.referrer) {
+                router.back();
+              } else {
+                router.push('/projects');
+              }
+            }}
+            className="w-fit"
+          >
+            <Icon id="direction-left" size={16} />
+            Prev Page
+          </Button>
+        </div>
+      </>
     </>
   );
 }
