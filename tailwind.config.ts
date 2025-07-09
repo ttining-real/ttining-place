@@ -7,7 +7,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         pretendard: ['var(--pretendardFont)', 'sans-serif'],
-        Agbalumo: ['var(--agbalumoFont)', 'sans-serif'],
+        montserrat: ['var(--montserratFont)', 'sans-serif'],
       },
     },
   },

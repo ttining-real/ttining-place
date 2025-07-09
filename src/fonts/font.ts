@@ -1,13 +1,21 @@
 import localFont from 'next/font/local';
+import { Montserrat } from 'next/font/google';
 
 export const pretendard = localFont({
-  src: './PretendardVariable.woff2',
+  src: [
+    {
+      path: './PretendardVariable.woff2',
+      weight: 'variable',
+      style: 'normal',
+    },
+  ],
   display: 'swap',
   variable: '--pretendardFont',
 });
 
-export const Agbalumo = localFont({
-  src: './Agbalumo-Regular.ttf',
+export const montserrat = Montserrat({
+  subsets: ['latin'],
   display: 'swap',
-  variable: '--agbalumoFont',
+  weight: 'variable',
+  variable: '--font-montserrat',
 });
