@@ -6,6 +6,7 @@ export interface ProjectsDataTypes {
   title: string;
   role: string[];
   summary: string;
+  url: string;
   stack: string[];
   description: string[];
   situation: string[];

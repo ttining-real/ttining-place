@@ -70,8 +70,8 @@ export default function ProjectDetail({
           <h3 className={`${montserrat.className} text-2xl font-semibold`}>
             Summary
           </h3>
-          <div className="flex flex-col gap-12 sm:flex-row">
-            <dl className="space-y-4 sm:space-y-1">
+          <div className="flex flex-col gap-12 md:flex-row">
+            <dl className="grow space-y-4">
               <div className="xs:flex-row flex flex-col items-baseline gap-2 sm:gap-4">
                 <dt className="sr-only">기간</dt>
                 <dd className="text-text-primary">
@@ -90,10 +90,25 @@ export default function ProjectDetail({
                   ))}
                 </dd>
               </div>
+              {project.url && (
+                <div className="xs:flex-row flex flex-col items-baseline gap-2 sm:gap-4">
+                  <dt className="sr-only">{project.title} 웹사이트 바로가기</dt>
+                  <dd>
+                    <a
+                      href={project.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary dark:text-primary-light hover:underline"
+                    >
+                      {project.title} 사이트 보기
+                    </a>
+                  </dd>
+                </div>
+              )}
             </dl>
             <ImageCard
               src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/projects/${project.image_url}.png`}
-              className="aspect-video sm:w-1/3"
+              className="aspect-video md:w-2/5"
               noneClassName="bg-transparent"
             />
           </div>
