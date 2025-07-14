@@ -44,6 +44,7 @@ export default function Introduce() {
               <div key={index} className="flex items-center gap-4">
                 <dt className="text-text-secondary">
                   <IconImg id={item.src} alt={item.alt} size={20} />
+                  <span className="sr-only">{item.label}</span>
                 </dt>
                 <dd className="flex items-center gap-4">
                   {item.site ? (
@@ -53,6 +54,9 @@ export default function Introduce() {
                           <a
                             href={siteItem.href}
                             className="hover:text-primary flex items-center gap-2 hover:underline"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={siteItem.ariaLabel}
                           >
                             <StackIcon id={siteItem.icon} size={16} />
                             {siteItem.label}
