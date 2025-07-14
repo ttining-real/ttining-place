@@ -15,6 +15,10 @@ import { formatDate } from '@/lib/formatDate';
 
 import { ProjectsDataTypes } from '@/types/projects-data-type';
 
+type ProjectsDataWithImageTypes = ProjectsDataTypes & {
+  imagePublicUrl: string | null;
+};
+
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const slug = context.params?.slug as string;
 
@@ -28,9 +32,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return { notFound: true };
   }
 
+  const { data: imageData } = supabase.storage
+    .from('projects')
+    .getPublicUrl(`${data.image_url}.png`);
+
   return {
     props: {
-      project: data,
+      project: {
+        ...data,
+        imagePublicUrl: imageData?.publicUrl ?? null,
+      },
     },
   };
 };
@@ -38,7 +49,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 export default function ProjectDetail({
   project,
 }: {
-  project: ProjectsDataTypes;
+  project: ProjectsDataWithImageTypes;
 }) {
   const router = useRouter();
 
@@ -107,7 +118,7 @@ export default function ProjectDetail({
               )}
             </dl>
             <ImageCard
-              src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/projects/${project.image_url}.png`}
+              src={project.imagePublicUrl}
               className="aspect-video md:w-2/5"
               noneClassName="bg-transparent"
             />
