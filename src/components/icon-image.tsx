@@ -5,6 +5,7 @@ type IconImgProps = {
   alt: string;
   size?: number;
   className?: string;
+  priority?: boolean;
 };
 
 // icons 폴더 내 png 이미지만 사용
@@ -13,6 +14,7 @@ export default function IconImg({
   alt,
   size = 24,
   className,
+  priority = false,
 }: IconImgProps) {
   return (
     <Image
@@ -21,7 +23,7 @@ export default function IconImg({
       width={size}
       height={size}
       className={className}
-      priority
+      priority={priority}
     />
   );
 }
