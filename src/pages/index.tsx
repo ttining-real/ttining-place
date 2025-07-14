@@ -12,6 +12,10 @@ import { supabase } from '@/lib/supabase';
 import { ExperienceDataTypes } from '@/types/experience-data-type';
 import { ProjectsDataTypes } from '@/types/projects-data-type';
 
+type ProjectsDataWithImageTypes = ProjectsDataTypes & {
+  imagePublicUrl: string | null;
+};
+
 export const getServerSideProps: GetServerSideProps = async () => {
   // experience
   const { data: experienceData, error: experienceError } = await supabase
@@ -39,10 +43,23 @@ export const getServerSideProps: GetServerSideProps = async () => {
     };
   }
 
+  const projectsDataWithImage: ProjectsDataWithImageTypes[] = projectsData.map(
+    (item) => {
+      const { data: imageData } = supabase.storage
+        .from('projects')
+        .getPublicUrl(`${item.image_url}.png`);
+
+      return {
+        ...item,
+        imagePublicUrl: imageData?.publicUrl ?? null,
+      };
+    },
+  );
+
   return {
     props: {
       experienceData: experienceData ?? [],
-      projectsData: projectsData ?? [],
+      projectsData: projectsDataWithImage,
     },
   };
 };
@@ -52,7 +69,7 @@ export default function Home({
   projectsData,
 }: {
   experienceData: ExperienceDataTypes[];
-  projectsData: ProjectsDataTypes[];
+  projectsData: ProjectsDataWithImageTypes[];
 }) {
   return (
     <>

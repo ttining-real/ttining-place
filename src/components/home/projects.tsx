@@ -9,10 +9,14 @@ import { formatDate } from '@/lib/formatDate';
 
 import { ProjectsDataTypes } from '@/types/projects-data-type';
 
+type ProjectsDataWithImageTypes = ProjectsDataTypes & {
+  imagePublicUrl: string | null;
+};
+
 export default function ProjectsSection({
   data,
 }: {
-  data: ProjectsDataTypes[];
+  data: ProjectsDataWithImageTypes[];
 }) {
   const sortData = useMemo(() => sortedProjectsData(data), [data]);
 
@@ -38,7 +42,7 @@ export default function ProjectsSection({
             summary={item.summary}
             period={`${formatDate(item.start_date)} ~ ${formatDate(item.end_date)}`}
             role={item.role}
-            image_url={item.image_url}
+            src={item.imagePublicUrl ?? undefined}
             reverse={index % 2 === 1}
           />
         ))}

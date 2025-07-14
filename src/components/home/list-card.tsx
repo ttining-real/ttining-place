@@ -9,7 +9,7 @@ type ListCardProps = {
   department?: string;
   period: string;
   role: string[];
-  image_url: string;
+  src?: string;
   reverse?: boolean;
   className?: string;
 };
@@ -18,7 +18,7 @@ export default function ListCard({
   href,
   title,
   summary,
-  image_url,
+  src,
   reverse = false,
   className = '',
 }: ListCardProps) {
@@ -27,7 +27,8 @@ export default function ListCard({
       className={`focus-ring border-border flex h-full flex-col justify-between gap-4 border-t sm:flex-row ${className}`}
     >
       <ImageCard
-        src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/projects/${image_url}.png`}
+        src={src}
+        priority
         alt={`${title} 썸네일`}
         className={`min-h-[236px] w-full sm:max-w-[420px] ${reverse ? 'sm:order-2' : 'sm:order-1'}`}
       />
