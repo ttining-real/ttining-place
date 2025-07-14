@@ -10,6 +10,7 @@ type ImageCardProps = {
   height?: number;
   className?: string;
   noneClassName?: string;
+  priority?: boolean;
 };
 
 export default function ImageCard({
@@ -17,6 +18,7 @@ export default function ImageCard({
   alt = '이미지',
   width = 420,
   height = 236,
+  priority,
   className = '',
   noneClassName = '',
 }: ImageCardProps) {
@@ -42,10 +44,11 @@ export default function ImageCard({
           onLoad={() => setLoading(false)}
           onError={() => setLoading(false)}
           className={`w-full transition-opacity duration-300 ${loading ? 'opacity-0' : ''}`}
+          {...(priority ? { priority: true } : {})}
         />
       ) : (
         <div
-          className={`bg-bg flex h-full flex-col items-center justify-center gap-4 ${noneClassName}`}
+          className={`bg-bg flex h-full w-full flex-col items-center justify-center gap-4 ${noneClassName}`}
         >
           <Image
             src="/icons/fearful_face.png"
@@ -53,6 +56,7 @@ export default function ImageCard({
             width={40}
             height={40}
             className="h-8 w-8"
+            priority
           />
           <figcaption className="text-text-secondary text-center text-sm">
             이미지 없음
