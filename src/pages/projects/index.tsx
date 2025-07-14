@@ -4,7 +4,7 @@ import { GetServerSideProps } from 'next';
 import { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-import { montserrat, pretendard } from '@/fonts/font';
+import { montserrat } from '@/fonts/font';
 import { projectsTabs as tabs } from '@/constants/tabs';
 import SectionLayout from '@/components/section-layout';
 import Chip from '@/components/chip';
@@ -15,6 +15,10 @@ import { formatDate } from '@/lib/formatDate';
 import { sortedProjectsData } from '@/lib/sortedData';
 
 import { ProjectsDataTypes } from '@/types/projects-data-type';
+
+type ProjectsDataWithImageTypes = ProjectsDataTypes & {
+  imagePublicUrl: string | null;
+};
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const { data, error } = await supabase.from('projects').select('*');
@@ -27,16 +31,29 @@ export const getServerSideProps: GetServerSideProps = async () => {
     };
   }
 
+  // 각 프로젝트에 이미지 Public URL 추가
+  const dataWithImage: ProjectsDataWithImageTypes[] = data.map((item) => {
+    const { data: imageData } = supabase.storage
+      .from('projects')
+      .getPublicUrl(`${item.image_url}.png`);
+
+    return {
+      ...item,
+      imagePublicUrl: imageData?.publicUrl ?? null,
+    };
+  });
+
   return {
     props: {
-      data,
+      // data,
+      data: dataWithImage,
     },
   };
 };
 
 type Tab = (typeof tabs)[number];
 
-export default function Page({ data }: { data: ProjectsDataTypes[] }) {
+export default function Page({ data }: { data: ProjectsDataWithImageTypes[] }) {
   const [selected, setSelected] = useState<Tab>('all');
 
   const sortedData = useMemo(() => sortedProjectsData(data), [data]);
@@ -87,7 +104,7 @@ export default function Page({ data }: { data: ProjectsDataTypes[] }) {
           <TabSelector tabs={tabs} selected={selected} onChange={setSelected} />
         </header>
         {/* 리스트 영역 */}
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-4">
+        <div className="grid grid-cols-1 gap-y-8 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-16 lg:grid-cols-3">
           <AnimatePresence>
             {filtered.map((item) => {
               return (
@@ -101,46 +118,43 @@ export default function Page({ data }: { data: ProjectsDataTypes[] }) {
                 >
                   <Link
                     href={`/projects/${item.slug}`}
-                    className="focus-ring flex h-full flex-col gap-4 rounded-2xl sm:p-4"
+                    className="focus-ring flex h-full flex-col rounded-sm"
                   >
-                    <div className="order-2 p-2">
-                      <h3 className="mb-2 text-xl font-semibold sm:text-xl">
+                    <div className="order-2 px-1 py-4">
+                      <h3 className="mb-1 text-lg font-semibold sm:text-xl">
                         {item.title}
                       </h3>
-                      <dl className="flex flex-col gap-2">
+                      <dl className="flex flex-col gap-1 text-sm sm:text-base">
                         <div>
                           <dt className="sr-only">작업 기간</dt>
                           <dd
-                            className={`${montserrat.className} text-text-secondary text-sm`}
+                            className={`${montserrat.className} text-text-secondary`}
                           >
                             {`${formatDate(item.start_date)} - ${formatDate(item.end_date)}`}
                           </dd>
                         </div>
-                        <div className="mb-4">
+                        <div className="">
                           <dt className="sr-only">요약</dt>
                           <dd className="text-text-secondary">
                             {item.summary}
                           </dd>
                         </div>
-                        <div className="mt-1">
+                        <div className="mt-2">
                           <dt className="sr-only">역할</dt>
                           <dd className="flex gap-1">
                             {item.role.map((r, i) => (
-                              <Chip
-                                key={i}
-                                id={r}
-                                className={`${pretendard.className} bg-section text-sm`}
-                              />
+                              <Chip key={i} id={r} className="" />
                             ))}
                           </dd>
                         </div>
                       </dl>
                     </div>
                     <ImageCard
-                      src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/projects/${item.image_url}.png`}
+                      src={item.imagePublicUrl}
                       alt={`${item.title} 썸네일`}
                       className="aspect-video overflow-hidden"
                       noneClassName="bg-surface"
+                      priority
                     />
                   </Link>
                 </motion.div>
