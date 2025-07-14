@@ -17,6 +17,10 @@ import { sortedExperienceData } from '@/lib/sortedData';
 
 import { ExperienceDataTypes } from '@/types/experience-data-type';
 
+type ExperienceDataWithImageTypes = ExperienceDataTypes & {
+  imagePublicUrl: string | null;
+};
+
 export const getServerSideProps: GetServerSideProps = async () => {
   const { data, error } = await supabase.from('experience').select('*');
 
@@ -28,16 +32,31 @@ export const getServerSideProps: GetServerSideProps = async () => {
     };
   }
 
+  const dataWithImage: ExperienceDataWithImageTypes[] = data.map((item) => {
+    const { data: imageData } = supabase.storage
+      .from('experience')
+      .getPublicUrl(`${item.image_url}.png`);
+
+    return {
+      ...item,
+      imagePublicUrl: imageData?.publicUrl ?? null,
+    };
+  });
+
   return {
     props: {
-      data,
+      data: dataWithImage,
     },
   };
 };
 
 type Tab = (typeof tabs)[number];
 
-export default function Page({ data }: { data: ExperienceDataTypes[] }) {
+export default function Page({
+  data,
+}: {
+  data: ExperienceDataWithImageTypes[];
+}) {
   const [selected, setSelected] = useState<Tab>('all');
   const [openId, setOpenId] = useState<string | null>(null); // 아코디언 열린 항목 ID
 
@@ -95,9 +114,9 @@ export default function Page({ data }: { data: ExperienceDataTypes[] }) {
         </header>
 
         {/* 리스트 영역 */}
-        <div className="flex flex-col gap-8 md:gap-0">
+        <div className="flex flex-col gap-8">
           <AnimatePresence>
-            {filtered.map((item, index) => {
+            {filtered.map((item) => {
               const isOpen = openId === item.id;
 
               return (
@@ -108,15 +127,16 @@ export default function Page({ data }: { data: ExperienceDataTypes[] }) {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.3 }}
-                  className={`border-border flex scroll-mt-32 flex-col gap-2 border-t md:flex-row md:gap-4 ${index === 0 ? 'border-none' : ''}`}
+                  className="flex scroll-mt-32 flex-col md:flex-row md:gap-6"
                 >
                   <ImageCard
-                    src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/experience/${item.image_url}.png`}
+                    src={item.imagePublicUrl}
+                    priority
                     alt={`${item.company_name} 로고`}
                     className="flex h-full min-h-[264px] w-full items-center md:max-w-[420px]"
                   />
 
-                  <div className="order-2 flex flex-1 flex-col gap-2 p-4 md:p-6">
+                  <div className="order-2 flex flex-1 flex-col gap-4 px-1 py-4">
                     <h3 className="text-text-primary text-xl font-semibold md:text-2xl">
                       {item.company_name}
                     </h3>
@@ -168,7 +188,7 @@ export default function Page({ data }: { data: ExperienceDataTypes[] }) {
                             collapsed: { height: 0, opacity: 0 },
                           }}
                           transition={{ duration: 0.3, ease: 'easeInOut' }}
-                          className="mt-4 overflow-hidden text-sm text-gray-700"
+                          className="overflow-hidden text-sm"
                         >
                           <dl className="flex flex-col gap-8">
                             <div>
