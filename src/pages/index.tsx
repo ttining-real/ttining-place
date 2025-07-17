@@ -2,9 +2,10 @@ import Head from 'next/head';
 import { GetServerSideProps } from 'next';
 
 // components
-import Hero from '@/components/home/hero';
-import AboutSection from '@/components/home/about';
-import ExperienceSection from '@/components/home/experience';
+import HeroSection from '@/components/home/hero';
+import GridMenuSection from '@/components/home/grid-menu';
+// import AboutSection from '@/components/home/about';
+// import ExperienceSection from '@/components/home/experience';
 import ProjectsSection from '@/components/home/projects';
 import CommentsSection from '@/components/home/comments';
 import { supabase } from '@/lib/supabase';
@@ -65,7 +66,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 };
 
 export default function Home({
-  experienceData,
+  // experienceData,
   projectsData,
 }: {
   experienceData: ExperienceDataTypes[];
@@ -87,9 +88,10 @@ export default function Home({
           content="UI 개발자 안지인의 포트폴리오입니다. 주요 프로젝트 및 경력을 확인하실 수 있습니다."
         />
       </Head>
-      <Hero />
-      <AboutSection />
-      <ExperienceSection data={experienceData} />
+      <HeroSection />
+      <GridMenuSection />
+      {/* <AboutSection /> */}
+      {/* <ExperienceSection data={experienceData} /> */}
       <ProjectsSection data={projectsData} />
       <CommentsSection />
     </>

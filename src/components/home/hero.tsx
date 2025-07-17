@@ -8,7 +8,7 @@ const headlineLines = [
   'Deliver Results',
 ];
 
-export default function Hero() {
+export default function HeroSection() {
   const shouldReduceMotion = useReducedMotion();
 
   return (
@@ -33,8 +33,9 @@ export default function Hero() {
           },
         }}
       >
-        <motion.div
-          className="flex flex-col"
+        <h2 className="sr-only">Introduce</h2>
+        <motion.h3
+          className="flex flex-col gap-0 sm:gap-4"
           variants={{
             hidden: {},
             visible: {
@@ -45,9 +46,9 @@ export default function Hero() {
           }}
         >
           {headlineLines.map((line, idx) => (
-            <motion.h2
+            <motion.p
               key={idx}
-              className={`${montserrat.className} xs:text-5xl text-4xl font-bold uppercase sm:text-6xl lg:text-8xl`}
+              className={`${montserrat.className} text-4xl font-bold uppercase sm:text-5xl md:text-6xl lg:text-7xl`}
               variants={{
                 hidden: { opacity: 0, y: shouldReduceMotion ? 0 : -60 },
                 visible: {
@@ -60,9 +61,9 @@ export default function Hero() {
               }}
             >
               {line}
-            </motion.h2>
+            </motion.p>
           ))}
-        </motion.div>
+        </motion.h3>
 
         <motion.p
           className="text-base leading-relaxed sm:text-lg"

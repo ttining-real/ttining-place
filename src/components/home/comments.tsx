@@ -129,31 +129,27 @@ export default function CommentsSection() {
 
   return (
     <>
-      <SectionLayout innerClassName="grid md:grid-cols-2 items-center">
-        <header
-          className={`${montserrat.className} md:bg-surface flex h-full flex-col items-center justify-center md:py-8`}
-        >
-          <h3 className="mb-4 text-2xl font-bold sm:mb-8 sm:text-3xl">
+      <SectionLayout innerClassName="grid md:grid-cols-2 gap-10">
+        <header className="flex flex-row items-center justify-between gap-4 md:flex-col md:justify-center">
+          <h2 className={`${montserrat.className} text-2xl font-bold`}>
             Comments
-          </h3>
-          <div className="text-center uppercase">
-            <p>Thanks for visiting!</p>
-            <p>Feel free to leave a note.</p>
+          </h2>
+          <div className="text-text-secondary text-right text-sm md:text-center">
+            <p>방문해 주셔서 감사합니다!</p>
+            <p>자유롭게 코멘트를 남겨주세요.</p>
           </div>
         </header>
-        <div className="lg:p-8">
-          <div
-            className={`focus-within:ring-primary-light/60 border-border bg-surface mx-1 mb-4 flex items-center justify-between gap-2 rounded-full border p-1 focus-within:ring-2`}
-          >
-            <span aria-hidden className="xs:text-lg pl-2 text-base sm:text-2xl">
+        <div className="flex flex-col gap-4">
+          <div className="focus-within:ring-primary-light/60 bg-surface border-border flex items-center justify-between gap-2 rounded-4xl border p-1 shadow-md focus-within:ring-2">
+            <span aria-hidden className="pl-3 text-lg">
               🥹
             </span>
             <input
               type="text"
-              placeholder="텍스트를 입력해 주세요."
+              placeholder="코멘트를 작성해 주세요."
               value={inputCommentValue}
               onChange={onChangeComment}
-              className="h-10 grow text-sm outline-none sm:text-base"
+              className="w-full grow outline-none"
             />
             <Button onClick={onClickRegisterButton} className="shrink-0">
               등록
@@ -165,8 +161,8 @@ export default function CommentsSection() {
               <p>첫 번째 한 마디를 남겨주세요!</p>
             </div>
           ) : (
-            <div className="flex flex-col items-center gap-4">
-              <ul className="flex w-full flex-col gap-2 p-1">
+            <div className="flex max-h-[300px] flex-col items-center gap-4 overflow-auto">
+              <ul className="flex w-full flex-col gap-4 p-1">
                 {visibleComments.map((comment) => {
                   const avatarUrl = `https://api.dicebear.com/9.x/big-smile/svg?seed=${comment.user_id}`;
                   const isMyComment = comment.user_id === userId;
@@ -174,7 +170,7 @@ export default function CommentsSection() {
                   return (
                     <li
                       key={comment.id}
-                      className="border-border bg-surface relative flex flex-col gap-2 rounded-xl border p-4"
+                      className="border-border bg-surface relative flex flex-col gap-2 rounded-xl border p-4 shadow-md"
                     >
                       <dl className="text-text-secondary grid grid-cols-[auto_1fr] items-center gap-x-3 text-sm">
                         <div className="row-span-2">

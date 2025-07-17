@@ -38,7 +38,7 @@ export default function Dialog({ isOpen, onClose, children }: DialogProps) {
     <AnimatePresence>
       {isOpen && (
         <div
-          className="bg-bg/60 fixed inset-0 z-50 flex items-center justify-center"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 dark:bg-black/60"
           onClick={onClose}
         >
           <motion.div
@@ -49,7 +49,7 @@ export default function Dialog({ isOpen, onClose, children }: DialogProps) {
             onClick={(e: React.MouseEvent<HTMLDivElement>) =>
               e.stopPropagation()
             }
-            className="focus-ring bg-bg w-full max-w-md rounded-xl p-6 shadow-lg outline-none"
+            className="focus-ring border-border bg-bg w-full max-w-md rounded-xl border p-6 shadow-lg outline-none"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}

@@ -22,14 +22,18 @@ export default function ProjectsSection({
 
   return (
     <SectionLayout outerClassName="bg-section">
-      <header className={`${montserrat.className}`}>
-        <h3 className="mb-4 text-sm uppercase sm:mb-8 sm:text-base">
+      <header>
+        <h2
+          className={`${montserrat.className} mb-4 text-sm uppercase sm:mb-8 sm:text-base`}
+        >
           Projects
-        </h3>
-        <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:gap-12">
-          <p className="text-2xl font-bold sm:text-3xl">Featured & Side</p>
+        </h2>
+        <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <p className={`${montserrat.className} text-2xl font-bold`}>
+            Selected Projects
+          </p>
           <Button href="/projects" variants="secondary">
-            View All Projects
+            모든 프로젝트 보기
           </Button>
         </div>
       </header>

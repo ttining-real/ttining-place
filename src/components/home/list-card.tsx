@@ -24,7 +24,7 @@ export default function ListCard({
 }: ListCardProps) {
   return (
     <article
-      className={`focus-ring border-border flex h-full flex-col justify-between gap-4 border-t sm:flex-row ${className}`}
+      className={`focus-ring bg-surface sm:border-border flex h-full flex-col justify-between overflow-hidden rounded-3xl shadow-md sm:flex-row sm:rounded-none sm:border-t sm:bg-transparent sm:shadow-none ${className}`}
     >
       <ImageCard
         src={src}
@@ -34,24 +34,17 @@ export default function ListCard({
       />
 
       <div
-        className={`flex w-full flex-col items-start justify-between gap-8 p-2 md:p-8 ${reverse ? 'sm:order-1' : 'sm:order-2'}`}
+        className={`flex w-full flex-col items-start p-6 ${reverse ? 'sm:order-1' : 'sm:order-2'}`}
       >
+        <h3 className="mb-1 text-lg font-semibold sm:text-xl">{title}</h3>
         <dl>
-          <div className="mb-4">
-            <dt className="sr-only">프로젝트 명</dt>
-            <dd className="flex items-center gap-1 text-lg font-bold sm:text-2xl">
-              {title}
-            </dd>
-          </div>
-
-          <div>
-            <dt className="sr-only">요약</dt>
-            <dd className="text-sm sm:text-base">{summary}</dd>
-          </div>
+          <dt className="sr-only">요약</dt>
+          <dd className="text-text-secondary mb-6 text-sm">{summary}</dd>
         </dl>
         <Button
           href={href}
           variants="secondary"
+          size="sm"
           ariaLabel={`${title} 상세 페이지로 이동`}
         >
           자세히 보기
