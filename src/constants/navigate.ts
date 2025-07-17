@@ -6,9 +6,11 @@ export const NAVIGATE = [
   {
     label: 'experience',
     href: '/experience',
+    query: { tab: 'all' },
   },
   {
     label: 'projects',
     href: '/projects',
+    query: { tab: 'all' },
   },
 ];
