@@ -52,6 +52,7 @@ export default function ProjectDetail({
   project: ProjectsDataWithImageTypes;
 }) {
   const router = useRouter();
+  const tab = router.query.tab as string | undefined;
 
   const sectionClassName = 'flex flex-col gap-6 text-[15px]';
 
@@ -154,16 +155,16 @@ export default function ProjectDetail({
           <Button
             variants="secondary"
             onClick={() => {
-              if (document.referrer) {
-                router.back();
+              if (tab) {
+                router.push(`/projects?tab=${tab}`);
               } else {
-                router.push('/projects');
+                router.back();
               }
             }}
             className="w-fit"
           >
             <Icon id="direction-left" size={16} />
-            Prev Page
+            이전 페이지로 이동
           </Button>
         </div>
       </>

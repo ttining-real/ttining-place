@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { GetServerSideProps } from 'next';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import { montserrat } from '@/fonts/font';
@@ -15,6 +15,7 @@ import { formatDate } from '@/lib/formatDate';
 import { sortedProjectsData } from '@/lib/sortedData';
 
 import { ProjectsDataTypes } from '@/types/projects-data-type';
+import { useRouter } from 'next/router';
 
 type ProjectsDataWithImageTypes = ProjectsDataTypes & {
   imagePublicUrl: string | null;
@@ -54,7 +55,18 @@ export const getServerSideProps: GetServerSideProps = async () => {
 type Tab = (typeof tabs)[number];
 
 export default function Page({ data }: { data: ProjectsDataWithImageTypes[] }) {
+  const router = useRouter();
+
   const [selected, setSelected] = useState<Tab>('all');
+
+  useEffect(() => {
+    if (!router.isReady) return; // undefined일 경우 return
+
+    const tab = router.query.tab;
+    if (tab === 'main' || tab === 'side' || tab === 'all') {
+      setSelected(tab);
+    }
+  }, [router.isReady, router.query.tab]);
 
   const sortedData = useMemo(() => sortedProjectsData(data), [data]);
 
@@ -78,6 +90,18 @@ export default function Page({ data }: { data: ProjectsDataWithImageTypes[] }) {
     }
   }, [selected, sortedData, main, side]);
 
+  const handleTabChange = (newTab: Tab) => {
+    setSelected(newTab);
+    router.replace(
+      {
+        pathname: router.pathname,
+        query: { ...router.query, tab: newTab },
+      },
+      undefined,
+      { shallow: true },
+    );
+  };
+
   return (
     <>
       <Head>
@@ -97,11 +121,15 @@ export default function Page({ data }: { data: ProjectsDataWithImageTypes[] }) {
         <header
           className={`${montserrat.className} border-border flex flex-col justify-between border-b pb-2 sm:flex-row sm:items-center`}
         >
-          <h3 className="mb-4 font-semibold uppercase sm:mb-0 sm:font-normal">
+          <h2 className="mb-4 font-semibold uppercase sm:mb-0 sm:font-normal">
             Projects
-          </h3>
+          </h2>
           {/* 탭 메뉴 */}
-          <TabSelector tabs={tabs} selected={selected} onChange={setSelected} />
+          <TabSelector
+            tabs={tabs}
+            selected={selected}
+            onChange={handleTabChange}
+          />
         </header>
         {/* 리스트 영역 */}
         <div className="grid grid-cols-1 gap-y-8 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-16 lg:grid-cols-3">
@@ -117,7 +145,10 @@ export default function Page({ data }: { data: ProjectsDataWithImageTypes[] }) {
                   className="flex flex-col gap-4"
                 >
                   <Link
-                    href={`/projects/${item.slug}`}
+                    href={{
+                      pathname: `/projects/${item.slug}`,
+                      query: { tab: selected },
+                    }}
                     className="focus-ring flex h-full flex-col rounded-sm"
                   >
                     <div className="order-2 px-1 py-4">
@@ -141,9 +172,13 @@ export default function Page({ data }: { data: ProjectsDataWithImageTypes[] }) {
                         </div>
                         <div className="mt-2">
                           <dt className="sr-only">역할</dt>
-                          <dd className="flex gap-1">
+                          <dd className="gap- flex flex-wrap gap-2">
                             {item.role.map((r, i) => (
-                              <Chip key={i} id={r} className="" />
+                              <Chip
+                                key={i}
+                                id={r}
+                                className="whitespace-nowrap"
+                              />
                             ))}
                           </dd>
                         </div>

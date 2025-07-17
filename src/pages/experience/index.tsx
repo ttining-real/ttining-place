@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { GetServerSideProps } from 'next';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import { montserrat } from '@/fonts/font';
@@ -16,6 +16,7 @@ import { formatDate } from '@/lib/formatDate';
 import { sortedExperienceData } from '@/lib/sortedData';
 
 import { ExperienceDataTypes } from '@/types/experience-data-type';
+import { useRouter } from 'next/router';
 
 type ExperienceDataWithImageTypes = ExperienceDataTypes & {
   imagePublicUrl: string | null;
@@ -57,7 +58,19 @@ export default function Page({
 }: {
   data: ExperienceDataWithImageTypes[];
 }) {
+  const router = useRouter();
+
   const [selected, setSelected] = useState<Tab>('all');
+
+  useEffect(() => {
+    if (!router.isReady) return; // undefined일 경우 return
+
+    const tab = router.query.tab;
+    if (tab === 'careers' || tab === 'activities' || tab === 'all') {
+      setSelected(tab);
+    }
+  }, [router.isReady, router.query.tab]);
+
   const [openId, setOpenId] = useState<string | null>(null); // 아코디언 열린 항목 ID
 
   const sortedData = useMemo(() => sortedExperienceData(data), [data]);
@@ -83,6 +96,18 @@ export default function Page({
     }
   }, [selected, sortedData, careers, activities]);
 
+  const handleTabChange = (newTab: Tab) => {
+    setSelected(newTab);
+    router.replace(
+      {
+        pathname: router.pathname,
+        query: { ...router.query, tab: newTab },
+      },
+      undefined,
+      { shallow: true },
+    );
+  };
+
   const toggleOpen = (id: string) => {
     setOpenId((prev) => (prev === id ? null : id));
   };
@@ -106,11 +131,15 @@ export default function Page({
         <header
           className={`${montserrat.className} border-border flex flex-col justify-between border-b pb-2 sm:flex-row sm:items-center`}
         >
-          <h3 className="mb-4 font-semibold uppercase sm:mb-0 sm:font-normal">
+          <h2 className="mb-4 font-semibold uppercase sm:mb-0 sm:font-normal">
             Experience
-          </h3>
+          </h2>
           {/* 탭 메뉴 */}
-          <TabSelector tabs={tabs} selected={selected} onChange={setSelected} />
+          <TabSelector
+            tabs={tabs}
+            selected={selected}
+            onChange={handleTabChange}
+          />
         </header>
 
         {/* 리스트 영역 */}
