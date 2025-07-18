@@ -68,9 +68,9 @@ export default function ResumeSection({
           <p
             className={`${montserrat.className} text-text-secondary`}
           >{`${formatDate(item.start_date)} - ${formatDate(item.end_date)}`}</p>
-          <div>
+          <div className="flex items-center">
+            <h5>{item.school_name}</h5>
             <p>
-              {item.school_name}
               {item.major && `, ${item.major}`}
               {item.note && ` (${item.note})`}
             </p>
@@ -87,11 +87,9 @@ export default function ResumeSection({
           <p className={`${montserrat.className} text-text-secondary`}>
             {formatDate(item.issued_date)}
           </p>
-          <div>
-            <p>
-              {item.title}
-              {item.organization && `, ${item.organization}`}
-            </p>
+          <div className="flex items-center">
+            <h5>{item.title}</h5>
+            <p>{item.organization && `, ${item.organization}`}</p>
           </div>
         </li>
       ))}
@@ -122,7 +120,7 @@ export default function ResumeSection({
         <h3 className="mb-4 text-sm uppercase sm:mb-8 sm:text-base">Resume</h3>
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center sm:gap-12">
           <AnimatePresence mode="wait">
-            <motion.p
+            <motion.h4
               key={page}
               className="text-2xl font-bold sm:text-3xl"
               initial={{ opacity: 0, y: 10 }}
@@ -131,7 +129,7 @@ export default function ResumeSection({
               transition={{ duration: 0.3 }}
             >
               {titles[page]}
-            </motion.p>
+            </motion.h4>
           </AnimatePresence>
 
           {/* 전환 버튼 */}

@@ -108,6 +108,7 @@ export default function Page({
         />
       </Head>
       <div className="flex flex-col">
+        <h2 className="sr-only">About</h2>
         <Introduce />
         <ExperienceSection data={experienceData} />
         <TechStack data={stackData} />

@@ -61,7 +61,7 @@ export default function ExperienceSection({ data }: ExperienceSectionProps) {
         </h3>
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center sm:gap-12">
           <AnimatePresence mode="wait">
-            <motion.p
+            <motion.h4
               key={page}
               className="text-2xl font-bold sm:text-3xl"
               initial={{ opacity: 0, y: 10 }}
@@ -70,7 +70,7 @@ export default function ExperienceSection({ data }: ExperienceSectionProps) {
               transition={{ duration: 0.3 }}
             >
               {page === 0 ? 'Careers' : 'Activities'}
-            </motion.p>
+            </motion.h4>
           </AnimatePresence>
 
           {/* 버튼 */}
@@ -111,12 +111,17 @@ export default function ExperienceSection({ data }: ExperienceSectionProps) {
                 className="border-border flex flex-col gap-6 border-t p-2 py-4 sm:flex-row sm:gap-12 sm:p-6"
               >
                 <div className="flex flex-col gap-2 sm:min-w-[200px]">
-                  <h4 className="order-2 text-xl font-semibold sm:text-2xl">
+                  <h5 className="order-2 text-xl font-semibold sm:text-2xl">
                     {career.company_name}
-                  </h4>
-                  <p
+                  </h5>
+                  <dl
                     className={`${montserrat.className} text-text-secondary order-1 text-sm sm:text-base`}
-                  >{`${formatDate(career.start_date)} - ${formatDate(career.end_date)}`}</p>
+                  >
+                    <dt className="sr-only">근무 기간</dt>
+                    <dd>
+                      {`${formatDate(career.start_date)} - ${formatDate(career.end_date)}`}
+                    </dd>
+                  </dl>
                 </div>
                 <dl className="flex flex-col gap-4 sm:gap-8">
                   <div>

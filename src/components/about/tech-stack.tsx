@@ -29,29 +29,27 @@ export default function TechStack({ data }: Props) {
               id={section.title}
               className="border-border flex flex-col gap-6 border-t py-12 md:grid md:grid-cols-8"
             >
-              <h3
+              <h4
                 className={`${montserrat.className} col-span-2 text-2xl font-semibold`}
               >
                 {section.title}
-              </h3>
-              <div className="col-span-6 flex flex-col gap-10">
+              </h4>
+              <div className="col-span-6 flex flex-col gap-6">
                 {section.stack_items.map((item) => (
-                  <dl key={item.id} className="flex flex-col gap-2">
-                    <dt
-                      className={`${montserrat.className} text-lg font-medium`}
+                  <div key={item.title}>
+                    <h5
+                      className={`${montserrat.className} mb-2 text-lg font-medium`}
                     >
                       {item.title}
-                    </dt>
-                    <dd className="text-text-secondary">
-                      <div className="">
-                        {item.description.map((desc, idx) => (
-                          <p key={idx}>{desc}</p>
-                        ))}
-                      </div>
+                    </h5>
+                    <div className="text-text-secondary text-sm">
+                      {item.description.map((desc, idx) => (
+                        <p key={idx}>{desc}</p>
+                      ))}
                       {item.stack_icons.length > 0 && (
                         <ul className="mt-4 flex flex-wrap gap-2">
                           {item.stack_icons.map((icon) => (
-                            <li key={icon.id} className="">
+                            <li key={icon.id}>
                               <Chip
                                 id={icon.name}
                                 icon={true}
@@ -61,8 +59,8 @@ export default function TechStack({ data }: Props) {
                           ))}
                         </ul>
                       )}
-                    </dd>
-                  </dl>
+                    </div>
+                  </div>
                 ))}
               </div>
             </article>
