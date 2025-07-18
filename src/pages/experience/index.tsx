@@ -144,6 +144,7 @@ export default function Page({
 
         {/* 리스트 영역 */}
         <div className="flex flex-col gap-8">
+          <h3 className="sr-only">{router.query.tab}</h3>
           <AnimatePresence>
             {filtered.map((item) => {
               const isOpen = openId === item.id;
@@ -166,9 +167,9 @@ export default function Page({
                   />
 
                   <div className="order-2 flex flex-1 flex-col gap-4 px-1 py-4">
-                    <h3 className="text-text-primary text-xl font-semibold md:text-2xl">
+                    <h4 className="text-text-primary text-xl font-semibold md:text-2xl">
                       {item.company_name}
-                    </h3>
+                    </h4>
                     <p className="text-text-secondary text-sm">{`${formatDate(item.start_date)} - ${formatDate(item.end_date)}`}</p>
                     <div className="text-sm">
                       {item.description.map((desc, index) => (
@@ -219,42 +220,38 @@ export default function Page({
                           transition={{ duration: 0.3, ease: 'easeInOut' }}
                           className="overflow-hidden text-sm"
                         >
-                          <dl className="flex flex-col gap-8">
+                          <div className="flex flex-col gap-8">
                             <div>
-                              <dt
+                              <h5
                                 className={`${montserrat.className} text-text-secondary mb-2 font-medium uppercase`}
                               >
                                 Role
-                              </dt>
-                              <dd>
-                                <ul className="text-text-primary list-disc pl-4">
-                                  {item.major_task.map((task, index) => (
-                                    <li key={index}>{task}</li>
-                                  ))}
-                                </ul>
-                              </dd>
+                              </h5>
+                              <ul className="text-text-primary list-disc pl-4">
+                                {item.major_task.map((task, index) => (
+                                  <li key={index}>{task}</li>
+                                ))}
+                              </ul>
                             </div>
                             <div>
-                              <dt
+                              <h5
                                 className={`${montserrat.className} text-text-secondary mb-2 font-medium uppercase`}
                               >
                                 Achivements
-                              </dt>
-                              <dd>
-                                <ul className="text-text-primary list-disc pl-4">
-                                  {item.achievements.map((achive, index) => (
-                                    <li key={index}>{achive}</li>
-                                  ))}
-                                </ul>
-                              </dd>
+                              </h5>
+                              <ul className="text-text-primary list-disc pl-4">
+                                {item.achievements.map((achive, index) => (
+                                  <li key={index}>{achive}</li>
+                                ))}
+                              </ul>
                             </div>
                             <div>
-                              <dt
+                              <h5
                                 className={`${montserrat.className} text-text-secondary mb-3 font-medium uppercase`}
                               >
                                 Tech Stack
-                              </dt>
-                              <dd className="flex flex-wrap gap-1">
+                              </h5>
+                              <div className="flex flex-wrap gap-1">
                                 {item.tech_stack.map((stack, index) => (
                                   <Chip
                                     key={index}
@@ -263,19 +260,19 @@ export default function Page({
                                     className={`${montserrat.className}`}
                                   />
                                 ))}
-                              </dd>
+                              </div>
                             </div>
                             <div>
-                              <dt
+                              <h5
                                 className={`${montserrat.className} text-text-secondary mb-2 font-medium uppercase`}
                               >
                                 Location
-                              </dt>
-                              <dd className="text-text-primary">
+                              </h5>
+                              <p className="text-text-primary">
                                 {item.location}
-                              </dd>
+                              </p>
                             </div>
-                          </dl>
+                          </div>
                         </motion.div>
                       )}
                     </AnimatePresence>
