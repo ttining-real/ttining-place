@@ -31,7 +31,7 @@ export default function StarDetail({
     }
 
     return (
-      <dl className="grid gap-8 sm:grid-cols-2">
+      <div className="grid gap-8 sm:grid-cols-2">
         {(value as Record<string, string>[]).map((obj, idx) => (
           <div
             key={idx}
@@ -39,15 +39,15 @@ export default function StarDetail({
           >
             {Object.entries(obj).map(([key, val]) => (
               <React.Fragment key={key}>
-                <dt className="text-text-primary mb-4 text-lg font-semibold">
+                <h4 className="text-text-primary mb-4 text-lg font-semibold">
                   {key}
-                </dt>
-                <dd className="text-text-secondary">{val}</dd>
+                </h4>
+                <p className="text-text-secondary">{val}</p>
               </React.Fragment>
             ))}
           </div>
         ))}
-      </dl>
+      </div>
     );
   };
 

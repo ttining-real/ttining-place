@@ -83,41 +83,39 @@ export default function ProjectDetail({
             Summary
           </h3>
           <div className="flex flex-col gap-12 md:flex-row">
-            <dl className="grow space-y-4">
+            <div className="grow space-y-4">
               <div className="xs:flex-row flex flex-col items-baseline gap-2 sm:gap-4">
-                <dt className="sr-only">기간</dt>
-                <dd className="text-text-primary">
+                <h4 className="sr-only">기간</h4>
+                <p className="text-text-primary">
                   {`${formatDate(project.start_date)} - ${formatDate(project.end_date)}`}
-                </dd>
+                </p>
               </div>
               <div className="xs:flex-row flex flex-col items-baseline gap-2 sm:gap-4">
-                <dt className="sr-only">주요 업무</dt>
-                <dd className="text-text-primary">{project.role.join(', ')}</dd>
+                <h4 className="sr-only">주요 업무</h4>
+                <p className="text-text-primary">{project.role.join(', ')}</p>
               </div>
               <div className="xs:flex-row flex flex-col items-baseline gap-2 sm:gap-4">
-                <dt className="sr-only">내용</dt>
-                <dd className="text-text-primary">
+                <h4 className="sr-only">내용</h4>
+                <div className="text-text-primary">
                   {project.description.map((desc, index) => (
                     <p key={index}>{desc}</p>
                   ))}
-                </dd>
+                </div>
               </div>
               {project.url && (
                 <div className="xs:flex-row flex flex-col items-baseline gap-2 sm:gap-4">
-                  <dt className="sr-only">{project.title} 웹사이트 바로가기</dt>
-                  <dd>
-                    <a
-                      href={project.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-primary dark:text-primary-light hover:underline"
-                    >
-                      {project.title} 사이트 보기
-                    </a>
-                  </dd>
+                  <h4 className="sr-only">{project.title} 웹사이트 바로가기</h4>
+                  <a
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary dark:text-primary-light hover:underline"
+                  >
+                    {project.title} 사이트 보기
+                  </a>
                 </div>
               )}
-            </dl>
+            </div>
             <ImageCard
               src={project.imagePublicUrl}
               className="aspect-video md:w-2/5"

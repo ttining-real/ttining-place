@@ -133,6 +133,7 @@ export default function Page({ data }: { data: ProjectsDataWithImageTypes[] }) {
         </header>
         {/* 리스트 영역 */}
         <div className="grid grid-cols-1 gap-y-8 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-16 lg:grid-cols-3">
+          <h3 className="sr-only">{router.query.tab}</h3>
           <AnimatePresence>
             {filtered.map((item) => {
               return (
@@ -152,9 +153,9 @@ export default function Page({ data }: { data: ProjectsDataWithImageTypes[] }) {
                     className="focus-ring flex h-full flex-col rounded-sm"
                   >
                     <div className="order-2 px-1 py-4">
-                      <h3 className="mb-1 text-lg font-semibold sm:text-xl">
+                      <h4 className="mb-1 text-lg font-semibold sm:text-xl">
                         {item.title}
-                      </h3>
+                      </h4>
                       <dl className="flex flex-col gap-1 text-sm sm:text-base">
                         <div>
                           <dt className="sr-only">작업 기간</dt>
