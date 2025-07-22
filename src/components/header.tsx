@@ -35,13 +35,13 @@ export default function Header() {
   if (!mounted) return null;
 
   return (
-    <header className="border-border/50 fixed top-2 right-2 left-2 z-50 flex items-center justify-between rounded-full border bg-transparent px-0 py-2 shadow-md backdrop-blur-lg md:top-6 md:right-6 md:left-6 md:px-8">
+    <header className="fixed top-2 right-2 left-2 z-50 flex items-center justify-between px-0 py-2 md:top-6 md:right-6 md:left-6 md:px-8">
       <h1 className={`${montserrat.className} text-xl font-semibold`}>
         <Link href="/" className="focus-ring rounded-4xl px-4 py-2">
           ANJIIN
         </Link>
       </h1>
-      <nav className="relative hidden rounded-4xl sm:block">
+      <nav className="bg-bg/80 relative hidden rounded-4xl p-2 shadow-md backdrop-blur-2xl sm:block">
         <ul
           className={`${montserrat.className} relative flex gap-2 font-medium uppercase`}
         >
@@ -67,7 +67,7 @@ export default function Header() {
                   )}
                   <Link
                     href={query ? { pathname: href, query } : href}
-                    className={`focus-ring hover:bg-primary-light/20 hover:text-primary relative z-10 inline-block rounded-4xl px-4 py-2 transition-colors duration-200 dark:hover:text-white ${isActive ? 'text-white' : 'text-text-secondary'}`}
+                    className={`focus-ring hover:bg-primary-light/20 hover:text-primary relative z-10 inline-block rounded-4xl px-4 py-2 transition-colors duration-200 ${isActive ? 'text-white hover:text-white' : 'text-text-secondary'}`}
                   >
                     {label}
                   </Link>
