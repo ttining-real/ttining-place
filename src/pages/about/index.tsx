@@ -2,10 +2,8 @@ import Head from 'next/head';
 import React from 'react';
 import { GetServerSideProps } from 'next';
 
-import Introduce from '@/components/about/introduce';
-import TechStack from '@/components/about/tech-stack';
-import ExperienceSection from '@/components/about/experience';
-import ResumeSection from '@/components/about/resume';
+// import IntroduceSection from '@/components/about/introduce';
+import TechStackSection from '@/components/about/tech-stack';
 import { supabase } from '@/lib/supabase';
 
 import { ExperienceDataTypes } from '@/types/experience-data-type';
@@ -13,6 +11,7 @@ import { EducationDataTypes } from '@/types/education-data-types';
 import { CertificatesDataTypes } from '@/types/certificates-data-types';
 import { TrainingDataTypes } from '@/types/training-data-types';
 import { StackDataTypes } from '@/types/stacks-data-types';
+import ResumeSection from '@/components/about/resume';
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const { data: experienceData, error: experienceError } = await supabase
@@ -107,16 +106,16 @@ export default function Page({
           content="UI 개발자 안지인의 포트폴리오입니다. 개인 이력 사항을 확인하실 수 있습니다."
         />
       </Head>
-      <div className="flex flex-col">
+      <div className="mt-20 flex flex-col">
         <h2 className="sr-only">About</h2>
-        <Introduce />
-        <ExperienceSection data={experienceData} />
-        <TechStack data={stackData} />
+        {/* <IntroduceSection /> */}
         <ResumeSection
+          careersData={experienceData}
           educationData={educationData}
           certificatesData={certificatesData}
           trainingData={trainingData}
         />
+        <TechStackSection data={stackData} />
       </div>
     </>
   );
