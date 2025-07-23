@@ -17,11 +17,17 @@ export default function AboutSection() {
         <h3 className="text-lg font-semibold">
           사용자 경험을 설계하고 구현하는 안지인입니다.
         </h3>
-        <p className="text-sm">
-          자세한 이야기가 궁금하다면,
-          <br />
-          About 페이지로 이동해 주세요.
-        </p>
+        <div className="text-center">
+          <p className="text-sm">
+            안녕하세요. UI/UX 디자인과 퍼블리싱 경험을 바탕으로
+            <br />
+            사용자 중심의 웹을 고민하며 프론트엔드 개발로 영역을 확장해나가고
+            있습니다.
+          </p>
+          <p className="text-sm">
+            자세한 이야기가 궁금하다면, About 페이지로 이동해 주세요.
+          </p>
+        </div>
         <div className="flex gap-3">
           <Button href="/about">자세히 보기</Button>
           <Button

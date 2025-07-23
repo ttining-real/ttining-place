@@ -139,7 +139,7 @@ export default function Page({ data }: { data: ProjectsDataWithImageTypes[] }) {
         <h3 className="sr-only">{router.query.tab}</h3>
         <section className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
           <AnimatePresence>
-            {filtered.map((item) => (
+            {filtered.map((item, index) => (
               <motion.div
                 key={item.id}
                 initial={{ opacity: 0, y: 10 }}
@@ -154,6 +154,7 @@ export default function Page({ data }: { data: ProjectsDataWithImageTypes[] }) {
                     query: { tab: selected },
                   }}
                   src={item.imagePublicUrl}
+                  priority={index === 0}
                 >
                   <div className="w-full">
                     <h4 className="text-text-primary text-lg font-semibold">

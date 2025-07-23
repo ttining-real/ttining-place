@@ -154,7 +154,7 @@ export default function Page({
         <h3 className="sr-only">{router.query.tab}</h3>
         <section className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
           <AnimatePresence>
-            {filtered.map((item) => (
+            {filtered.map((item, index) => (
               <motion.div
                 key={item.id}
                 initial={{ opacity: 0, y: 10 }}
@@ -162,7 +162,11 @@ export default function Page({
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3 }}
               >
-                <Card key={item.id} src={item.imagePublicUrl}>
+                <Card
+                  key={item.id}
+                  src={item.imagePublicUrl}
+                  priority={index === 0}
+                >
                   <div className="w-full">
                     <h4 className="text-text-primary text-lg font-semibold">
                       {item.company_name}

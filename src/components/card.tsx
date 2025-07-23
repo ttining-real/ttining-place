@@ -9,6 +9,7 @@ type CardProps = {
   href?: Url;
   src: string | null;
   children: ReactNode;
+  priority?: boolean;
 };
 
 function ImageFallback() {
@@ -25,7 +26,7 @@ function ImageFallback() {
   );
 }
 
-export default function Card({ href, src, children }: CardProps) {
+export default function Card({ href, src, priority, children }: CardProps) {
   const isValidSrc = typeof src === 'string' && src.trim() !== '';
 
   return (
@@ -39,7 +40,7 @@ export default function Card({ href, src, children }: CardProps) {
                 alt=""
                 width={200}
                 height={200}
-                priority
+                priority={priority}
                 className="aspect-4/3 w-full overflow-hidden object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
               />
             ) : (
@@ -59,7 +60,7 @@ export default function Card({ href, src, children }: CardProps) {
                 alt=""
                 width={200}
                 height={200}
-                priority
+                priority={priority}
                 className="aspect-video w-full overflow-hidden object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
               />
             ) : (

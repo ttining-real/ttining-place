@@ -1,15 +1,17 @@
+import React from 'react';
+
 import { montserrat } from '@/fonts/font';
 import { contact } from '@/constants/personal';
 
 import SectionLayout from '@/components/section-layout';
 import IconImg from '@/components/icon-image';
 import StackIcon from '@/components/stack-icon';
+import { formatDate } from '@/lib/formatDate';
 
 import { ExperienceDataTypes } from '@/types/experience-data-type';
 import { EducationDataTypes } from '@/types/education-data-types';
 import { CertificatesDataTypes } from '@/types/certificates-data-types';
 import { TrainingDataTypes } from '@/types/training-data-types';
-import { formatDate } from '@/lib/formatDate';
 
 type ResumeSectionProps = {
   careersData: ExperienceDataTypes[];
@@ -56,7 +58,7 @@ export default function ResumeSection({
                   {item.site ? (
                     <>
                       {item.site.map((siteItem, siteIndex) => (
-                        <>
+                        <React.Fragment key={siteItem.href ?? siteIndex}>
                           <a
                             href={siteItem.href}
                             className="hover:text-primary flex items-center gap-2 hover:underline"
@@ -70,7 +72,7 @@ export default function ResumeSection({
                           {siteIndex < item.site.length - 1 && (
                             <hr className="border-border h-3 border" />
                           )}
-                        </>
+                        </React.Fragment>
                       ))}
                     </>
                   ) : (
