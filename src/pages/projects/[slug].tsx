@@ -103,7 +103,7 @@ export default function ProjectDetail({
                   기간
                 </h4>
                 <p className="text-sm text-white">
-                  {`${formatDate(project.start_date)} - ${formatDate(project.end_date)}`}
+                  {`${formatDate(project.start_date, 'kor')} - ${formatDate(project.end_date, 'kor')}`}
                 </p>
               </div>
               <div className="xs:flex-row flex flex-col items-baseline gap-2 sm:gap-4">

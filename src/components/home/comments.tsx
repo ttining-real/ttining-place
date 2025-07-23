@@ -6,7 +6,7 @@ import Button from '@/components/button';
 import Dialog from '@/components/dialog';
 import { supabase } from '@/lib/supabase';
 import { generateRandomNickname } from '@/lib/generateRandomNickname';
-import { formatCommentDate } from '@/lib/formatCommentDate';
+import { formatDate } from '@/lib/formatDate';
 
 type Comment = {
   id: string;
@@ -194,7 +194,7 @@ export default function CommentsSection() {
 
                         <div className="col-start-2 text-[13px]">
                           <dt className="sr-only">작성일</dt>
-                          <dd>{formatCommentDate(comment.created_at)}</dd>
+                          <dd>{formatDate(comment.created_at, 'dash')}</dd>
                         </div>
                       </dl>
                       <p className="w-10/12 text-base">{comment.text}</p>

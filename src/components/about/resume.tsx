@@ -9,18 +9,13 @@ import { ExperienceDataTypes } from '@/types/experience-data-type';
 import { EducationDataTypes } from '@/types/education-data-types';
 import { CertificatesDataTypes } from '@/types/certificates-data-types';
 import { TrainingDataTypes } from '@/types/training-data-types';
+import { formatDate } from '@/lib/formatDate';
 
 type ResumeSectionProps = {
   careersData: ExperienceDataTypes[];
   educationData: EducationDataTypes[];
   certificatesData: CertificatesDataTypes[];
   trainingData: TrainingDataTypes[];
-};
-
-const formatDate = (dateString: string) => {
-  const date = new Date(dateString);
-  const formatted = `${date.getFullYear()}. ${String(date.getMonth() + 1).padStart(2, '0')}`;
-  return formatted;
 };
 
 export default function ResumeSection({
@@ -121,7 +116,7 @@ export default function ResumeSection({
                   className={`${montserrat.className} text-text-secondary order-1`}
                 >
                   <dt className="sr-only">재직 기간</dt>
-                  <dd>{`${formatDate(career.start_date)} ~ ${formatDate(career.end_date)}`}</dd>
+                  <dd>{`${formatDate(career.start_date, 'dot')} ~ ${formatDate(career.end_date, 'dot')}`}</dd>
                 </dl>
               </div>
             ))}
@@ -160,7 +155,7 @@ export default function ResumeSection({
                   className={`${montserrat.className} text-text-secondary order-1`}
                 >
                   <dt className="sr-only">재직 기간</dt>
-                  <dd>{`${formatDate(career.start_date)} ~ ${formatDate(career.end_date)}`}</dd>
+                  <dd>{`${formatDate(career.start_date, 'dot')} ~ ${formatDate(career.end_date, 'dot')}`}</dd>
                 </dl>
               </div>
             ))}
@@ -187,7 +182,7 @@ export default function ResumeSection({
                   className={`${montserrat.className} text-text-secondary order-1`}
                 >
                   <dt className="sr-only">재학 기간</dt>
-                  <dd>{`${formatDate(edu.start_date)} ~ ${formatDate(edu.end_date)}`}</dd>
+                  <dd>{`${formatDate(edu.start_date, 'dot')} ~ ${formatDate(edu.end_date, 'dot')}`}</dd>
                 </dl>
               </div>
             ))}
@@ -209,7 +204,7 @@ export default function ResumeSection({
                   className={`${montserrat.className} text-text-secondary order-1`}
                 >
                   <dt className="sr-only">취득 시기</dt>
-                  <dd>{formatDate(cert.issued_date)}</dd>
+                  <dd>{formatDate(cert.issued_date, 'dot')}</dd>
                 </dl>
               </div>
             ))}
@@ -226,7 +221,7 @@ export default function ResumeSection({
                 <dl className="text-text-secondary order-1 flex flex-wrap items-center gap-x-2">
                   <div className={`${montserrat.className}`}>
                     <dt className="sr-only">취득 시기</dt>
-                    <dd>{`${formatDate(training.start_date)} - ${formatDate(training.end_date)}`}</dd>
+                    <dd>{`${formatDate(training.start_date, 'dot')} - ${formatDate(training.end_date, 'dot')}`}</dd>
                   </div>
                   <hr className="border-border h-3 border" />
                   <div>
