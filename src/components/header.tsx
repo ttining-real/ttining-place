@@ -129,9 +129,9 @@ export default function Header() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 100 }}
             transition={{ duration: 0.2 }}
-            className="bg-surface border-border absolute top-full -right-2 left-12 mt-0 h-screen border-l shadow-xl sm:hidden"
+            className="bg-surface border-border absolute -top-2 -right-2 left-12 mt-0 h-screen border-l shadow-xl sm:hidden"
           >
-            <ul className="flex flex-col gap-2">
+            <ul className="flex flex-col gap-2 py-12">
               {NAVIGATE.map(({ label, href, query }) => {
                 const isActive =
                   pathname === href || pathname.startsWith(`${href}/`);
@@ -139,10 +139,10 @@ export default function Header() {
                   <li key={href}>
                     <Link
                       href={query ? { pathname: href, query } : href}
-                      className={`${montserrat.className} hover:text-primary-light active:text-primary block w-full px-8 py-6 text-2xl font-semibold uppercase transition-colors ${
+                      className={`${montserrat.className} block w-full px-8 py-6 text-2xl font-semibold uppercase transition-colors ${
                         isActive
-                          ? 'bg-primary text-white'
-                          : 'text-text-secondary hover:bg-hover'
+                          ? 'text-primary dark:text-white'
+                          : 'text-text-secondary hover:text-primary-light active:text-primary-dark dark:hover:text-primary-light dark:active:text-primary dark:text-white/40'
                       }`}
                       onClick={() => setMenuOpen(false)}
                     >

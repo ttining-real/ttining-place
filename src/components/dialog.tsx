@@ -106,7 +106,7 @@ export default function Dialog({
               e.stopPropagation()
             }
             className={clsx(
-              'focus-ring border-border bg-bg w-full max-w-4xl overflow-hidden rounded-xl border shadow-lg outline-none',
+              'focus-ring border-border bg-bg flex h-screen w-full max-w-4xl flex-col overflow-hidden rounded-none border shadow-lg outline-none sm:mx-6 sm:h-auto sm:overflow-hidden sm:rounded-xl',
               className,
             )}
             initial={{ opacity: 0, scale: 0.95 }}

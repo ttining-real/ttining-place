@@ -105,8 +105,6 @@ export default function Page({ data }: { data: ProjectsDataWithImageTypes[] }) {
     );
   };
 
-  console.log(filtered);
-
   return (
     <>
       <Head>
@@ -124,7 +122,7 @@ export default function Page({ data }: { data: ProjectsDataWithImageTypes[] }) {
       </Head>
       <SectionLayout outerClassName="sm:pt-[133px]" innerClassName="gap-8">
         <header
-          className={`${montserrat.className} flex flex-col justify-between sm:flex-row sm:items-center`}
+          className={`${montserrat.className} flex flex-col justify-between gap-4 sm:flex-row sm:items-center`}
         >
           <h2
             className={`${montserrat.className} text-[32px] font-bold uppercase`}

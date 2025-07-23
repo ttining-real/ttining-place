@@ -111,7 +111,6 @@ export default function Page({
   };
 
   const onClickCardButton = (item: ExperienceDataWithImageTypes) => {
-    console.log('버튼 클릭');
     setSelectedItem(item);
     setIsDialogOpen(true);
   };
@@ -137,7 +136,7 @@ export default function Page({
       </Head>
       <SectionLayout outerClassName="sm:pt-[133px]" innerClassName="gap-8">
         <header
-          className={`${montserrat.className} flex flex-col justify-between sm:flex-row sm:items-center`}
+          className={`${montserrat.className} flex flex-col justify-between gap-4 sm:flex-row sm:items-center`}
         >
           <h2
             className={`${montserrat.className} text-[32px] font-bold uppercase`}
@@ -250,93 +249,93 @@ export default function Page({
                 </header>
                 <div
                   id="dialog-description"
-                  className="flex flex-col items-end gap-6 p-8"
+                  className="grid h-full gap-12 overflow-auto p-8 text-sm sm:grid-cols-2"
                 >
-                  <div className="grid grid-cols-2 gap-12 text-sm">
-                    <dl className="space-y-4">
-                      <div>
-                        <dt>
-                          <h4
-                            className={`${montserrat.className} text-text-secondary mb-2 font-medium`}
-                          >
-                            Description
-                          </h4>
-                        </dt>
-                        <dd>{selectedItem.description}</dd>
-                      </div>
-                      <div>
-                        <dt>
-                          <h4
-                            className={`${montserrat.className} text-text-secondary font-medium`}
-                          >
-                            Role
-                          </h4>
-                        </dt>
-                        <dd>
-                          <ul>
-                            {selectedItem.role.map((role, index) => (
-                              <li
-                                key={index}
-                                className="before:bg-text-secondary relative pl-2 before:absolute before:top-1/2 before:left-0 before:h-[3px] before:w-[3px] before:-translate-y-1/2 before:rounded-md before:content-['']"
-                              >
-                                {role}
-                              </li>
-                            ))}
-                          </ul>
-                        </dd>
-                      </div>
-                      <div>
-                        <dt>
-                          <h4
-                            className={`${montserrat.className} text-text-secondary mb-2 font-medium`}
-                          >
-                            Achievements
-                          </h4>
-                        </dt>
-                        <dd>
-                          <ul>
-                            {selectedItem.achievements.map((role, index) => (
-                              <li
-                                key={index}
-                                className="before:bg-text-secondary relative pl-2 before:absolute before:top-1/2 before:left-0 before:h-[3px] before:w-[3px] before:-translate-y-1/2 before:rounded-md before:content-['']"
-                              >
-                                {role}
-                              </li>
-                            ))}
-                          </ul>
-                        </dd>
-                      </div>
-                      <div>
-                        <dt>
-                          <h4
-                            className={`${montserrat.className} text-text-secondary mb-2 font-medium`}
-                          >
-                            Location
-                          </h4>
-                        </dt>
-                        <dd>{selectedItem.location}</dd>
-                      </div>
-                    </dl>
-                    <dl>
+                  <dl className="space-y-4">
+                    <div>
                       <dt>
                         <h4
                           className={`${montserrat.className} text-text-secondary mb-2 font-medium`}
                         >
-                          Tech Stack
+                          Description
                         </h4>
                       </dt>
-                      <dd className="flex flex-wrap gap-2">
-                        {selectedItem.tech_stack.map((stack, index) => (
-                          <Chip
-                            key={index}
-                            id={stack}
-                            icon={true}
-                            className={`${montserrat.className} bg-section text-sm`}
-                          />
-                        ))}
+                      <dd>{selectedItem.description}</dd>
+                    </div>
+                    <div>
+                      <dt>
+                        <h4
+                          className={`${montserrat.className} text-text-secondary font-medium`}
+                        >
+                          Role
+                        </h4>
+                      </dt>
+                      <dd>
+                        <ul>
+                          {selectedItem.major_task.map((item, index) => (
+                            <li
+                              key={index}
+                              className="before:bg-text-secondary relative pl-2 before:absolute before:top-1/2 before:left-0 before:h-[3px] before:w-[3px] before:-translate-y-1/2 before:rounded-md before:content-['']"
+                            >
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
                       </dd>
-                    </dl>
-                  </div>
+                    </div>
+                    <div>
+                      <dt>
+                        <h4
+                          className={`${montserrat.className} text-text-secondary mb-2 font-medium`}
+                        >
+                          Achievements
+                        </h4>
+                      </dt>
+                      <dd>
+                        <ul>
+                          {selectedItem.achievements.map((item, index) => (
+                            <li
+                              key={index}
+                              className="before:bg-text-secondary relative pl-2 before:absolute before:top-1/2 before:left-0 before:h-[3px] before:w-[3px] before:-translate-y-1/2 before:rounded-md before:content-['']"
+                            >
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>
+                        <h4
+                          className={`${montserrat.className} text-text-secondary mb-2 font-medium`}
+                        >
+                          Location
+                        </h4>
+                      </dt>
+                      <dd>{selectedItem.location}</dd>
+                    </div>
+                  </dl>
+                  <dl>
+                    <dt>
+                      <h4
+                        className={`${montserrat.className} text-text-secondary mb-2 font-medium`}
+                      >
+                        Tech Stack
+                      </h4>
+                    </dt>
+                    <dd className="flex flex-wrap gap-2">
+                      {selectedItem.tech_stack.map((item, index) => (
+                        <Chip
+                          key={index}
+                          id={item}
+                          icon={true}
+                          className={`${montserrat.className} bg-section text-sm`}
+                        />
+                      ))}
+                    </dd>
+                  </dl>
+                </div>
+                <div className="flex items-center justify-end gap-4 p-8">
                   <Button variants="secondary" onClick={handleCloseDialog}>
                     닫기
                   </Button>

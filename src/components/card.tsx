@@ -17,10 +17,10 @@ function ImageFallback() {
 
   return (
     <div
-      className={`${montserrat.className} text-disabled-text bg-disabled-bg relative inset-0 flex aspect-4/3 w-full flex-col justify-between overflow-hidden p-6 font-semibold transition-transform duration-500 ease-in-out group-hover:scale-105 ${before}`}
+      className={`${montserrat.className} text-disabled-text bg-disabled-bg relative inset-0 flex aspect-4/3 w-full flex-col items-center justify-center overflow-hidden p-6 transition-transform duration-500 ease-in-out group-hover:scale-105 ${before}`}
     >
-      <p className="text-lg">Image Coming Soon...</p>
-      <p className="text-sm">Thumbnail Unavailable</p>
+      <p className="text-lg font-semibold">Image Coming Soon...</p>
+      <p className="text-sm font-medium">Thumbnail Unavailable</p>
     </div>
   );
 }
@@ -32,7 +32,7 @@ export default function Card({ href, src, children }: CardProps) {
     <article className="group border-border relative border">
       {href ? (
         <Link href={href} className="focus-ring block overflow-hidden">
-          <figure className="bg-section">
+          <figure className="bg-section overflow-hidden">
             {isValidSrc ? (
               <Image
                 src={src}
@@ -52,7 +52,7 @@ export default function Card({ href, src, children }: CardProps) {
         </Link>
       ) : (
         <>
-          <figure className="bg-section">
+          <figure className="bg-section overflow-hidden">
             {isValidSrc ? (
               <Image
                 src={src}
