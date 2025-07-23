@@ -2,6 +2,7 @@ import Head from 'next/head';
 
 // components
 import HeroSection from '@/components/home/hero';
+import AboutSection from '@/components/home/about';
 import StackSection from '@/components/home/stack';
 
 export default function Home() {
@@ -22,6 +23,7 @@ export default function Home() {
         />
       </Head>
       <HeroSection />
+      <AboutSection />
       <StackSection />
     </>
   );

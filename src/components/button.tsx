@@ -101,6 +101,9 @@ export default function Button({
   // href 유무 및 내부, 외부 판단 조건 분기
   if (typeof href === 'string') {
     const isInternal = href.startsWith('/');
+    const isDownload = /\.(pdf|zip|jpg|png|jpeg|mp4|mp3|webp|svg|txt)$/.test(
+      href,
+    );
 
     if (isInternal) {
       return (
@@ -115,6 +118,7 @@ export default function Button({
           href={href}
           target="_blank"
           rel="noopener noreferrer"
+          {...(isDownload ? { download: '' } : {})}
           {...sharedProps}
         >
           {/* {content} */}
