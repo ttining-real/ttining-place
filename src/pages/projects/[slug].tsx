@@ -4,7 +4,6 @@ import { GetServerSideProps } from 'next';
 
 import SectionLayout from '@/components/section-layout';
 import Breadcrumb from '@/components/breadcrumb';
-import ImageCard from '@/components/image-card';
 import SituationSection from '@/components/projects/situation';
 import TaskSection from '@/components/projects/task';
 import ActionSection from '@/components/projects/action';
@@ -132,11 +131,15 @@ export default function ProjectDetail({
                 </div>
               )}
             </div>
-            <ImageCard
-              src={project.imagePublicUrl}
-              className="aspect-video"
-              noneClassName="bg-transparent"
-            />
+            <figure>
+              <Image
+                src={project.imagePublicUrl!}
+                alt=""
+                width={200}
+                height={300}
+                className="aspect-4/3 w-full object-cover"
+              />
+            </figure>
           </div>
           {/* 아래 둥근 배경 */}
           <Image
