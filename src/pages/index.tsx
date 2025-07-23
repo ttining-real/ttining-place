@@ -1,77 +1,9 @@
 import Head from 'next/head';
-import { GetServerSideProps } from 'next';
 
 // components
 import HeroSection from '@/components/home/hero';
-import GridMenuSection from '@/components/home/grid-menu';
-import ProjectsSection from '@/components/home/projects';
-import CommentsSection from '@/components/home/comments';
-import { supabase } from '@/lib/supabase';
 
-import { ExperienceDataTypes } from '@/types/experience-data-type';
-import { ProjectsDataTypes } from '@/types/projects-data-type';
-import AboutSection from '@/components/home/about';
-import { sortedProjectsData } from '@/lib/sortedData';
-
-type ProjectsDataWithImageTypes = ProjectsDataTypes & {
-  imagePublicUrl: string | null;
-};
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  // experience
-  const { data: experienceData, error: experienceError } = await supabase
-    .from('experience')
-    .select('*');
-
-  // projects
-  const { data: projectsData, error: projectsError } = await supabase
-    .from('projects')
-    .select('*')
-    .in('type', ['work', 'side']);
-
-  if (experienceError || projectsError || !experienceData || !projectsData) {
-    return {
-      props: {
-        personalData: [],
-        experienceData: [],
-        projectsData: [],
-        error:
-          experienceError?.message ||
-          projectsError?.message ||
-          '🚫 알 수 없는 오류가 발생했어요.',
-      },
-    };
-  }
-
-  const projectsDataWithImage: ProjectsDataWithImageTypes[] = projectsData.map(
-    (item) => {
-      const { data: imageData } = supabase.storage
-        .from('projects')
-        .getPublicUrl(`${item.image_url}.png`);
-
-      return {
-        ...item,
-        imagePublicUrl: imageData?.publicUrl ?? null,
-      };
-    },
-  );
-
-  return {
-    props: {
-      experienceData: experienceData ?? [],
-      projectsData: projectsDataWithImage,
-    },
-  };
-};
-
-export default function Home({
-  // experienceData,
-  projectsData,
-}: {
-  experienceData: ExperienceDataTypes[];
-  projectsData: ProjectsDataWithImageTypes[];
-}) {
-  const sortedData = sortedProjectsData(projectsData);
+export default function Home() {
   return (
     <>
       <Head>
@@ -89,10 +21,6 @@ export default function Home({
         />
       </Head>
       <HeroSection />
-      <AboutSection />
-      <GridMenuSection />
-      <ProjectsSection data={sortedData} />
-      <CommentsSection />
     </>
   );
 }
