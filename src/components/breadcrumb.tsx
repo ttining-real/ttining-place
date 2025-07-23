@@ -48,16 +48,22 @@ export default function Breadcrumb({ className, current }: BreadcrumbProps) {
           }
 
           return (
-            <li key={href} className="flex items-center gap-2 text-white">
+            <li
+              key={href}
+              className="text-text-primary flex items-center gap-2"
+            >
               {!isLast ? (
-                <Link href={href} className="hover:underline">
+                <Link
+                  href={href}
+                  className="text-text-secondary hover:text-text-primary hover:underline"
+                >
                   {label}
                 </Link>
               ) : (
-                <span className="font-medium">{current}</span>
+                <span className="text-primary font-medium">{current}</span>
               )}
               {!isLast && (
-                <span className="text-white/40">
+                <span className="text-disabled-text">
                   <Icon id="arrow-right" size={16} />
                 </span>
               )}

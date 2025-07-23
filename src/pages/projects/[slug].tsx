@@ -63,9 +63,9 @@ export default function ProjectDetail({
         <meta name="description" content={project.summary} />
       </Head>
       <>
-        <SectionLayout outerClassName="relative before:absolute before:top-0 before:left-0 before:right-0 before:-z-10 before:h-[60%] before:bg-primary before:content-[''] pt-[88px] sm:pt-[136px] pb-8">
+        <SectionLayout outerClassName="relative bg-section pt-[88px] sm:pt-[136px] pb-8">
           <div className="m-auto flex w-full max-w-7xl flex-col gap-8">
-            <h2 className="order-2 text-[32px] font-semibold text-white">
+            <h2 className="text-primary order-2 text-[32px] font-bold">
               {project.title}
             </h2>
             <Breadcrumb className="order-1" current={project.title} />
@@ -74,44 +74,46 @@ export default function ProjectDetail({
           <div className="grid grid-cols-1 gap-y-8 md:grid-cols-3 md:gap-6">
             <div className="col-span-2 grow space-y-2">
               <div className="xs:flex-row flex flex-col items-baseline gap-2 sm:gap-4">
-                <h4 className="min-w-[80px] text-sm font-medium text-white/60">
+                <h4 className="text-primary bg-primary/10 min-w-[80px] rounded-2xl py-1 text-center text-sm font-medium">
                   요약
                 </h4>
-                <p className="text-sm text-white">{project.summary}</p>
+                <p className="text-text-primary text-sm">{project.summary}</p>
               </div>
               <div className="xs:flex-row flex flex-col items-baseline gap-2 sm:gap-4">
-                <h4 className="min-w-[80px] text-sm font-medium text-white/60">
+                <h4 className="text-primary bg-primary/10 min-w-[80px] rounded-2xl py-1 text-center text-sm font-medium">
                   클라이언트
                 </h4>
-                <p className="text-sm text-white">다누시스</p>
+                <p className="text-text-primary text-sm">다누시스</p>
               </div>
               <div className="xs:flex-row flex flex-col items-baseline gap-2 sm:gap-4">
-                <h4 className="min-w-[80px] text-sm font-medium text-white/60">
+                <h4 className="text-primary bg-primary/10 min-w-[80px] rounded-2xl py-1 text-center text-sm font-medium">
                   담당
                 </h4>
-                <p className="text-sm text-white">{project.role.join(', ')}</p>
+                <p className="text-text-primary text-sm">
+                  {project.role.join(', ')}
+                </p>
               </div>
               <div className="xs:flex-row flex flex-col items-baseline gap-2 sm:gap-4">
-                <h4 className="min-w-[80px] text-sm font-medium text-white/60">
+                <h4 className="text-primary bg-primary/10 min-w-[80px] rounded-2xl py-1 text-center text-sm font-medium">
                   기여도
                 </h4>
-                <p className="text-sm text-white">70%</p>
+                <p className="text-text-primary text-sm">70%</p>
               </div>
               <div className="xs:flex-row flex flex-col items-baseline gap-2 sm:gap-4">
-                <h4 className="min-w-[80px] text-sm font-medium text-white/60">
+                <h4 className="text-primary bg-primary/10 min-w-[80px] rounded-2xl py-1 text-center text-sm font-medium">
                   기간
                 </h4>
-                <p className="text-sm text-white">
+                <p className="text-text-primary text-sm">
                   {`${formatDate(project.start_date, 'kor')} - ${formatDate(project.end_date, 'kor')}`}
                 </p>
               </div>
               <div className="xs:flex-row flex flex-col items-baseline gap-2 sm:gap-4">
-                <h4 className="min-w-[80px] text-sm font-medium text-white/60">
+                <h4 className="text-primary bg-primary/10 min-w-[80px] rounded-2xl py-1 text-center text-sm font-medium">
                   설명
                 </h4>
                 <div className="text-text-primary">
                   {project.description.map((desc, index) => (
-                    <p className="text-sm text-white" key={index}>
+                    <p className="text-text-primary text-sm" key={index}>
                       {desc}
                     </p>
                   ))}
@@ -119,14 +121,16 @@ export default function ProjectDetail({
               </div>
               {project.url && (
                 <div className="xs:flex-row flex flex-col items-baseline gap-2 sm:gap-4">
-                  <h4 className="sr-only">{project.title} 웹사이트 바로가기</h4>
+                  <h4 className="text-primary bg-primary/10 min-w-[80px] rounded-2xl py-1 text-center text-sm font-medium">
+                    웹사이트
+                  </h4>
                   <a
                     href={project.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-primary dark:text-primary-light hover:underline"
+                    className="text-primary dark:text-primary-light text-sm hover:underline"
                   >
-                    {project.title} 사이트 보기
+                    {project.title} 웹사이트 열기
                   </a>
                 </div>
               )}
@@ -141,14 +145,6 @@ export default function ProjectDetail({
               />
             </figure>
           </div>
-          {/* 아래 둥근 배경 */}
-          <Image
-            src="/images/background-rounded.svg"
-            width={100}
-            height={100}
-            alt=""
-            className="absolute top-1/2 right-0 left-0 -z-10 w-full object-cover"
-          />
         </SectionLayout>
         <TechStackSection data={project.stack} />
         <SituationSection data={project.situation} />

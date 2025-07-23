@@ -4,7 +4,7 @@ import SectionLayout from '@/components/section-layout';
 export default function SituationSection({ data }: { data: string[] }) {
   return (
     <SectionLayout
-      outerClassName="bg-[#f3f3f3]"
+      outerClassName="bg-[#f3f3f3] dark:bg-[#292B2E]"
       innerClassName="flex-col md:flex-row items-center gap-12"
     >
       <h3
