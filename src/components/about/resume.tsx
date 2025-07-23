@@ -28,7 +28,7 @@ export default function ResumeSection({
   const activities = careersData.filter((item) => item.type === 'activity');
 
   return (
-    <SectionLayout outerClassName="bg-section sm:pt-[133px]">
+    <SectionLayout outerClassName="bg-surface sm:pt-[133px]">
       <h3 className={`${montserrat.className} text-[32px] font-bold uppercase`}>
         Resume
       </h3>
@@ -42,7 +42,7 @@ export default function ResumeSection({
               <li>Front-end Development</li>
             </ul>
           </article>
-          <article className="bg-bg box-shadow flex w-full shrink-0 flex-col gap-2 rounded-2xl p-6 sm:w-fit">
+          <article className="bg-surface box-shadow flex w-full shrink-0 flex-col gap-2 rounded-2xl p-6 sm:w-fit">
             <h4 className={`${montserrat.className} text-base font-semibold`}>
               Contact
             </h4>
@@ -223,7 +223,7 @@ export default function ResumeSection({
                     <dt className="sr-only">취득 시기</dt>
                     <dd>{`${formatDate(training.start_date, 'dot')} - ${formatDate(training.end_date, 'dot')}`}</dd>
                   </div>
-                  <hr className="border-border h-3 border" />
+                  <hr aria-hidden className="border-border h-3 border" />
                   <div>
                     <dt className="sr-only">발급 기관</dt>
                     <dd>{training.organization}</dd>
