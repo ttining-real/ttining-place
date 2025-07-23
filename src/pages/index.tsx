@@ -4,14 +4,14 @@ import { GetServerSideProps } from 'next';
 // components
 import HeroSection from '@/components/home/hero';
 import GridMenuSection from '@/components/home/grid-menu';
-// import AboutSection from '@/components/home/about';
-// import ExperienceSection from '@/components/home/experience';
 import ProjectsSection from '@/components/home/projects';
 import CommentsSection from '@/components/home/comments';
 import { supabase } from '@/lib/supabase';
 
 import { ExperienceDataTypes } from '@/types/experience-data-type';
 import { ProjectsDataTypes } from '@/types/projects-data-type';
+import AboutSection from '@/components/home/about';
+import { sortedProjectsData } from '@/lib/sortedData';
 
 type ProjectsDataWithImageTypes = ProjectsDataTypes & {
   imagePublicUrl: string | null;
@@ -27,8 +27,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const { data: projectsData, error: projectsError } = await supabase
     .from('projects')
     .select('*')
-    .in('type', ['main', 'side'])
-    .in('display_order', [1, 2]);
+    .in('type', ['work', 'side']);
 
   if (experienceError || projectsError || !experienceData || !projectsData) {
     return {
@@ -72,6 +71,7 @@ export default function Home({
   experienceData: ExperienceDataTypes[];
   projectsData: ProjectsDataWithImageTypes[];
 }) {
+  const sortedData = sortedProjectsData(projectsData);
   return (
     <>
       <Head>
@@ -89,10 +89,9 @@ export default function Home({
         />
       </Head>
       <HeroSection />
+      <AboutSection />
       <GridMenuSection />
-      {/* <AboutSection /> */}
-      {/* <ExperienceSection data={experienceData} /> */}
-      <ProjectsSection data={projectsData} />
+      <ProjectsSection data={sortedData} />
       <CommentsSection />
     </>
   );

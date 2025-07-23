@@ -12,7 +12,7 @@ export function sortedExperienceData<T extends ExperienceDataTypes>(
 
 // projects 데이터 정렬
 export function sortedProjectsData<
-  T extends { type: 'main' | 'side'; display_order: number },
+  T extends { type: 'work' | 'side'; display_order: number },
 >(data: T[]): T[] {
   return [...data].sort((a, b) => {
     // 1. display_order 기준 오름차순
@@ -20,9 +20,9 @@ export function sortedProjectsData<
       return a.display_order - b.display_order;
     }
 
-    // 2. display_order 같으면 type 기준: main 우선
+    // 2. display_order 같으면 type 기준: work 우선
     if (a.type !== b.type) {
-      return a.type === 'main' ? -1 : 1;
+      return a.type === 'work' ? -1 : 1;
     }
 
     return 0;

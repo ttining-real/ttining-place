@@ -22,7 +22,7 @@ export default function TabSelector<T extends string>({
           <button
             key={tab}
             onClick={() => onChange(tab)}
-            className={`${montserrat.className} focus-ring relative rounded-sm px-4 py-2 uppercase transition-colors duration-200 ${
+            className={`${montserrat.className} focus-ring relative rounded-full px-4 py-2 font-medium transition-colors duration-200 first-letter:uppercase ${
               isActive
                 ? 'text-primary'
                 : 'text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white'
@@ -32,7 +32,7 @@ export default function TabSelector<T extends string>({
             {isActive && (
               <motion.div
                 layoutId="underline"
-                className="bg-primary absolute -bottom-2 left-0 h-[2px] w-full"
+                className="bg-primary/10 absolute bottom-0 left-0 h-full w-full rounded-full"
                 transition={{ type: 'spring', stiffness: 500, damping: 30 }}
               />
             )}

@@ -34,7 +34,7 @@ export default function Breadcrumb({ className, current }: BreadcrumbProps) {
 
   return (
     <nav aria-label="Breadcrumb" className={className}>
-      <ul className="flex items-center gap-1 text-sm text-gray-600">
+      <ul className="flex items-center gap-2 text-sm">
         {fullSegments.map((segment, index) => {
           const isLast = index === fullSegments.length - 1;
           const href = buildHref(index);
@@ -48,10 +48,7 @@ export default function Breadcrumb({ className, current }: BreadcrumbProps) {
           }
 
           return (
-            <li
-              key={href}
-              className="text-text-secondary flex items-center gap-1"
-            >
+            <li key={href} className="flex items-center gap-2 text-white">
               {!isLast ? (
                 <Link href={href} className="hover:underline">
                   {label}
@@ -60,8 +57,8 @@ export default function Breadcrumb({ className, current }: BreadcrumbProps) {
                 <span className="font-medium">{current}</span>
               )}
               {!isLast && (
-                <span className="mx-1">
-                  <Icon id="arrow-right" size={14} />
+                <span className="text-white/40">
+                  <Icon id="arrow-right" size={16} />
                 </span>
               )}
             </li>

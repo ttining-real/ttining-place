@@ -1,7 +1,7 @@
 export interface ProjectsDataTypes {
   id: string;
   slug: string;
-  type: 'main' | 'side';
+  type: 'work' | 'side';
   display_order: number;
   title: string;
   role: string[];
