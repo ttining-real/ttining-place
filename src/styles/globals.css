@@ -5,9 +5,9 @@
 
 :root {
   /* Primary */
-  --primary: #4a90e2;
-  --primary-light: #6ca0f6;
-  --primary-dark: #357abd;
+  --primary: #1e63e9;
+  --primary-light: #4c84f4;
+  --primary-dark: #1346a3;
 
   /* Background */
   --bg-primary: #f8f9fa;
@@ -35,13 +35,16 @@
   --scroll-track: #ffffff;
   --scroll-thumb: #b5b5b5;
   --scroll-thumb-hover: #4a90e2;
+
+  /* shadow */
+  --shadow: rgba(0, 0, 0, 0.1);
 }
 
 .dark:root {
   /* Primary */
-  --primary: #4a90e2;
-  --primary-light: #6ca0f6;
-  --primary-dark: #357abd;
+  --primary: #1e63e9;
+  --primary-light: #4c84f4;
+  --primary-dark: #1346a3;
 
   /* Background */
   --bg-primary: #212427;
@@ -69,6 +72,9 @@
   --scroll-track: #2c2f32;
   --scroll-thumb: #62686e;
   --scroll-thumb-hover: #6ca0f6;
+
+  /* shadow */
+  --shadow: rgba(0, 0, 0, 0.2);
 }
 
 @theme inline {
@@ -99,6 +105,8 @@
   --color-scroll-track: var(--scroll-track);
   --color-scroll-thumb: var(--scroll-thumb);
   --color-scroll-thumb-hover: var(--scroll-thumb-hover);
+
+  --color-shadow: var(--shadow);
 }
 
 html {
@@ -150,6 +158,11 @@ body {
   @apply focus:outline-primary-light/60 focus:outline-2 focus:outline-offset-2;
 }
 
+/* 그림자 */
+.box-shadow {
+  box-shadow: 0px 2px 16px var(--shadow);
+}
+
 /* 헤더 내비게이션 - hover 시 텍스트 색상 변경 */
 .hover-transition {
   @apply hover:text-primary-dark transition-colors duration-200 ease-in-out;
@@ -188,4 +201,62 @@ body {
   /* lg : 1024px */
   /* xl : 1280px */
   /* 2xl : 1536px */
+}
+
+/* 좌우 애니메이션 */
+@keyframes wiggleX {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-4px);
+  }
+  75% {
+    transform: translateX(4px);
+  }
+}
+
+.wiggle-on-hover {
+  transition: transform 0.3s ease-in-out;
+}
+
+.group:hover .wiggle-on-hover {
+  animation: wiggleX 0.4s ease-in-out infinite;
+}
+
+/* 좌우 애니메이션 (wiper) */
+@keyframes wiper {
+  0% {
+    transform: rotate(0deg);
+  }
+  15% {
+    transform: rotate(-6deg);
+  }
+  30% {
+    transform: rotate(6deg);
+  }
+  45% {
+    transform: rotate(-3deg);
+  }
+  60% {
+    transform: rotate(3deg);
+  }
+  75% {
+    transform: rotate(-1deg);
+  }
+  90% {
+    transform: rotate(1deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.wiper-on-hover {
+  transition: transform 0.2s ease-in-out;
+}
+
+.group:hover .wiper-on-hover {
+  animation: wiper 0.8s ease-in-out;
 }
