@@ -9,7 +9,7 @@ type Props = {
   data: StackDataTypes[];
 };
 
-export default function TechStack({ data }: Props) {
+export default function TechStackSection({ data }: Props) {
   const sortedData = [...data].sort(
     (a, b) => a.display_order - b.display_order,
   );
@@ -17,11 +17,11 @@ export default function TechStack({ data }: Props) {
   return (
     <>
       <SectionLayout>
-        <header className={`${montserrat.className}`}>
-          <h3 className="mb-4 text-sm uppercase sm:mb-8 sm:text-base">
-            Tech Stack
-          </h3>
-        </header>
+        <h3
+          className={`${montserrat.className} text-[32px] font-bold uppercase`}
+        >
+          Tech Stack
+        </h3>
         <div className="">
           {sortedData.map((section) => (
             <article
@@ -29,16 +29,14 @@ export default function TechStack({ data }: Props) {
               id={section.title}
               className="border-border flex flex-col gap-6 border-t py-12 md:grid md:grid-cols-8"
             >
-              <h4
-                className={`${montserrat.className} col-span-2 text-2xl font-semibold`}
-              >
+              <h4 className={`${montserrat.className} text-base font-semibold`}>
                 {section.title}
               </h4>
               <div className="col-span-6 flex flex-col gap-6">
                 {section.stack_items.map((item) => (
                   <div key={item.title}>
                     <h5
-                      className={`${montserrat.className} mb-2 text-lg font-medium`}
+                      className={`${montserrat.className} mb-2 text-sm font-medium`}
                     >
                       {item.title}
                     </h5>
@@ -53,7 +51,7 @@ export default function TechStack({ data }: Props) {
                               <Chip
                                 id={icon.name}
                                 icon={true}
-                                className={`${montserrat.className} text-sm`}
+                                className={`${montserrat.className} bg-section text-sm`}
                               />
                             </li>
                           ))}

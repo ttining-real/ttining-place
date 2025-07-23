@@ -2,7 +2,6 @@ import Head from 'next/head';
 import React from 'react';
 import { GetServerSideProps } from 'next';
 
-// import IntroduceSection from '@/components/about/introduce';
 import TechStackSection from '@/components/about/tech-stack';
 import { supabase } from '@/lib/supabase';
 
@@ -106,9 +105,8 @@ export default function Page({
           content="UI 개발자 안지인의 포트폴리오입니다. 개인 이력 사항을 확인하실 수 있습니다."
         />
       </Head>
-      <div className="mt-20 flex flex-col">
+      <div className="flex flex-col">
         <h2 className="sr-only">About</h2>
-        {/* <IntroduceSection /> */}
         <ResumeSection
           careersData={experienceData}
           educationData={educationData}
