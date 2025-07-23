@@ -27,11 +27,11 @@ export default function ToTheTop() {
   return (
     <>
       <Button
-        variants="primary"
+        variants="secondary"
         isIconOnly
         iconId="arrow-top"
         ariaLabel="맨 위로 이동"
-        className={`bg-primary/90 border-primary/30 hover:bg-primary focus-ring fixed right-6 bottom-6 flex h-12 w-12 items-center justify-center rounded-full border-2 transition-opacity duration-300 ${
+        className={`fixed right-6 bottom-6 flex h-12 w-12 items-center justify-center rounded-full transition-opacity duration-300 ${
           isVisible
             ? 'pointer-events-auto opacity-100'
             : 'pointer-events-none opacity-0'

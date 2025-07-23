@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { ReactNode } from 'react';
+import { Url } from 'next/dist/shared/lib/router/router';
 
 import { pretendard } from '@/fonts/font';
 import Icon from '@/components/icon';
@@ -15,7 +16,7 @@ type BaseProps = {
   children?: ReactNode;
   className?: string;
   onClick?: () => void;
-  href?: string;
+  href?: string | Url;
   ariaLabel?: string;
   disabled?: boolean;
 };
@@ -98,7 +99,7 @@ export default function Button({
   };
 
   // href 유무 및 내부, 외부 판단 조건 분기
-  if (href) {
+  if (typeof href === 'string') {
     const isInternal = href.startsWith('/');
 
     if (isInternal) {

@@ -38,7 +38,9 @@ export default function SectionLayout({
       initial="hidden"
       animate={isInView ? 'visible' : 'hidden'}
     >
-      <div className={`m-auto flex max-w-5xl flex-col gap-6 ${innerClassName}`}>
+      <div
+        className={`m-auto flex max-w-5xl flex-col gap-6 2xl:max-w-7xl ${innerClassName}`}
+      >
         {children}
       </div>
     </motion.section>

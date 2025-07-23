@@ -3,7 +3,7 @@ import '@/styles/globals.css';
 import Head from 'next/head';
 import { NextPage } from 'next';
 import { AppProps } from 'next/app';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 
 import GlobalLayout from '@/layouts/global-layout';
 
@@ -17,9 +17,9 @@ export default function App({
 }: AppProps & {
   Component: NextPageWithLayout;
 }) {
-  const router = useRouter();
+  // const router = useRouter();
 
-  const subPageClassName = router.pathname !== '/';
+  // const subPageClassName = router.pathname !== '/';
 
   const getLayout = Component.getLayout ?? ((page) => page);
 
@@ -28,9 +28,8 @@ export default function App({
       <Head>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <GlobalLayout className={`${subPageClassName ? 'mt-20' : ''}`}>
-        {getLayout(<Component {...pageProps} />)}
-      </GlobalLayout>
+      {/* <GlobalLayout className={`${subPageClassName ? 'mt-20' : ''}`}> */}
+      <GlobalLayout>{getLayout(<Component {...pageProps} />)}</GlobalLayout>
     </>
   );
 }
