@@ -1,22 +1,21 @@
 import Head from 'next/head';
 import { GetServerSideProps } from 'next';
+import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import clsx from 'clsx';
 
 import { montserrat } from '@/fonts/font';
 import { experienceTabs as tabs } from '@/constants/tabs';
 import SectionLayout from '@/components/section-layout';
 import Button from '@/components/button';
-import Icon from '@/components/icon';
-import Chip from '@/components/chip';
 import TabSelector from '@/components/tab-selector';
-import ImageCard from '@/components/image-card';
+import Card from '@/components/card';
 import { supabase } from '@/lib/supabase';
 import { formatDate } from '@/lib/formatDate';
 import { sortedExperienceData } from '@/lib/sortedData';
 
 import { ExperienceDataTypes } from '@/types/experience-data-type';
-import { useRouter } from 'next/router';
 
 type ExperienceDataWithImageTypes = ExperienceDataTypes & {
   imagePublicUrl: string | null;
@@ -71,7 +70,7 @@ export default function Page({
     }
   }, [router.isReady, router.query.tab]);
 
-  const [openId, setOpenId] = useState<string | null>(null); // 아코디언 열린 항목 ID
+  // const [openId, setOpenId] = useState<string | null>(null); // 아코디언 열린 항목 ID
 
   const sortedData = useMemo(() => sortedExperienceData(data), [data]);
 
@@ -108,9 +107,9 @@ export default function Page({
     );
   };
 
-  const toggleOpen = (id: string) => {
-    setOpenId((prev) => (prev === id ? null : id));
-  };
+  // const toggleOpen = (id: string) => {
+  //   setOpenId((prev) => (prev === id ? null : id));
+  // };
 
   return (
     <>
@@ -127,14 +126,15 @@ export default function Page({
           content="UI 개발자 안지인의 포트폴리오입니다. 경력 사항을 확인하실 수 있습니다."
         />
       </Head>
-      <SectionLayout>
+      <SectionLayout outerClassName="sm:pt-[133px]" innerClassName="gap-8">
         <header
-          className={`${montserrat.className} border-border flex flex-col justify-between border-b pb-2 sm:flex-row sm:items-center`}
+          className={`${montserrat.className} flex flex-col justify-between sm:flex-row sm:items-center`}
         >
-          <h2 className="mb-4 font-semibold uppercase sm:mb-0 sm:font-normal">
+          <h2
+            className={`${montserrat.className} text-[32px] font-bold uppercase`}
+          >
             Experience
           </h2>
-          {/* 탭 메뉴 */}
           <TabSelector
             tabs={tabs}
             selected={selected}
@@ -143,145 +143,62 @@ export default function Page({
         </header>
 
         {/* 리스트 영역 */}
-        <div className="flex flex-col gap-8">
-          <h3 className="sr-only">{router.query.tab}</h3>
+        <h3 className="sr-only">{router.query.tab}</h3>
+        <section className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
           <AnimatePresence>
-            {filtered.map((item) => {
-              const isOpen = openId === item.id;
-
-              return (
-                <motion.article
-                  key={item.id}
-                  id={item.slug}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.3 }}
-                  className="flex scroll-mt-32 flex-col md:flex-row md:gap-6"
-                >
-                  <ImageCard
-                    src={item.imagePublicUrl}
-                    priority
-                    alt={`${item.company_name} 로고`}
-                    className="flex h-full min-h-[264px] w-full items-center md:max-w-[420px]"
-                  />
-
-                  <div className="order-2 flex flex-1 flex-col gap-4 px-1 py-4">
-                    <h4 className="text-text-primary text-xl font-semibold md:text-2xl">
+            {filtered.map((item) => (
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Card key={item.id} src={item.imagePublicUrl}>
+                  <div className="w-full">
+                    <h4 className="text-text-primary text-lg font-semibold">
                       {item.company_name}
                     </h4>
-                    <p className="text-text-secondary text-sm">{`${formatDate(item.start_date)} - ${formatDate(item.end_date)}`}</p>
-                    <div className="text-sm">
-                      {item.description.map((desc, index) => (
-                        <p key={index}>{desc}</p>
-                      ))}
-                    </div>
-
-                    {/* 자세히 보기 버튼 */}
-                    <Button
-                      size="sm"
-                      variants="secondary"
-                      onClick={() => toggleOpen(item.id)}
-                      className="border-primary/40 mt-2 w-fit"
-                    >
-                      <motion.span
-                        animate={{ rotate: isOpen ? 180 : 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="inline-block"
-                      >
-                        <Icon id="arrow-bottom" size={16} />
-                      </motion.span>
-                      <AnimatePresence mode="wait" initial={false}>
-                        <motion.span
-                          key={isOpen ? 'Folding' : 'More View'}
-                          initial={{ opacity: 0, y: 4 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -4 }}
-                          transition={{ duration: 0.2 }}
-                          className={`${montserrat.className}`}
+                    <dl className="text-text-primary text-sm">
+                      <div>
+                        <dt className="sr-only">소속, 직급</dt>
+                        <dd
+                          className={clsx(
+                            item.position ? 'flex items-center gap-2' : '',
+                          )}
                         >
-                          {isOpen ? 'Folding' : 'More View'}
-                        </motion.span>
-                      </AnimatePresence>
-                    </Button>
-
-                    {/* 아코디언 상세 영역 */}
-                    <AnimatePresence initial={false}>
-                      {isOpen && (
-                        <motion.div
-                          id={`details-${item.id}`}
-                          initial="collapsed"
-                          animate="open"
-                          exit="collapsed"
-                          variants={{
-                            open: { height: 'auto', opacity: 1 },
-                            collapsed: { height: 0, opacity: 0 },
-                          }}
-                          transition={{ duration: 0.3, ease: 'easeInOut' }}
-                          className="overflow-hidden text-sm"
-                        >
-                          <div className="flex flex-col gap-8">
-                            <div>
-                              <h5
-                                className={`${montserrat.className} text-text-secondary mb-2 font-medium uppercase`}
-                              >
-                                Role
-                              </h5>
-                              <ul className="text-text-primary list-disc pl-4">
-                                {item.major_task.map((task, index) => (
-                                  <li key={index}>{task}</li>
-                                ))}
-                              </ul>
-                            </div>
-                            <div>
-                              <h5
-                                className={`${montserrat.className} text-text-secondary mb-2 font-medium uppercase`}
-                              >
-                                Achivements
-                              </h5>
-                              <ul className="text-text-primary list-disc pl-4">
-                                {item.achievements.map((achive, index) => (
-                                  <li key={index}>{achive}</li>
-                                ))}
-                              </ul>
-                            </div>
-                            <div>
-                              <h5
-                                className={`${montserrat.className} text-text-secondary mb-3 font-medium uppercase`}
-                              >
-                                Tech Stack
-                              </h5>
-                              <div className="flex flex-wrap gap-1">
-                                {item.tech_stack.map((stack, index) => (
-                                  <Chip
-                                    key={index}
-                                    id={stack}
-                                    icon={true}
-                                    className={`${montserrat.className}`}
-                                  />
-                                ))}
-                              </div>
-                            </div>
-                            <div>
-                              <h5
-                                className={`${montserrat.className} text-text-secondary mb-2 font-medium uppercase`}
-                              >
-                                Location
-                              </h5>
-                              <p className="text-text-primary">
-                                {item.location}
-                              </p>
-                            </div>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+                          {item.position ? (
+                            <>
+                              <span>{item.department}</span>
+                              <hr className="border-disabled-text h-3 w-0 border" />
+                              <span>{item.position}</span>
+                            </>
+                          ) : (
+                            <span>{item.department}</span>
+                          )}
+                        </dd>
+                      </div>
+                      <div>
+                        <dt className="sr-only">작업 연도</dt>
+                        <dd className={`${montserrat.className}`}>
+                          {`${formatDate(item.start_date, 'dot')} ~ ${formatDate(item.end_date, 'dot')}`}
+                        </dd>
+                      </div>
+                    </dl>
                   </div>
-                </motion.article>
-              );
-            })}
+                  <Button variants="secondary" size="sm">
+                    자세히 보기
+                  </Button>
+                  <span
+                    className={`${montserrat.className} bg-primary/10 text-primary border-primary absolute top-4 left-4 rounded-2xl border px-2 py-0.5 text-sm font-medium`}
+                  >
+                    {item.type}
+                  </span>
+                </Card>
+              </motion.div>
+            ))}
           </AnimatePresence>
-        </div>
+        </section>
       </SectionLayout>
     </>
   );
