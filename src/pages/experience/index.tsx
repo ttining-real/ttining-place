@@ -16,6 +16,8 @@ import { formatDate } from '@/lib/formatDate';
 import { sortedExperienceData } from '@/lib/sortedData';
 
 import { ExperienceDataTypes } from '@/types/experience-data-type';
+import Dialog from '@/components/dialog';
+import Chip from '@/components/chip';
 
 type ExperienceDataWithImageTypes = ExperienceDataTypes & {
   imagePublicUrl: string | null;
@@ -60,6 +62,9 @@ export default function Page({
   const router = useRouter();
 
   const [selected, setSelected] = useState<Tab>('all');
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [selectedItem, setSelectedItem] =
+    useState<ExperienceDataWithImageTypes | null>(null);
 
   useEffect(() => {
     if (!router.isReady) return; // undefined일 경우 return
@@ -69,8 +74,6 @@ export default function Page({
       setSelected(tab);
     }
   }, [router.isReady, router.query.tab]);
-
-  // const [openId, setOpenId] = useState<string | null>(null); // 아코디언 열린 항목 ID
 
   const sortedData = useMemo(() => sortedExperienceData(data), [data]);
 
@@ -107,9 +110,15 @@ export default function Page({
     );
   };
 
-  // const toggleOpen = (id: string) => {
-  //   setOpenId((prev) => (prev === id ? null : id));
-  // };
+  const onClickCardButton = (item: ExperienceDataWithImageTypes) => {
+    console.log('버튼 클릭');
+    setSelectedItem(item);
+    setIsDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false); // 다이얼로그 닫기
+  };
 
   return (
     <>
@@ -179,14 +188,18 @@ export default function Page({
                         </dd>
                       </div>
                       <div>
-                        <dt className="sr-only">작업 연도</dt>
+                        <dt className="sr-only">재직 기간</dt>
                         <dd className={`${montserrat.className}`}>
                           {`${formatDate(item.start_date, 'dot')} ~ ${formatDate(item.end_date, 'dot')}`}
                         </dd>
                       </div>
                     </dl>
                   </div>
-                  <Button variants="secondary" size="sm">
+                  <Button
+                    variants="secondary"
+                    size="sm"
+                    onClick={() => onClickCardButton(item)}
+                  >
                     자세히 보기
                   </Button>
                   <span
@@ -197,6 +210,139 @@ export default function Page({
                 </Card>
               </motion.div>
             ))}
+            {selectedItem && (
+              <Dialog isOpen={isDialogOpen} onClose={handleCloseDialog}>
+                <header className="bg-primary p-8">
+                  <h3
+                    id="dialog-title"
+                    className="pb-1 text-lg font-semibold text-white"
+                  >
+                    {selectedItem.company_name}
+                  </h3>
+                  <dl className="space-y-1 text-sm text-white">
+                    <div>
+                      <dt className="sr-only">소속, 직급</dt>
+                      <dd
+                        className={clsx(
+                          selectedItem.position
+                            ? 'flex items-center gap-2'
+                            : '',
+                        )}
+                      >
+                        {selectedItem.position ? (
+                          <>
+                            <span>{selectedItem.department}</span>
+                            <hr className="border-disabled-text h-3 w-0 border" />
+                            <span>{selectedItem.position}</span>
+                          </>
+                        ) : (
+                          <span>{selectedItem.department}</span>
+                        )}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt className="sr-only">재직 기간</dt>
+                      <dd className={`${montserrat.className}`}>
+                        {`${formatDate(selectedItem.start_date, 'dot')} ~ ${formatDate(selectedItem.end_date, 'dot')}`}
+                      </dd>
+                    </div>
+                  </dl>
+                </header>
+                <div
+                  id="dialog-description"
+                  className="flex flex-col items-end gap-6 p-8"
+                >
+                  <div className="grid grid-cols-2 gap-12 text-sm">
+                    <dl className="space-y-4">
+                      <div>
+                        <dt>
+                          <h4
+                            className={`${montserrat.className} text-text-secondary mb-2 font-medium`}
+                          >
+                            Description
+                          </h4>
+                        </dt>
+                        <dd>{selectedItem.description}</dd>
+                      </div>
+                      <div>
+                        <dt>
+                          <h4
+                            className={`${montserrat.className} text-text-secondary font-medium`}
+                          >
+                            Role
+                          </h4>
+                        </dt>
+                        <dd>
+                          <ul>
+                            {selectedItem.role.map((role, index) => (
+                              <li
+                                key={index}
+                                className="before:bg-text-secondary relative pl-2 before:absolute before:top-1/2 before:left-0 before:h-[3px] before:w-[3px] before:-translate-y-1/2 before:rounded-md before:content-['']"
+                              >
+                                {role}
+                              </li>
+                            ))}
+                          </ul>
+                        </dd>
+                      </div>
+                      <div>
+                        <dt>
+                          <h4
+                            className={`${montserrat.className} text-text-secondary mb-2 font-medium`}
+                          >
+                            Achievements
+                          </h4>
+                        </dt>
+                        <dd>
+                          <ul>
+                            {selectedItem.achievements.map((role, index) => (
+                              <li
+                                key={index}
+                                className="before:bg-text-secondary relative pl-2 before:absolute before:top-1/2 before:left-0 before:h-[3px] before:w-[3px] before:-translate-y-1/2 before:rounded-md before:content-['']"
+                              >
+                                {role}
+                              </li>
+                            ))}
+                          </ul>
+                        </dd>
+                      </div>
+                      <div>
+                        <dt>
+                          <h4
+                            className={`${montserrat.className} text-text-secondary mb-2 font-medium`}
+                          >
+                            Location
+                          </h4>
+                        </dt>
+                        <dd>{selectedItem.location}</dd>
+                      </div>
+                    </dl>
+                    <dl>
+                      <dt>
+                        <h4
+                          className={`${montserrat.className} text-text-secondary mb-2 font-medium`}
+                        >
+                          Tech Stack
+                        </h4>
+                      </dt>
+                      <dd className="flex flex-wrap gap-2">
+                        {selectedItem.tech_stack.map((stack, index) => (
+                          <Chip
+                            key={index}
+                            id={stack}
+                            icon={true}
+                            className={`${montserrat.className} bg-section text-sm`}
+                          />
+                        ))}
+                      </dd>
+                    </dl>
+                  </div>
+                  <Button variants="secondary" onClick={handleCloseDialog}>
+                    닫기
+                  </Button>
+                </div>
+              </Dialog>
+            )}
           </AnimatePresence>
         </section>
       </SectionLayout>
