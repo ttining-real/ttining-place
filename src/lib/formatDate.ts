@@ -13,3 +13,10 @@ export function formatDate(dateString: string | Date | undefined): string {
 
   return `${year}년 ${month}월`;
 }
+
+export function formatYears(startDate: string, endDate: string): string {
+  const startYear = new Date(startDate).getFullYear();
+  const endYear = new Date(endDate).getFullYear();
+
+  return startYear === endYear ? `${startYear}` : `${startYear} ~ ${endYear}`;
+}
