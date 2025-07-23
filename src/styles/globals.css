@@ -260,3 +260,39 @@ body {
 .group:hover .wiper-on-hover {
   animation: wiper 0.8s ease-in-out;
 }
+
+/* loop */
+@keyframes loop {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.loop-slider {
+  .inner {
+    display: flex;
+    width: fit-content;
+    gap: 16px;
+    animation-name: loop;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: var(--direction);
+    animation-duration: var(--duration);
+  }
+}
+
+.fade {
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    var(--bg-primary),
+    transparent 30%,
+    transparent 70%,
+    var(--bg-primary)
+  );
+  position: absolute;
+  inset: 0;
+}
