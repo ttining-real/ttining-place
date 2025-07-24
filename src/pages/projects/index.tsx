@@ -31,22 +31,34 @@ export const getServerSideProps: GetServerSideProps = async () => {
     };
   }
 
-  // 각 프로젝트에 이미지 Public URL 추가
-  const dataWithImage: ProjectsDataWithImageTypes[] = data.map((item) => {
-    let imagePublicUrl: string | null = null;
+  const dataWithImage: ProjectsDataWithImageTypes[] = await Promise.all(
+    data.map(async (item) => {
+      let imagePublicUrl: string | null = null;
 
-    if (item.image_url && item.image_url.trim() !== '') {
-      const { data: imageData } = supabase.storage
-        .from('projects')
-        .getPublicUrl(`${item.image_url}.png`);
-      imagePublicUrl = imageData?.publicUrl ?? null;
-    }
+      if (item.slug && item.slug.trim() !== '') {
+        const imagePath = `${item.slug}.png`;
 
-    return {
-      ...item,
-      imagePublicUrl,
-    };
-  });
+        // 이미지 파일 존재 여부 확인
+        const { data: existsCheck, error: downloadError } =
+          await supabase.storage.from('projects').download(imagePath);
+
+        const imageExists = !!existsCheck && !downloadError;
+
+        if (imageExists) {
+          const { data: imageData } = supabase.storage
+            .from('projects')
+            .getPublicUrl(imagePath);
+
+          imagePublicUrl = imageData?.publicUrl ?? null;
+        }
+      }
+
+      return {
+        ...item,
+        imagePublicUrl,
+      };
+    }),
+  );
 
   return {
     props: {

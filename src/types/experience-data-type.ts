@@ -13,5 +13,4 @@ export interface ExperienceDataTypes {
   achievements: string[];
   tech_stack: string[];
   location: string[];
-  image_url: string;
 }

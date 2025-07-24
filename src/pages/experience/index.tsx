@@ -34,16 +34,34 @@ export const getServerSideProps: GetServerSideProps = async () => {
     };
   }
 
-  const dataWithImage: ExperienceDataWithImageTypes[] = data.map((item) => {
-    const { data: imageData } = supabase.storage
-      .from('experience')
-      .getPublicUrl(`${item.image_url}.png`);
+  const dataWithImage: ExperienceDataWithImageTypes[] = await Promise.all(
+    data.map(async (item) => {
+      let imagePublicUrl: string | null = null;
 
-    return {
-      ...item,
-      imagePublicUrl: imageData?.publicUrl ?? null,
-    };
-  });
+      if (item.slug && item.slug.trim() !== '') {
+        const imagePath = `${item.slug}.png`;
+
+        // 이미지 파일 존재 여부 확인
+        const { data: existsCheck, error: downloadError } =
+          await supabase.storage.from('experience').download(imagePath);
+
+        const imageExists = !!existsCheck && !downloadError;
+
+        if (imageExists) {
+          const { data: imageData } = supabase.storage
+            .from('experience')
+            .getPublicUrl(imagePath);
+
+          imagePublicUrl = imageData?.publicUrl ?? null;
+        }
+      }
+
+      return {
+        ...item,
+        imagePublicUrl,
+      };
+    }),
+  );
 
   return {
     props: {

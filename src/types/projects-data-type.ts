@@ -15,5 +15,4 @@ export interface ProjectsDataTypes {
   result: Record<string, string | string[]>[];
   start_date: string;
   end_date: string;
-  image_url: string;
 }
