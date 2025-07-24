@@ -2,7 +2,9 @@ import Head from 'next/head';
 import React from 'react';
 import { GetServerSideProps } from 'next';
 
+import ResumeSection from '@/components/about/resume';
 import TechStackSection from '@/components/about/tech-stack';
+import TimelineSection from '@/components/about/timeline';
 import { supabase } from '@/lib/supabase';
 
 import { ExperienceDataTypes } from '@/types/experience-data-type';
@@ -10,9 +12,10 @@ import { EducationDataTypes } from '@/types/education-data-types';
 import { CertificatesDataTypes } from '@/types/certificates-data-types';
 import { TrainingDataTypes } from '@/types/training-data-types';
 import { StackDataTypes } from '@/types/stacks-data-types';
-import ResumeSection from '@/components/about/resume';
+import { TimelineDataTypes } from '@/types/timeline-data-types';
 
 export const getServerSideProps: GetServerSideProps = async () => {
+  // experience
   const { data: experienceData, error: experienceError } = await supabase
     .from('experience')
     .select(
@@ -20,21 +23,25 @@ export const getServerSideProps: GetServerSideProps = async () => {
     )
     .order('start_date', { ascending: false });
 
+  // education
   const { data: educationData, error: educationError } = await supabase
     .from('education')
     .select('id, school_name, major, start_date, end_date, note')
     .order('start_date', { ascending: false });
 
+  // certificates
   const { data: certificatesData, error: certificatesError } = await supabase
     .from('certificates')
     .select('id, title, organization, issued_date')
     .order('issued_date', { ascending: false });
 
+  // training
   const { data: trainingData, error: trainingError } = await supabase
     .from('training')
     .select('id, title, organization, start_date, end_date')
     .order('start_date', { ascending: false });
 
+  // stack
   const { data: stackData, error: stackError } = await supabase.from(
     'stack_sections',
   ).select(`
@@ -47,6 +54,10 @@ export const getServerSideProps: GetServerSideProps = async () => {
     )
   `);
 
+  const { data: timelineData, error: timelineError } = await supabase
+    .from('project_timeline')
+    .select('*');
+
   if (experienceError) {
     return {
       props: {
@@ -55,12 +66,14 @@ export const getServerSideProps: GetServerSideProps = async () => {
         certificatesData: [],
         trainingData: [],
         stackData: [],
+        timelineData: [],
         error:
           experienceError?.message ||
           educationError?.message ||
           certificatesError?.message ||
           trainingError?.message ||
           stackError?.message ||
+          timelineError?.message ||
           '🚫 알 수 없는 오류가 발생했어요!',
       },
     };
@@ -73,6 +86,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       certificatesData: certificatesData ?? [],
       trainingData: trainingData ?? [],
       stackData: stackData ?? [],
+      timelineData: timelineData ?? [],
     },
   };
 };
@@ -83,12 +97,14 @@ export default function Page({
   certificatesData,
   trainingData,
   stackData,
+  timelineData,
 }: {
   experienceData: ExperienceDataTypes[];
   educationData: EducationDataTypes[];
   certificatesData: CertificatesDataTypes[];
   trainingData: TrainingDataTypes[];
   stackData: StackDataTypes[];
+  timelineData: TimelineDataTypes[];
 }) {
   return (
     <>
@@ -114,6 +130,7 @@ export default function Page({
           trainingData={trainingData}
         />
         <TechStackSection data={stackData} />
+        <TimelineSection data={timelineData} />
       </div>
     </>
   );
