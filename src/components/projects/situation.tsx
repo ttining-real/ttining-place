@@ -13,7 +13,7 @@ export default function SituationSection({ data }: { data: string[] }) {
         Situation
       </h3>
       <hr className="border-border w-16 border md:h-16 md:w-0" />
-      <ul>
+      <ul className="text-center md:text-left">
         {data.map((item, index) => (
           <li key={index}>{item}</li>
         ))}
