@@ -2,12 +2,14 @@ import { ReactNode, useRef } from 'react';
 import { motion, useInView, Easing } from 'framer-motion';
 
 type SectionLayoutProps = {
+  id?: string;
   outerClassName?: string;
   innerClassName?: string;
   children: ReactNode;
 };
 
 export default function SectionLayout({
+  id,
   outerClassName = '',
   innerClassName = '',
   children,
@@ -31,6 +33,7 @@ export default function SectionLayout({
 
   return (
     <motion.section
+      {...(id ? { id } : {})}
       ref={ref}
       aria-label="section layout"
       className={`px-6 py-20 ${outerClassName}`}

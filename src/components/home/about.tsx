@@ -5,6 +5,7 @@ import Button from '../button';
 export default function AboutSection() {
   return (
     <SectionLayout
+      id="about"
       outerClassName="bg-section"
       innerClassName="items-center md:flex-row justify-center gap-6"
     >
@@ -14,9 +15,9 @@ export default function AboutSection() {
         >
           About
         </h2>
-        <h3 className="text-lg font-semibold">
+        <p className="text-lg font-semibold">
           사용자 경험을 설계하고 구현하는 안지인입니다.
-        </h3>
+        </p>
         <div className="text-center">
           <p className="text-sm">
             안녕하세요. UI/UX 디자인과 퍼블리싱 경험을 바탕으로
@@ -33,6 +34,7 @@ export default function AboutSection() {
           <Button
             href={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/personal//ANJIIN_Resume.pdf`}
             variants="secondary"
+            className="dark:border-primary-secondary dark:text-primary-secondary"
           >
             이력서 PDF 열기
           </Button>

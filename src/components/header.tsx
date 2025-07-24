@@ -66,6 +66,7 @@ export default function Header() {
                     />
                   )}
                   <Link
+                    passHref
                     href={query ? { pathname: href, query } : href}
                     className={`focus-ring hover:bg-primary-light/20 hover:text-primary relative z-10 inline-block rounded-4xl px-4 py-2 transition-colors duration-200 ${isActive ? 'text-white hover:text-white' : 'text-text-secondary'}`}
                   >
@@ -138,6 +139,7 @@ export default function Header() {
                 return (
                   <li key={href}>
                     <Link
+                      passHref
                       href={query ? { pathname: href, query } : href}
                       className={`${montserrat.className} block w-full px-8 py-6 text-2xl font-semibold uppercase transition-colors ${
                         isActive

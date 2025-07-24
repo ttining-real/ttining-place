@@ -106,7 +106,7 @@ export default function ResumeSection({
                       {career.major_task.map((task, index) => (
                         <li
                           key={index}
-                          className="before:bg-text-secondary relative pl-1.5 before:absolute before:top-2 before:left-0 before:h-0.5 before:w-0.5 before:rounded-md before:content-['']"
+                          className="before:bg-text-secondary relative pl-1.5 font-light before:absolute before:top-2 before:left-0 before:h-0.5 before:w-0.5 before:rounded-md before:content-['']"
                         >
                           {task}
                         </li>
@@ -145,7 +145,7 @@ export default function ResumeSection({
                       {career.major_task.map((task, index) => (
                         <li
                           key={index}
-                          className="before:bg-text-secondary relative pl-1.5 before:absolute before:top-2 before:left-0 before:h-0.5 before:w-0.5 before:rounded-md before:content-['']"
+                          className="before:bg-text-secondary relative pl-1.5 font-light before:absolute before:top-2 before:left-0 before:h-0.5 before:w-0.5 before:rounded-md before:content-['']"
                         >
                           {task}
                         </li>

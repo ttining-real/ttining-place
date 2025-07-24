@@ -51,7 +51,7 @@ export default function TechStackSection({ data }: Props) {
                               <Chip
                                 id={icon.name}
                                 icon={true}
-                                className={`${montserrat.className} bg-section text-sm`}
+                                className={`${montserrat.className} bg-surface border-border border text-sm`}
                               />
                             </li>
                           ))}

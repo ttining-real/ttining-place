@@ -42,9 +42,9 @@
 
 .dark:root {
   /* Primary */
-  --primary: #1e63e9;
-  --primary-light: #4c84f4;
-  --primary-dark: #1346a3;
+  --primary: #4181ff;
+  --primary-light: #70a0ff;
+  --primary-dark: #1969ff;
 
   /* Background */
   --bg-primary: #212427;
