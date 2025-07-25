@@ -24,8 +24,8 @@ export default function Card({ href, src, priority, children }: CardProps) {
               <Image
                 src={src}
                 alt=""
-                width={200}
-                height={200}
+                width={400}
+                height={300}
                 priority={priority}
                 className="aspect-4/3 w-full overflow-hidden object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
               />
@@ -44,8 +44,8 @@ export default function Card({ href, src, priority, children }: CardProps) {
               <Image
                 src={src}
                 alt=""
-                width={200}
-                height={200}
+                width={400}
+                height={225}
                 priority={priority}
                 className="aspect-video w-full overflow-hidden object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
               />

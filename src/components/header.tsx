@@ -55,7 +55,7 @@ export default function Header() {
                   {isActive && (
                     <motion.div
                       layoutId="nav-active-bg"
-                      className="bg-primary absolute inset-0 z-0 rounded-4xl"
+                      className="bg-primary absolute inset-0 -z-10 rounded-4xl"
                       transition={{
                         type: 'spring',
                         stiffness: 500,
