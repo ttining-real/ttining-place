@@ -2,8 +2,8 @@ import Head from 'next/head';
 
 // components
 import HeroSection from '@/components/home/hero';
-import AboutSection from '@/components/home/about';
 import StackSection from '@/components/home/stack';
+import AboutSection from '@/components/home/about';
 
 export default function Home() {
   return (
