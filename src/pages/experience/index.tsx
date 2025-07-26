@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { GetServerSideProps } from 'next';
+import { GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -23,7 +23,7 @@ type ExperienceDataWithImageTypes = ExperienceDataTypes & {
   imagePublicUrl: string | null;
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const { data, error } = await supabase.from('experience').select('*');
 
   if (!data || error) {
@@ -67,6 +67,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     props: {
       data: dataWithImage,
     },
+    revalidate: 60,
   };
 };
 

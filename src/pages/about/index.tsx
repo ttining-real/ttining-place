@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import React from 'react';
-import { GetServerSideProps } from 'next';
+// import { GetServerSideProps } from 'next';
+import { GetStaticProps } from 'next';
 
 import ResumeSection from '@/components/about/resume';
 import TechStackSection from '@/components/about/tech-stack';
@@ -14,7 +15,7 @@ import { TrainingDataTypes } from '@/types/training-data-types';
 import { StackDataTypes } from '@/types/stacks-data-types';
 import { TimelineDataTypes } from '@/types/timeline-data-types';
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   // experience
   const { data: experienceData, error: experienceError } = await supabase
     .from('experience')
@@ -88,6 +89,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       stackData: stackData ?? [],
       timelineData: timelineData ?? [],
     },
+    revalidate: 60,
   };
 };
 
