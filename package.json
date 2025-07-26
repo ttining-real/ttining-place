@@ -1,6 +1,7 @@
 {
   "name": "ttining-place",
   "version": "0.1.0",
+  "description": "ttining place, 사용자 경험을 설계하고 구현하는 안지인의 포트폴리오입니다. ",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -12,6 +13,7 @@
     "@supabase/supabase-js": "^2.49.4",
     "clsx": "^2.1.1",
     "framer-motion": "^12.19.1",
+    "gsap": "^3.13.0",
     "motion": "^12.19.1",
     "next": "15.2.4",
     "react": "^19.0.0",
